@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentMainActivity">
+    tools:context=".StudentMainActivity"
+    android:background="@mipmap/real_ivory"
+    android:orientation="vertical"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar"
+        />
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/midnight_blue"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Button
+        android:id="@+id/btStudentMainViewProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="40dp"
+        android:text="View Profile"
+        android:textColor="@color/white"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/btStudentMainViewAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        android:text="View Attendance"
+        android:textColor="@color/white"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/btStudentMainViewAnnouncements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        android:text="View Announcements"
+        android:textColor="@color/white"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"
+        />
+
+</LinearLayout>
