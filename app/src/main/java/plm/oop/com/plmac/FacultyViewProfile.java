@@ -28,10 +28,10 @@ public class FacultyViewProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_profile);
         Intent i= getIntent();
-        String userName= i.getStringExtra("userName");
+        String userNumber= i.getStringExtra("userNumber");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mRef = database.getReference("Faculty");
-        Query query =mRef.orderByChild("userName").equalTo(userName);
+        Query query =mRef.orderByChild("userNumber").equalTo(userNumber);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
                                                  @Override
                                                  public void onDataChange(DataSnapshot dataSnapshot) {

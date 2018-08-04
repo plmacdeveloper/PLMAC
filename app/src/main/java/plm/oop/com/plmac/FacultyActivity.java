@@ -38,7 +38,7 @@ public class FacultyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mRef = database.getReference("Faculty");
-                Query query =mRef.orderByChild("userName").equalTo(facultyUsername.getText().toString());
+                Query query =mRef.orderByChild("userNumber").equalTo(facultyUsername.getText().toString());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,16 +50,16 @@ public class FacultyActivity extends AppCompatActivity {
                             if (faculty.child("userPassword").getValue(String.class).equals(facultyPassword.getText().toString())){
 //                                startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
                                 Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
-                                i.putExtra("userName",faculty.child("userName").getValue(String.class));
+                                i.putExtra("userNumber",faculty.child("userNumber").getValue(String.class));
                                 startActivity(i);
                             }
                             else{
-                                Toast.makeText(getApplicationContext(), "Invalid Username and Password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                             }
                             }
                         }
                         else{
-                            Toast.makeText(getApplicationContext(), "Invalid Username and Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                         }
 
                     }
