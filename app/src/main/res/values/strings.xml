@@ -11,4 +11,19 @@
         <item>Delete</item>
         <item>Update</item>
     </string-array>
+    <string-array name="Course">
+        <item>Object-Oriented Programming (Lec)</item>
+        <item>Object-Oriented Programming (Lab)</item>
+        <item>Lunch</item>
+    </string-array>
+    <string-array name="sched">
+        <item>Object-Oriented Programming (Lec)</item>
+        <item>Object-Oriented Programming (Lab)</item>
+        <item>Lunch</item>
+    </string-array>
+    <string-array name="room">
+        <item>Object-Oriented Programming (Lec)</item>
+        <item>Object-Oriented Programming (Lab)</item>
+        <item>Lunch</item>
+    </string-array>
 </resources>
