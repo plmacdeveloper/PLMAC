@@ -18,9 +18,9 @@ public class FacultyHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_home);
         Intent i= getIntent();
-        final String userName= i.getStringExtra("userName");
+        final String userNumber= i.getStringExtra("userNumber");
         welcomeMessage = findViewById(R.id.welcomeMessage);
-        String welcome="WELCOME "+userName+"!";
+        String welcome="WELCOME "+userNumber+"!";
         welcomeMessage.setText(welcome);
 
         fh_ss=findViewById(R.id.btFacultyHomeSelectSubject);
@@ -37,7 +37,7 @@ public class FacultyHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FacultyHomeActivity.this, FacultyViewProfile.class);
-                i.putExtra("userName",userName);
+                i.putExtra("userNumber",userNumber);
                 startActivity(i);
 
 
