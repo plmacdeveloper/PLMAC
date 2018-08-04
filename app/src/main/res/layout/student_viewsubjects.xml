@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentViewSubjects"
+    android:background="@mipmap/real_ivory">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/app_bar"
+            android:id="@+id/app_bar"
+            ></include>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/app_bar"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:id="@+id/rlStudentViewSubjectsOOPLab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsOOPLabCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COURSE: OBJECT-ORIENTED PROGRAMMING(LABORATORY)"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsOOPLabSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCHEDULE: FRIDAY: 10AM-1PM"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/tvStudentViewSubjectsOOPLabCourse"
+
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsOOPLabFaculty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FACULTY: PERFERINDA CAUBANG"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/tvStudentViewSubjectsOOPLabSchedule"
+
+                    android:layout_marginTop="10dp"
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlStudentViewSubjectsOOPLab"
+                android:background="@drawable/btn_bg3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COURSE: OBJECT-ORIENTED PROGRAMMING(LECTURE)"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCHEDULE: FRIDAY: 6PM-8PM"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/tvStudentViewSubjectsCourse"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvStudentViewSubjectsFaculty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FACULTY: PERFERINDA CAUBANG"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/tvStudentViewSubjectsSchedule"
+                    android:layout_marginTop="10dp"
+                    />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

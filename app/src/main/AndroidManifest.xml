@@ -64,7 +64,9 @@
         <activity
             android:name=".AdminSubject"
             android:theme="@style/AppTheme" />
-        <activity android:name=".StudentViewProfile"></activity>
+        <activity android:name=".StudentViewProfile" />
+        <activity android:name=".StudentUpdatePassword" />
+        <activity android:name=".StudentViewSubjects"></activity>
     </application>
 
 </manifest>
