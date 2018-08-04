@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@mipmap/real_ivory"
+    tools:context=".IntroScreenActivity">
+
+    <include
+        layout = "@layout/app_bar"
+        android:id="@+id/app_bar"
+        />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/faculty_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/app_bar"
+        android:layout_marginTop="40dp"/>
+    <LinearLayout
+
+        android:id="@+id/linlay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        >
+
+        <EditText
+            android:id="@+id/etFacultyUsername"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/et_bg"
+            android:fontFamily="sans-serif"
+            android:hint="Username"
+
+            android:inputType="textAutoComplete"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/etFacultyPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Password"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/et_bg"
+
+            android:fontFamily="sans-serif"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btFacultyLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/linlay1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg2"
+        android:fontFamily="@font/quicksand_bold"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:text="Login "
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/btFacultyForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Forgot Password?"
+        android:textColor="@color/darkgray"
+
+
+        />
+
+</RelativeLayout>

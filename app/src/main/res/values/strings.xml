@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PLMAC</string>
+    <string name="result">Default</string>
+    <string name="add">ADD</string>
+    <string name="update">UPDATE</string>
+    <string name="delete">DELETE</string>
+    <string name="choose">CHOOSE OPERATION</string>
+    <string-array name="AccountInformation">
+        <item> </item>
+        <item>Add</item>
+        <item>Delete</item>
+        <item>Update</item>
+    </string-array>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/real_ivory"
+    tools:context=".AdminActivity">
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar"
+        >
+    </include>
+
+    <Button
+        android:id="@+id/btAdminStudentInformation"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/white"
+        android:layout_below="@+id/app_bar"
+        android:layout_centerHorizontal="true"
+        android:text="Student"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/btAdminFacultyInformation"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/btAdminStudentInformation"
+        android:text="Faculty"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btAdminSubjectInformation"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+        android:text="Subject"
+        android:layout_below="@+id/btAdminFacultyInformation"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_marginTop="20dp"/>
+    <Switch
+        android:id="@+id/btEnableSendGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btAdminSubjectInformation"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:paddingHorizontal="40dp"
+        android:background="@drawable/btn_bg2"
+        android:checked="false"/>
+    <TextView
+        android:id="@+id/tvSendGradeEnable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btEnableSendGrade"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+</RelativeLayout>

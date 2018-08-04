@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QRScanner"
+    android:background="@mipmap/real_ivory">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true">
+
+        <SurfaceView
+            android:id="@+id/svCameraPreview"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="450px"
+            android:layout_height="450px" />
+        <LinearLayout
+            android:id="@+id/qrlinlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/svCameraPreview">
+
+            <TextView
+                android:id="@+id/tvScanner"
+                android:text="SCANNER"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:id="@+id/tvScanResult"
+                android:layout_below="@+id/tvScanner"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:text="@string/result"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

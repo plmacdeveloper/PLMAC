@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@mipmap/real_ivory"
+    tools:context=".IntroScreenActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/newlogo"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rellay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivLogo"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tvPlm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="PAMANTASAN NG LUNGSOD NG MAYNILA"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/tvAc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Attendance Checker"
+                android:textAlignment="center"
+                android:fontFamily="@font/quicksand_bold"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:id="@+id/btStudentAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tvAc"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btn_bg3"
+                android:fontFamily="@font/quicksand_bold"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:text="Student"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <Button
+                android:id="@+id/btFacultyAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/btStudentAccess"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_bg3"
+                android:fontFamily="@font/quicksand_bold"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:text="Faculty"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btInformation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/btFacultyAccess"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@mipmap/infologo"
+
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

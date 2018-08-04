@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "645961748461",
+    "firebase_url": "https://plmac-b4342.firebaseio.com",
+    "project_id": "plmac-b4342",
+    "storage_bucket": "plmac-b4342.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645961748461:android:779924c8d47a72cc",
+        "android_client_info": {
+          "package_name": "plm.oop.com.plmac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645961748461-kaf27jenjt9n05emoq5fipu724275a9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXuflco2-6Y-Rb3FXqmFSsrK5nnwEiLKw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
