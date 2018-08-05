@@ -54,9 +54,9 @@ public class StudentViewProfile extends AppCompatActivity {
         svp_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivity(new Intent(StudentViewProfile.this, StudentUpdatePassword.class));
-
+                Intent a = new Intent(StudentViewProfile.this, StudentViewProfile.class);
+                a.putExtra("userNumber",userNumber);
+                startActivity(a);
             }
         });
 
