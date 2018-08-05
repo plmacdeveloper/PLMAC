@@ -2,9 +2,13 @@ package plm.oop.com.plmac;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminSubject extends AppCompatActivity {
 
@@ -31,6 +34,7 @@ public class AdminSubject extends AppCompatActivity {
     //    Delete
     private EditText adminSubjectCodeDelete;
     private Button adminSubjectDeleteUser;
+    private RecyclerView adminSubjectCodeView;
 
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;
@@ -56,25 +60,10 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectAddUser = findViewById(R.id.btAdminSubjectAddUser);
 
         adminSubjectCodeDelete = findViewById(R.id.etAdminSubjectCodeDelete);
+        adminSubjectCodeView = findViewById(R.id.rvAdminSubjectCode);
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
 
 
-        SubjectChooseOperation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(adminSubjectChoose.getVisibility() == View.GONE) {
-                    adminSubjectChoose.setVisibility(View.VISIBLE);
-                    layoutAdminSubjectAdd.setVisibility(View.GONE);
-                    layoutAdminSubjectDelete.setVisibility(View.GONE);
-                    SubjectChooseOperation.setText(R.string.choose);
-                }else{
-                    adminSubjectChoose.setVisibility(View.GONE);
-                    layoutAdminSubjectAdd.setVisibility(View.GONE);
-                    layoutAdminSubjectDelete.setVisibility(View.GONE);
-                    SubjectChooseOperation.setText(R.string.choose);
-                }
-            }
-        });
 
         adminSubjectAdd.setOnClickListener(new View.OnClickListener() {
             @Override

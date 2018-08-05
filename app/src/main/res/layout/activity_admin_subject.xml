@@ -4,125 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminSubject"
-    android:background="@mipmap/real_ivory">
+    android:background="@mipmap/real_ivory"
+    tools:context=".AdminSubject">
 
     <include
-        layout="@layout/app_bar"
         android:id="@+id/app_bar"
-        >
-    </include>
+        layout="@layout/app_bar"></include>
 
     <Button
         android:id="@+id/btSubjectChooseOperation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Operation"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/app_bar"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_bg2"
-        android:paddingHorizontal="70dp"
         android:fontFamily="@font/quicksand_bold"
-        android:textSize="20sp"/>
+        android:paddingHorizontal="70dp"
+        android:text="Choose Operation"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:id="@+id/llAdminSubjectChoose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="15dp"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btAdminSubjectAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="ADD"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="ADD"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btAdminSubjectDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="DELETE"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="DELETE"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btAdminSubjectUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="UPDATE"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="UPDATE"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llAdminSubjectAdd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <EditText
             android:id="@+id/etAdminSubjectCodeAdd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/et_bg"
             android:layout_marginTop="15dp"
+            android:background="@drawable/et_bg"
             android:fontFamily="@font/quicksand_bold"
             android:hint="Course Code"
             android:textAlignment="center"
-            android:textSize="18sp"
             android:textColor="@color/black"
-            />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/etAdminSubjectNameAdd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/et_bg"
             android:layout_marginTop="15dp"
+            android:background="@drawable/et_bg"
             android:fontFamily="@font/quicksand_bold"
             android:hint="Name"
             android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/etAdminSubjectFacultyAdd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/et_bg"
             android:layout_marginTop="15dp"
+            android:background="@drawable/et_bg"
             android:fontFamily="@font/quicksand_bold"
             android:hint="Faculty"
             android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btAdminSubjectAddUser"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
-            android:text="Add"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp"
             android:background="@drawable/btn_bg2"
-            />
+            android:fontFamily="@font/quicksand_bold"
+            android:text="Add"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -130,8 +127,8 @@
         android:id="@+id/llAdminSubjectDelete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:visibility="gone">
@@ -140,26 +137,30 @@
             android:id="@+id/etAdminSubjectCodeDelete"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/et_bg"
             android:layout_marginTop="15dp"
+            android:background="@drawable/et_bg"
             android:fontFamily="@font/quicksand_bold"
             android:hint="Course Code"
             android:textAlignment="center"
-            android:textSize="18sp"
             android:textColor="@color/black"
-            />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btAdminSubjectDeleteUser"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
-            android:text="Delete"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp"
             android:background="@drawable/btn_bg2"
-            />
+            android:fontFamily="@font/quicksand_bold"
+            android:text="Delete"
+            android:textSize="18sp" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAdminSubjectCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </RelativeLayout>
