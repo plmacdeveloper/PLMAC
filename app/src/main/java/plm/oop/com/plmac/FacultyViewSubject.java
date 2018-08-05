@@ -12,10 +12,18 @@ import java.util.List;
 
 public class FacultyViewSubject extends AppCompatActivity  {
     ListView listView;
+    String[] subject= {"Octopus","Pig","Sheep","Rabbit","Snake","Spider" };
 
-    String[] subject = getResources().getStringArray(R.array.course);
-    String[] schedule = getResources().getStringArray(R.array.sched);
-    String[] rooms = getResources().getStringArray(R.array.room);
+    String[] schedule = {
+            "8 tentacled monster",
+            "Delicious in rolls",
+            "Great for jumpers",
+            "Nice in a stew",
+            "Great for shoes",
+            "Scary."
+    };
+    String[] rooms= {"Octopus","Pig","Sheep","Rabbit","Snake","Spider" };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

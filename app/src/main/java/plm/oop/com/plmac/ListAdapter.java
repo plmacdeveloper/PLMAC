@@ -14,20 +14,20 @@ import android.widget.TextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter<String>{
+public class ListAdapter extends ArrayAdapter{
 
     private final Activity context;
 
-    private final String[] course1;
-    private final String[] sched1;
-    private final String[] room1;
-public ListAdapter(Activity context,String[] vstv1arrayParam,String[] vstv2arrayParam, String[] vstv3arrayParam)
+    private final String[] courseArray;
+    private final String[] schedArray;
+    private final String[] roomArray;
+public ListAdapter(Activity context,String[] courseParam,String[] schedParam, String[] roomParam)
 {
-    super(context,R.layout.customlist,vstv1arrayParam);
+    super(context,R.layout.customlist,courseParam);
     this.context = context;
-    this.course1 = vstv1arrayParam;
-    this.sched1 = vstv2arrayParam;
-    this.room1 = vstv3arrayParam;
+    this.courseArray = courseParam;
+    this.schedArray = schedParam;
+    this.roomArray = roomParam;
 }
 
     @NonNull
@@ -40,9 +40,9 @@ public ListAdapter(Activity context,String[] vstv1arrayParam,String[] vstv2array
         TextView schedule =(TextView)rowView.findViewById(R.id.vstv2);
         TextView rooms =(TextView)rowView.findViewById(R.id.vstv3);
 
-        subjName.setText(course1[position]);
-        schedule.setText(sched1[position]);
-        rooms.setText(room1[position]);
+        subjName.setText(courseArray[position]);
+        schedule.setText(schedArray[position]);
+        rooms.setText(roomArray[position]);
     return rowView;
     }
 }
