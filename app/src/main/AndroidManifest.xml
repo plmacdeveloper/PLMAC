@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -76,11 +78,13 @@
         <activity
             android:name=".StudentViewAttendance"
             android:theme="@style/AppTheme" />
-        <activity android:name=".StudentViewAnnouncements"></activity>
+        <activity
+            android:name=".StudentViewAnnouncements"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".FacultyViewSubject"
-            android:theme="@style/AppTheme"/>
-
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ListDetails"></activity>
     </application>
 
 </manifest>
