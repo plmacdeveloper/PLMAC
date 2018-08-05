@@ -11,9 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FacultyViewSubject extends AppCompatActivity  {
-    private ListView listView;
-
-    ListAdapter adapter;
+    ListView listView;
 
     String[] subject = getResources().getStringArray(R.array.course);
     String[] schedule = getResources().getStringArray(R.array.sched);
@@ -25,9 +23,6 @@ public class FacultyViewSubject extends AppCompatActivity  {
         setContentView(R.layout.activity_faculty_view_subject);
 
         ListAdapter place = new ListAdapter(this,subject,schedule,rooms);
-
-
-
 
 
         listView = (ListView)findViewById(R.id.vslv1);
