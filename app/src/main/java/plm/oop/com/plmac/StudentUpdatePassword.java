@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,8 +58,6 @@ public class StudentUpdatePassword extends AppCompatActivity {
                             for (DataSnapshot student : dataSnapshot.getChildren()) {
 //                                Toast.makeText(getApplicationContext(), faculty.child("userProgram").getValue(String.class), Toast.LENGTH_SHORT).show();
                                 if (student.child("userPassword").getValue(String.class).equals(oldPass)){
-                                    onBackPressed();
-                                    finish();
                                     Toast.makeText(getApplicationContext(),oldPass,Toast.LENGTH_SHORT);
 //                                startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
                                     if (newPass.equals(verifyPass)) {
