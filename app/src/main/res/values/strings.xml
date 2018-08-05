@@ -10,17 +10,17 @@
         <item>Delete</item>
         <item>Update</item>
     </string-array>
-    <string-array name="course">
+    <string-array name="Course">
         <item>Object-Oriented Programming (Lec)</item>
         <item>Object-Oriented Programming (Lab)</item>
         <item>Lunch</item>
     </string-array>
-    <string-array name="sched">
+    <string-array name="Sched">
         <item>O32131bject-Oriented Programming (Lec)</item>
         <item>Object22-Oriented Programming (Lab)</item>
         <item>Lunch</item>
     </string-array>
-    <string-array name="room">
+    <string-array name="Room">
         <item>Object-O123riented Programming (Lec)</item>
         <item>Object-Oriented Programming (Lab)</item>
         <item>Lunch</item>
