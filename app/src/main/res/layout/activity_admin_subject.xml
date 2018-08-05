@@ -4,6 +4,162 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminSubject">
+    tools:context=".AdminSubject"
+    android:background="@mipmap/real_ivory">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar"
+        >
+    </include>
+
+    <Button
+        android:id="@+id/btSubjectChooseOperation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Operation"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/app_bar"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg2"
+        android:paddingHorizontal="70dp"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/llAdminSubjectChoose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btSubjectChooseOperation"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <Button
+            android:id="@+id/btAdminSubjectAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_bold"
+            android:textSize="20sp"
+            android:background="@drawable/btn_bg3"
+            android:layout_marginTop="15dp"
+            android:text="ADD"/>
+        <Button
+            android:id="@+id/btAdminSubjectDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_bold"
+            android:textSize="20sp"
+            android:background="@drawable/btn_bg3"
+            android:layout_marginTop="15dp"
+            android:text="DELETE"/>
+        <Button
+            android:id="@+id/btAdminSubjectUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_bold"
+            android:textSize="20sp"
+            android:background="@drawable/btn_bg3"
+            android:layout_marginTop="15dp"
+            android:text="UPDATE"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llAdminSubjectAdd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etAdminSubjectCodeAdd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/et_bg"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Course Code"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/etAdminSubjectNameAdd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/et_bg"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Name"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/etAdminSubjectFacultyAdd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/et_bg"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Faculty"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/btAdminSubjectAddUser"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:text="Add"
+            android:fontFamily="@font/quicksand_bold"
+            android:textSize="18sp"
+            android:background="@drawable/btn_bg2"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llAdminSubjectDelete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etAdminSubjectCodeDelete"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/et_bg"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Course Code"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:id="@+id/btAdminSubjectDeleteUser"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:text="Delete"
+            android:fontFamily="@font/quicksand_bold"
+            android:textSize="18sp"
+            android:background="@drawable/btn_bg2"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>

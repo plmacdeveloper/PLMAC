@@ -64,11 +64,22 @@
         <activity
             android:name=".AdminSubject"
             android:theme="@style/AppTheme" />
-        <activity android:name=".StudentViewProfile" />
-        <activity android:name=".StudentUpdatePassword" />
-        <activity android:name=".StudentViewSubjects" />
-        <activity android:name=".StudentViewAttendance" />
+        <activity
+            android:name=".StudentViewProfile"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".StudentUpdatePassword"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".StudentViewSubjects"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".StudentViewAttendance"
+            android:theme="@style/AppTheme" />
         <activity android:name=".StudentViewAnnouncements"></activity>
+        <activity
+            android:name=".FacultyViewSubject"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
