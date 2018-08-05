@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">PLMAC</string>
     <string name="result">Default</string>
     <string name="add">ADD</string>
     <string name="update">UPDATE</string>
@@ -25,5 +24,11 @@
         <item>Object-Oriented Programming (Lec)</item>
         <item>Object-Oriented Programming (Lab)</item>
         <item>Lunch</item>
+    </string-array>
+    <string name="app_name">test</string>
+    <string-array name="course">
+        <item>OOP(LAB),132</item>
+        <item>OOP(LEC),444</item>
+        <item>LUNCH,666</item>
     </string-array>
 </resources>
