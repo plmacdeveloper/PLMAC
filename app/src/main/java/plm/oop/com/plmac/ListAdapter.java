@@ -1,5 +1,6 @@
 package plm.oop.com.plmac;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,59 +15,36 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ListAdapter extends ArrayAdapter<String>{
-    customButtonListener customListener;
-    public interface customButtonListener{
-        public void onButtonListener(int position,String value);
-    }
-    public void setCustomButtonListener(customButtonListener listener){
-        this.customListener = listener;
-    }
-    private Context context;
-    private ArrayList<String> data = new ArrayList<String>();
-    public ListAdapter(Context context, ArrayList<String>subj)
-    {
-        super(context,R.layout.customlist,subj);
-        this.data = subj;
 
-        this.context = context;
-    }
+    private final Activity context;
 
+    private final String[] vstv1array;
+    private final String[] vstv2array;
+    private final String[] vstv3array;
+public ListAdapter(Activity context,String[] vstv1arrayParam,String[] vstv2arrayParam, String[] vstv3arrayParam)
+{
+    super(context,R.layout.customlist,vstv1arrayParam);
+    this.context = context;
+    this.vstv1array = vstv1arrayParam;
+    this.vstv2array = vstv2arrayParam;
+    this.vstv3array = vstv3arrayParam;
+}
 
     @NonNull
     @Override
-    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
-        if(convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.customlist, null);
-            viewHolder = new ViewHolder();
-            viewHolder.text = (TextView) convertView.findViewById(R.id.vstv1);
-            viewHolder.button = (Button) convertView.findViewById(R.id.vsb1);
-            viewHolder.button2 = (Button) convertView.findViewById(R.id.vsb2);
-            convertView.setTag(viewHolder);
-        }else
-        {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-        final String temp = getItem(position);
-        viewHolder.text.setText(temp);
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView = inflater.inflate(R.layout.customlist,null,true);
 
-            @Override
-            public void onClick(View v) {
-                if (customListener != null)
-                {
-                    customListener.onButtonListener(position, temp);
-                }
-            }
-        });
-        return convertView;
-    }
-    public class ViewHolder {
-        TextView text;
-        Button button, button2;
-    }
+        TextView subjName =(TextView)rowView.findViewById(R.id.vstv1);
+        TextView sched =(TextView)rowView.findViewById(R.id.vstv2);
+        TextView room =(TextView)rowView.findViewById(R.id.vstv3);
 
+        subjName.setText(vstv1array[position]);
+        sched.setText(vstv2array[position]);
+        room.setText(vstv3array[position]);
+    return rowView;
+    }
 }
 
 

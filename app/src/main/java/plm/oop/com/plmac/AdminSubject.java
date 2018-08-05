@@ -89,7 +89,7 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminSubject.this, QRScanner.class));
+                startActivity(new Intent(AdminSubject.this, FacultyViewSubject.class));
 
             }
         });

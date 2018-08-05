@@ -5,37 +5,34 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import plm.oop.com.plmac.ListAdapter.customButtonListener;
+import plm.oop.com.plmac.ListAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FacultyViewSubject extends AppCompatActivity implements customButtonListener {
+public class FacultyViewSubject extends AppCompatActivity  {
     private ListView listView;
 
     ListAdapter adapter;
-    ArrayList<String> subj = new ArrayList<String>();
+
+    String[] subject = getResources().getStringArray(R.array.course);
+    String[] schedule = getResources().getStringArray(R.array.sched);
+    String[] rooms = getResources().getStringArray(R.array.room);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_subject);
-        String[] subject = getResources().getStringArray(R.array.course);
 
-        List<String> dataTemp = Arrays.asList(subject);
+        ListAdapter place = new ListAdapter(this,subject,schedule,rooms);
 
-        subj.addAll(dataTemp);
+
+
+
 
         listView = (ListView)findViewById(R.id.vslv1);
-        adapter = new ListAdapter(FacultyViewSubject.this,subj);
-        adapter.setCustomButtonListener(FacultyViewSubject.this);
-        listView.setAdapter(adapter);
-
+        listView.setAdapter(place);
     }
 
-    @Override
-    public void onButtonListener(int position, String value) {
-        Toast.makeText(FacultyViewSubject.this,"Clicked",Toast.LENGTH_SHORT).show();
-    }
 
 }
