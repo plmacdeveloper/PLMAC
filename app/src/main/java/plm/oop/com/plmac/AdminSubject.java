@@ -111,7 +111,7 @@ public class AdminSubject extends AppCompatActivity {
 
                 String name = adminSubjectNameAdd.getText().toString().trim();
                 String faculty = adminSubjectFacultyAdd.getText().toString().trim();
-                String code = adminSubjectCodeAdd.getText().toString().trim();
+                String code = adminSubjectCodeAdd.getText().toString().trim().toUpperCase();
                 if(name.isEmpty() || faculty.isEmpty() || code.isEmpty()){
                     progressDialog.dismiss();
                     Toast.makeText(AdminSubject.this,"Information Incomplete.",Toast.LENGTH_SHORT).show();
@@ -120,6 +120,10 @@ public class AdminSubject extends AppCompatActivity {
                     DatabaseReference myRef = firebaseDatabase.getReference("Subject");
                     myRef.child(code).child("Name").setValue(name);
                     myRef.child(code).child("Faculty").setValue(faculty);
+                    Toast.makeText(AdminSubject.this,"Add Information Successful.",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    onBackPressed();
+                    finish();
                 }
             }
         });
@@ -127,7 +131,7 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String code = adminSubjectCodeDelete.getText().toString().trim();
+                final String code = adminSubjectCodeDelete.getText().toString().trim().toUpperCase();
 
                 if(code.isEmpty()){
                     Toast.makeText(AdminSubject.this, "Input name.", Toast.LENGTH_SHORT).show();

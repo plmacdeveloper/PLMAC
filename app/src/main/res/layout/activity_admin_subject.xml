@@ -74,7 +74,7 @@
         android:layout_below="@+id/btSubjectChooseOperation"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/etAdminSubjectCodeAdd"
@@ -83,11 +83,11 @@
             android:background="@drawable/et_bg"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/quicksand_bold"
-            android:hint="Course Cod"
+            android:hint="Course Code"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:inputType="number"/>
+            />
 
         <EditText
             android:id="@+id/etAdminSubjectNameAdd"
