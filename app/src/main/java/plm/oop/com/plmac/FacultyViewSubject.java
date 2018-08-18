@@ -26,7 +26,6 @@ import java.util.List;
 public class FacultyViewSubject extends AppCompatActivity {
 
     ListView listView;
-    String userName = "Mamshie Lubao";
 
 
 
@@ -34,7 +33,11 @@ public class FacultyViewSubject extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+
             setContentView(R.layout.activity_faculty_view_subject);
+            Intent i= getIntent();
+            final String userName= i.getStringExtra("userName");
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mRef = database.getReference("Subject");
 

@@ -50,6 +50,7 @@ public class FacultyActivity extends AppCompatActivity {
                             if (faculty.child("userPassword").getValue(String.class).equals(facultyPassword.getText().toString())){
 //                                startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
                                 Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
+                                i.putExtra("userName",faculty.child("userName").getValue(String.class));
                                 i.putExtra("userNumber",faculty.child("userNumber").getValue(String.class));
                                 startActivity(i);
                             }

@@ -34,7 +34,7 @@ public class AdminSubject extends AppCompatActivity {
     //    Delete
     private EditText adminSubjectCodeDelete;
     private Button adminSubjectDeleteUser;
-    private RecyclerView adminSubjectCodeView;
+   // private RecyclerView adminSubjectCodeView;
 
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;
@@ -60,7 +60,7 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectAddUser = findViewById(R.id.btAdminSubjectAddUser);
 
         adminSubjectCodeDelete = findViewById(R.id.etAdminSubjectCodeDelete);
-        adminSubjectCodeView = findViewById(R.id.rvAdminSubjectCode);
+        //adminSubjectCodeView = findViewById(R.id.rvAdminSubjectCode);
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
 
 

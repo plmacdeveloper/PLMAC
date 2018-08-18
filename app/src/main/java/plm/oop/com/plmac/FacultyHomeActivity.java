@@ -19,16 +19,19 @@ public class FacultyHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_faculty_home);
         Intent i= getIntent();
         final String userNumber= i.getStringExtra("userNumber");
+        final String userName= i.getStringExtra("userName");
         welcomeMessage = findViewById(R.id.welcomeMessage);
-        String welcome="WELCOME "+userNumber+"!";
+        String welcome="Welcome "+userName+"!";
         welcomeMessage.setText(welcome);
 
         fh_ss=findViewById(R.id.btFacultyHomeSelectSubject);
         fh_ss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                Intent i = new Intent(FacultyHomeActivity.this,FacultyViewSubject.class);
+                i.putExtra("userName", userName);
+                i.putExtra("userName",userName);
+                startActivity(i);
             }
         });
 
@@ -37,11 +40,11 @@ public class FacultyHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FacultyHomeActivity.this, FacultyViewProfile.class);
-                i.putExtra("userNumber",userNumber);
+                i.putExtra("userNumber", userNumber);
                 startActivity(i);
-
-
             }
+
+
         });
 
     }
