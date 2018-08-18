@@ -28,12 +28,7 @@ public class FacultyViewSubject extends AppCompatActivity {
     ListView listView;
     String userName = "Mamshie Lubao";
 
-    String[] schedule = {
-            "8 tentacled monster",
-            "Delicious in rolls",
-            "Great for jumpers"
-    };
-    String[] rooms = {"Octopus", "Pig", "Sheep"};
+
 
 
         @Override
@@ -60,8 +55,8 @@ public class FacultyViewSubject extends AppCompatActivity {
 
 
                     String[] subjectArr = subject.toArray(new String[0]);
-                    String[] roomArr = subject.toArray(new String[0]);
-                    String[] scheduleArr = subject.toArray(new String[0]);
+                    String[] roomArr = room.toArray(new String[0]);
+                    String[] scheduleArr = schedule.toArray(new String[0]);
 
                     ListAdapter place = new ListAdapter(FacultyViewSubject.this, subjectArr, roomArr, scheduleArr);
 
