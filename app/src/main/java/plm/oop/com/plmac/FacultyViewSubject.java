@@ -24,11 +24,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FacultyViewSubject extends AppCompatActivity {
-//    DatabaseReference database= FirebaseDatabase.getInstance().getReference("Subject");
 
     ListView listView;
     String userName = "Mamshie Lubao";
-    //    List<String> subject = new FacultyViewSubjectsListAdapter();
 
     String[] schedule = {
             "8 tentacled monster",
@@ -45,25 +43,6 @@ public class FacultyViewSubject extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference mRef = database.getReference("Subject");
 
-//        mRef.addValueEventListener(new ValueEventListener() {
-//           @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-//                    String sub=snapshot.child("name").getValue(String.class);
-//
-//                   subject.add(sub);
-//
-////                    Toast.makeText(getApplicationContext(), facultyFound, Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
             Query zonesQuery = mRef.orderByChild("Faculty").equalTo(userName);
             zonesQuery.addValueEventListener(new ValueEventListener() {
@@ -71,14 +50,20 @@ public class FacultyViewSubject extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<String> subject = new ArrayList<>();
+                    ArrayList<String> room = new ArrayList<>();
+                    ArrayList<String> schedule = new ArrayList<>();
                     for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
                         subject.add(zoneSnapshot.child("Name").getValue(String.class));
+                        room.add(zoneSnapshot.child("Room").getValue(String.class));
+                        schedule.add(zoneSnapshot.child("Schedule").getValue(String.class));
                     }
 
 
-                    String[] courseArr = subject.toArray(new String[0]);
+                    String[] subjectArr = subject.toArray(new String[0]);
+                    String[] roomArr = subject.toArray(new String[0]);
+                    String[] scheduleArr = subject.toArray(new String[0]);
 
-                    ListAdapter place = new ListAdapter(FacultyViewSubject.this, courseArr, schedule, rooms);
+                    ListAdapter place = new ListAdapter(FacultyViewSubject.this, subjectArr, roomArr, scheduleArr);
 
                     listView = findViewById(R.id.vslv1);
                     listView.setAdapter(place);
