@@ -34,6 +34,7 @@ public class AdminSubject extends AppCompatActivity {
     //    Delete
     private EditText adminSubjectCodeDelete;
     private Button adminSubjectDeleteUser;
+   // she is already takeeeen woooooooooo
    // private RecyclerView adminSubjectCodeView;
 
     private ProgressDialog progressDialog;
