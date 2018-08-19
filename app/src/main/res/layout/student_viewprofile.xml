@@ -8,67 +8,61 @@
     tools:context=".StudentViewProfile">
 
     <include
-        layout="@layout/app_bar"
         android:id="@+id/app_bar"
-        ></include>
+        layout="@layout/app_bar"></include>
 
     <RelativeLayout
         android:id="@+id/rlStudentViewProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        >
+        android:layout_centerInParent="true">
 
         <TextView
             android:id="@+id/tvStudentViewProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NAME"
-            android:fontFamily="@font/quicksand_bold"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:layout_centerHorizontal="true"
-            />
+            android:fontFamily="@font/quicksand_bold"
+            android:text="NAME"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvStudentViewProfileProgram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvStudentViewProfileName"
-            android:text="PROGRAM"
-            android:fontFamily="@font/quicksand_bold"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            />
+            android:fontFamily="@font/quicksand_bold"
+            android:text="PROGRAM"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvStudentViewProfileStudentNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvStudentViewProfileProgram"
-            android:text="STUDENT NUMBER"
-            android:fontFamily="@font/quicksand_bold"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            />
+            android:fontFamily="@font/quicksand_bold"
+            android:text="STUDENT NUMBER"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btStudentViewProfileUpdatePassword"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:background="@drawable/btn_bg2"
             android:layout_below="@+id/tvStudentViewProfileStudentNumber"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="UPDATE PASSWORD"
-            android:textSize="20sp"
+            android:background="@drawable/btn_bg2"
             android:fontFamily="@font/quicksand_bold"
-            />
+            android:text="UPDATE PASSWORD"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

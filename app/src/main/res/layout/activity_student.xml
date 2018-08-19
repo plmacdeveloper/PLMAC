@@ -9,29 +9,31 @@
     android:background="@mipmap/real_ivory"
     tools:context=".IntroScreenActivity">
 
-   <include
-       layout = "@layout/app_bar"
-       android:id="@+id/app_bar"
-       />
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@mipmap/student_icon"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/app_bar"
-        android:layout_marginTop="40dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/student_icon" />
 
-    <LinearLayout
+    <ScrollView
 
         android:id="@+id/linlay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        >
+        android:layout_marginRight="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etStudentUsername"
@@ -40,8 +42,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/et_bg"
                 android:fontFamily="sans-serif"
-                android:hint="Username"
-
+                android:hint="ID Number"
                 android:inputType="textAutoComplete"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -52,19 +53,19 @@
                 android:id="@+id/etStudentPassword"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:hint="Password"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/et_bg"
-
                 android:fontFamily="sans-serif"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
     <Button
         android:id="@+id/btStudentLogin"
         android:layout_width="wrap_content"
@@ -79,22 +80,21 @@
         android:text="Login "
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btStudentForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Forgot Password?"
+        android:textColor="@color/darkgray"
+
+
         />
-
-        <Button
-            android:id="@+id/btStudentForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:background="@color/transparent"
-            android:fontFamily="@font/quicksand_bold"
-            android:text="Forgot Password?"
-            android:textColor="@color/darkgray"
-
-
-             />
 
 </RelativeLayout>

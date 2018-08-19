@@ -4,262 +4,282 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminFaculty"
-    android:background="@mipmap/real_ivory">
+    android:animateLayoutChanges="true"
+    android:background="@mipmap/real_ivory"
+    tools:context=".AdminFaculty">
 
     <include
-        layout="@layout/app_bar"
         android:id="@+id/app_bar"
-        >
-    </include>
+        layout="@layout/app_bar"></include>
 
     <Button
         android:id="@+id/btFacultyChooseOperation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Operation"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/app_bar"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_bg2"
-        android:paddingHorizontal="70dp"
         android:fontFamily="@font/quicksand_bold"
-        android:textSize="20sp"/>
+        android:paddingHorizontal="70dp"
+        android:text="Choose Operation"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:id="@+id/llAdminFacultyChoose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/btFacultyChooseOperation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="15dp"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btAdminFacultyAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="ADD"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="ADD"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btAdminFacultyDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="DELETE"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="DELETE"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btAdminFacultyUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            android:background="@drawable/btn_bg3"
             android:layout_marginTop="15dp"
-            android:text="UPDATE"/>
+            android:background="@drawable/btn_bg3"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="UPDATE"
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/llAdminFacultyAdd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/btFacultyChooseOperation"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:visibility="gone">
 
-        <EditText
-            android:id="@+id/etAdminFacultyNameAdd"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Name"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etAdminFacultyProgramAdd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Program"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/etAdminFacultyNameAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Name"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/etAdminFacultyNumberAdd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="ID Number"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:inputType="number"/>
+            <EditText
+                android:id="@+id/etAdminFacultyProgramAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Program"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/etAdminFacultyPasswordAdd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Password"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/etAdminFacultyNumberAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="ID Number"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/btAdminFacultyAddUser"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:text="Add"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp"
-            android:background="@drawable/btn_bg2"
-            />
+            <EditText
+                android:id="@+id/etAdminFacultyPasswordAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Password"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btAdminFacultyAddUser"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_bg2"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Add"
+                android:textSize="18sp" />
 
-    <LinearLayout
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
         android:id="@+id/llAdminFacultyDelete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/btFacultyChooseOperation"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:visibility="gone">
 
-        <EditText
-            android:id="@+id/etAdminFacultyNumberDelete"
+        <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="ID Number"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:inputType="number"/>
+            android:layout_height="match_parent"
 
-        <Button
-            android:id="@+id/btAdminFacultyDeleteUser"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:text="Delete"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp"
-            android:background="@drawable/btn_bg2"
-            />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etAdminFacultyNumberDelete"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="ID Number"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <LinearLayout
+            <Button
+                android:id="@+id/btAdminFacultyDeleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_bg2"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Delete"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
         android:id="@+id/llAdminFacultyUpdate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/btFacultyChooseOperation"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
-        <EditText
-            android:id="@+id/etAdminFacultyNumberUpdate"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="ID Number (required)"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:inputType="number"/>
-        <Button
-            android:id="@+id/btAdminFacultyUpdateSetNumber"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_bg2"
-            android:text="Set"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp" />
-<LinearLayout
-    android:id="@+id/llAdminFacultyUpdateSet"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:visibility="gone">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etAdminFacultyNameUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Name"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/etAdminFacultyNumberUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="ID Number (required)"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/etAdminFacultyProgramUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Program"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/btAdminFacultyUpdateSetNumber"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_bg2"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Set"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/etAdminFacultyPasswordUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/et_bg"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Password"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            <ScrollView
+                android:id="@+id/llAdminFacultyUpdateSet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-        <Button
-            android:id="@+id/btAdminFacultyUpdateUser"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:text="Update"
-            android:fontFamily="@font/quicksand_bold"
-            android:textSize="18sp"
-            android:background="@drawable/btn_bg2"
-            />
-</LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/etAdminFacultyNameUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/et_bg"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:hint="Name"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/etAdminFacultyProgramUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/et_bg"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:hint="Program"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/etAdminFacultyPasswordUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/et_bg"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:hint="Password"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/btAdminFacultyUpdateUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_bg2"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:text="Update"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

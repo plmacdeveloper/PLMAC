@@ -65,16 +65,18 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/llAdminSubjectAdd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btSubjectChooseOperation"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:visibility="visible">
-
+        android:visibility="gone">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <EditText
             android:id="@+id/etAdminSubjectCodeAdd"
             android:layout_width="match_parent"
@@ -120,19 +122,21 @@
             android:fontFamily="@font/quicksand_bold"
             android:text="Add"
             android:textSize="18sp" />
-
     </LinearLayout>
+    </ScrollView>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/llAdminSubjectDelete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btSubjectChooseOperation"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:visibility="gone">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <EditText
             android:id="@+id/etAdminSubjectCodeDelete"
             android:layout_width="match_parent"
@@ -161,6 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:scrollbars="vertical" />
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

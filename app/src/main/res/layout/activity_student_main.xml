@@ -4,63 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentMainActivity"
     android:background="@mipmap/real_ivory"
     android:orientation="vertical"
-    >
+    tools:context=".StudentMainActivity">
 
     <include
-        layout="@layout/app_bar"
         android:id="@+id/app_bar"
-        />
+        layout="@layout/app_bar" />
 
     <ImageView
+        android:id="@+id/img_result_qr"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@color/midnight_blue"
-        android:id="@+id/img_result_qr"
-        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="50dp"
+        android:background="@color/midnight_blue" />
 
 
     <Button
         android:id="@+id/btStudentMainViewProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_bg"
-        android:layout_marginTop="40dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_bg"
+        android:fontFamily="@font/quicksand_bold"
         android:text="View Profile"
         android:textColor="@color/white"
-        android:fontFamily="@font/quicksand_bold"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btStudentMainViewAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_bg"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg"
+        android:fontFamily="@font/quicksand_bold"
         android:text="View Attendance"
         android:textColor="@color/white"
-        android:fontFamily="@font/quicksand_bold"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btStudentMainViewAnnouncements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_bg"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg"
+        android:fontFamily="@font/quicksand_bold"
         android:text="View Announcements"
         android:textColor="@color/white"
-        android:fontFamily="@font/quicksand_bold"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
 </LinearLayout>

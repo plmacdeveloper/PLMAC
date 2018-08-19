@@ -3,40 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background = "@mipmap/real_ivory"
+    android:background="@mipmap/real_ivory"
     tools:context=".FacultyHomeActivity">
+
     <include
-        layout="@layout/app_bar"
         android:id="@+id/app_bar"
-        >
-    </include>
+        layout="@layout/app_bar"></include>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        >
+        android:layout_centerInParent="true">
+
         <TextView
             android:id="@+id/welcomeMessage"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:textSize="20sp"
 
 
             />
+
         <Button
             android:id="@+id/btFacultyHomeSelectSubject"
             android:layout_width="300dp"
             android:layout_height="40dp"
-           android:layout_below="@+id/welcomeMessage"
-            android:background="@drawable/btn_bg"
-            android:layout_marginTop="10sp"
+            android:layout_below="@+id/welcomeMessage"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:text="Select Subject"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/btn_bg"
             android:fontFamily="@font/quicksand_bold"
+            android:text="Select Subject"
+            android:textColor="@color/white"
             android:textSize="20sp"
 
             />
@@ -46,16 +46,14 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_below="@id/btFacultyHomeSelectSubject"
-            android:background="@drawable/btn_bg"
             android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:text="View Profile"
+            android:background="@drawable/btn_bg"
             android:fontFamily="@font/quicksand_bold"
-            android:textSize="20sp"
-            />
+            android:text="View Profile"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

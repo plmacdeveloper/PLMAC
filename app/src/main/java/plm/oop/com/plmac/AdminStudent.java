@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,8 +22,8 @@ import java.util.HashMap;
 public class AdminStudent extends AppCompatActivity {
 
     private Button StudentChooseOperation, adminStudentAdd, adminStudentDelete, adminStudentUpdate;
-    private LinearLayout adminStudentChoose, layoutAdminStudentAdd, layoutAdminStudentDelete, layoutAdminStudentUpdate;
-
+    private LinearLayout adminStudentChoose;
+    private ScrollView layoutAdminStudentAdd, layoutAdminStudentDelete, layoutAdminStudentUpdate;
     //    Add
     private EditText adminStudentNameAdd, adminStudentProgramAdd, adminStudentNumberAdd, adminStudentPasswordAdd;
     private Button adminStudentAddUser;
@@ -34,7 +35,7 @@ public class AdminStudent extends AppCompatActivity {
     //    Update
     private EditText adminStudentNameUpdate, adminStudentProgramUpdate, adminStudentNumberUpdate, adminStudentPasswordUpdate;
     private Button adminStudentUpdateUser, adminStudentUpdateSetNumber;
-    private LinearLayout adminStudentUpdateSet;
+    private ScrollView adminStudentUpdateSet;
 
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;

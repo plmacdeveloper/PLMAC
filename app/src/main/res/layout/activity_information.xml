@@ -8,77 +8,77 @@
     android:background="@mipmap/real_ivory"
     tools:context=".IntroScreenActivity">
 
-        <Button
-            android:id="@+id/btAdminLoginHidden"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/btn_bg3"
-            android:text="ABOUT"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:fontFamily="@font/quicksand_bold" />
+    <Button
+        android:id="@+id/btAdminLoginHidden"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_bg3"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="ABOUT"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
-            <RelativeLayout
-                android:id="@+id/rellay1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/btAdminLoginHidden"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"
-                >
-            <EditText
-                android:id="@+id/etAdminPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:hint="Admin Password"
-                android:fontFamily="@font/quicksand_bold"
-                android:textColorHint="@color/darkgray"
-                android:background="@drawable/et_bg"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:paddingHorizontal="70dp"
-                android:paddingVertical="10dp"
-                />
-                <Button
-                    android:id="@+id/btAdminLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/etAdminPassword"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_bg2"
-                    android:text="Login"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:paddingHorizontal="70dp"
-                    android:textSize="20dp"/>
-            </RelativeLayout>
-    <ScrollView
-        android:id="@+id/svAbout"
-        android:visibility="visible"
+    <RelativeLayout
+        android:id="@+id/rellay1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btAdminLoginHidden"
-        android:layout_marginTop="20dp">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btAdminLogin"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="40dp"
-                >
-                <TextView
-                    android:id="@+id/tvAbout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textAlignment="center"
-                    android:text="PLMAC
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etAdminPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_bg"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Admin Password"
+            android:paddingHorizontal="70dp"
+            android:paddingVertical="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/darkgray"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btAdminLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etAdminPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_bg2"
+            android:fontFamily="@font/quicksand_bold"
+            android:paddingHorizontal="70dp"
+            android:text="Login"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/svAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btAdminLoginHidden"
+        android:layout_marginTop="20dp"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btAdminLogin"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/tvAbout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="PLMAC
 is a software application that
 you can download and install
 on your Android smartphones and tablets.
@@ -89,92 +89,95 @@ Pamantasan ng Lungsod ng Maynila.
 This aims to help the university
 in helping with the
 recording of attendance."
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/tvAbout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="20sp"
-                    android:layout_marginTop="300dp"
-                    android:layout_below="@+id/tvAbout1"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textAlignment="center"
-                    android:text="This application was develop on Android Studio.
-This is still a prototype and can be implemented and upgraded with the PLM CRS."
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/tvAbout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout"
-                    android:layout_marginTop="300dp"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-                    android:text="DEVELOPERS"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/tvAbout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout2"
-                    android:layout_marginTop="100dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Marc Reinhard C. Ballon"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/tvAbout4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout3"
-                    android:layout_marginTop="100dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Mark Stephen T. Fabon"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/tvAbout5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout4"
-                    android:layout_marginTop="100dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Noel T. Perido"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/tvAbout6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout5"
-                    android:layout_marginTop="100dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Peter Amiel N. Portes"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/tvAbout7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAbout6"
-                    android:layout_marginTop="100dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="MEOOOOOOOOOW"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="@color/black"
-                    />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvAbout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tvAbout1"
+                android:layout_marginTop="300dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="This application was develop on Android Studio.
+This is still a prototype and can be implemented and upgraded with the PLM CRS."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAbout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout"
+                android:layout_marginTop="300dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="DEVELOPERS"
+
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tvAbout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout2"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Marc Reinhard C. Ballon"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAbout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout3"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Mark Stephen T. Fabon"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAbout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout4"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Noel T. Perido"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAbout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout5"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Peter Amiel N. Portes"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAbout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAbout6"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="MEOOOOOOOOOW"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +26,8 @@ import java.util.List;
 public class AdminSubject extends AppCompatActivity {
 
     private Button SubjectChooseOperation, adminSubjectAdd, adminSubjectDelete, adminSubjectUpdate;
-    private LinearLayout adminSubjectChoose, layoutAdminSubjectAdd, layoutAdminSubjectDelete;
-
+    private LinearLayout adminSubjectChoose;
+    private ScrollView layoutAdminSubjectAdd, layoutAdminSubjectDelete;
     //    Add
     private EditText adminSubjectNameAdd, adminSubjectFacultyAdd, adminSubjectCodeAdd;
     private Button adminSubjectAddUser;
@@ -64,7 +65,22 @@ public class AdminSubject extends AppCompatActivity {
         //adminSubjectCodeView = findViewById(R.id.rvAdminSubjectCode);
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
 
-
+        SubjectChooseOperation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(adminSubjectChoose.getVisibility() == View.GONE) {
+                    adminSubjectChoose.setVisibility(View.VISIBLE);
+                    layoutAdminSubjectAdd.setVisibility(View.GONE);
+                    layoutAdminSubjectDelete.setVisibility(View.GONE);
+                    SubjectChooseOperation.setText(R.string.choose);
+                }else{
+                    adminSubjectChoose.setVisibility(View.GONE);
+                    layoutAdminSubjectAdd.setVisibility(View.GONE);
+                    layoutAdminSubjectDelete.setVisibility(View.GONE);
+                    SubjectChooseOperation.setText(R.string.choose);
+                }
+            }
+        });
 
         adminSubjectAdd.setOnClickListener(new View.OnClickListener() {
             @Override
