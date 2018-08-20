@@ -14,6 +14,7 @@
         layout="@layout/app_bar" />
 
     <ImageView
+        android:id="@+id/ivStudentPic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@+id/app_bar"
@@ -26,7 +27,8 @@
         android:id="@+id/linlay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/ivStudentPic"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp">
 
@@ -82,19 +84,6 @@
         android:textColor="@color/black"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btStudentForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="@color/transparent"
-        android:fontFamily="@font/quicksand_bold"
-        android:text="Forgot Password?"
-        android:textColor="@color/darkgray"
 
-
-        />
 
 </RelativeLayout>

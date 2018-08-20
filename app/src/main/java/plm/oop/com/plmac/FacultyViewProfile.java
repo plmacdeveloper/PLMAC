@@ -28,7 +28,7 @@ public class FacultyViewProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_profile);
         Intent i= getIntent();
-        String userNumber= i.getStringExtra("userNumber");
+        final String userNumber= i.getStringExtra("userNumber");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mRef = database.getReference("Faculty");
         Query query =mRef.orderByChild("userNumber").equalTo(userNumber);
@@ -58,8 +58,9 @@ public class FacultyViewProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(FacultyViewProfile.this,FacultyUpdatePassword.class));
-
+                Intent i = new Intent(FacultyViewProfile.this,FacultyUpdatePassword.class);
+                i.putExtra("userNumber",userNumber);
+                startActivity(i);
             }
         });
 

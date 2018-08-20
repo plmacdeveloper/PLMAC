@@ -44,7 +44,12 @@ public class InformationActivity extends AppCompatActivity {
             if(pass.isEmpty()){
                 Toast.makeText(InformationActivity.this,"Input password.",Toast.LENGTH_SHORT).show();
             }else{
-                startActivity(new Intent(InformationActivity.this,AdminActivity.class));
+                if(pass.matches("wow") ) {
+                    startActivity(new Intent(InformationActivity.this, AdminActivity.class));
+                }
+                else{
+                    Toast.makeText(InformationActivity.this,"Wrong password.",Toast.LENGTH_SHORT).show();
+                }
             }
         }
     });

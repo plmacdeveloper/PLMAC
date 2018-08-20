@@ -84,6 +84,7 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
 
         final ArrayList<String> SearchFacultyNameList = new ArrayList<>();
+        final ArrayList<String> SearchFacultyIDList = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference arrayRef = firebaseDatabase.getReference("Faculty");
@@ -92,7 +93,7 @@ public class AdminSubject extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
                     SearchFacultyNameList.add(ds.child("userName").getValue(String.class));
-
+                    SearchFacultyIDList.add(ds.getKey().toString());
                 }
             }
 
@@ -184,12 +185,15 @@ public class AdminSubject extends AppCompatActivity {
                 String room = adminSubjectRoomAdd.getText().toString().trim().toUpperCase();
                 String startTime = String.valueOf(spinStartHour.getSelectedItem()) + ":" + String.valueOf(spinStartMin.getSelectedItem()) + " " + String.valueOf(spinStartAA.getSelectedItem());
                 String endTime = String.valueOf(spinEndHour.getSelectedItem()) + ":" + String.valueOf(spinEndMin.getSelectedItem()) + " " + String.valueOf(spinEndAA.getSelectedItem());
-                if (name.isEmpty() || faculty.isEmpty() || code.isEmpty() || room.isEmpty()) {
+                String facultyID = SearchFacultyIDList.get(SearchFacultyNameList.indexOf(faculty));
+                if (name.isEmpty() || faculty.isEmpty() || code.isEmpty() || room.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
                     progressDialog.dismiss();
                     Toast.makeText(AdminSubject.this, "Information Incomplete.", Toast.LENGTH_SHORT).show();
                 } else {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = firebaseDatabase.getReference("Subject");
+                    DatabaseReference facRef = firebaseDatabase.getReference("Faculty");
+                    facRef.child(facultyID).child("userSubjects").child(code).setValue(name);
                     myRef.child(code).child("Name").setValue(name);
                     myRef.child(code).child("Faculty").setValue(faculty);
                     myRef.child(code).child("Room").setValue(room);

@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FacultyActivity extends AppCompatActivity {
 
-    private Button facultyForgotPassword,facultyLogin;
+    private Button facultyLogin;
     private EditText facultyUsername, facultyPassword;
 
     @Override
@@ -26,7 +26,6 @@ public class FacultyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty);
 
-        facultyForgotPassword = findViewById(R.id.btFacultyForgotPassword);
         facultyLogin = findViewById(R.id.btFacultyLogin);
         facultyUsername = findViewById(R.id.etFacultyUsername);
         facultyPassword = findViewById(R.id.etFacultyPassword);
@@ -76,11 +75,6 @@ public class FacultyActivity extends AppCompatActivity {
 
             }
         });
-        facultyForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(FacultyActivity.this,ForgotPasswordActivity.class));
-            }
-        });
+
     }
 }

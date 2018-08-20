@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StudentActivity extends AppCompatActivity {
 
-    private Button  studentLogin, studentForgotPassword;
+    private Button  studentLogin;
     private EditText studentUsername, studentPassword;
 
 
@@ -29,7 +29,7 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student);
 
         studentLogin = findViewById(R.id.btStudentLogin);
-        studentForgotPassword = findViewById(R.id.btStudentForgotPassword);
+
         studentUsername = findViewById(R.id.etStudentUsername);
         studentPassword = findViewById(R.id.etStudentPassword);
 
@@ -74,12 +74,7 @@ public class StudentActivity extends AppCompatActivity {
             }
         });
 
-        studentForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(StudentActivity.this, ForgotPasswordActivity.class));
-            }
-        });
+
 
     }
 }

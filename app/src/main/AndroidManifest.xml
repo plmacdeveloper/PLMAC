@@ -35,9 +35,6 @@
             android:name=".StudentMainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ForgotPasswordActivity"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".QRScanner"
             android:theme="@style/AppTheme" />
 
