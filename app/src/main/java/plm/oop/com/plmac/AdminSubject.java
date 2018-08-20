@@ -34,22 +34,21 @@ import java.util.List;
 public class AdminSubject extends AppCompatActivity {
 
     private Button SubjectChooseOperation, adminSubjectAdd, adminSubjectDelete, adminSubjectUpdate;
-    private LinearLayout adminSubjectChoose;
+    private LinearLayout adminSubjectChoose,adminAddStudent;
     private ScrollView layoutAdminSubjectAdd, layoutAdminSubjectDelete;
     //    Add
-    private EditText adminSubjectNameAdd, adminSubjectFacultyAdd, adminSubjectCodeAdd, adminSubjectRoomAdd;
-    private Button adminSubjectAddUser;
+    private EditText adminSubjectNameAdd, adminSubjectFacultyAdd, adminSubjectCodeAdd, adminSubjectRoomAdd, adminSubjectStudentAdd;
+    private Button adminSubjectAddUser, adminSubjectAddStudents;
     private Spinner spinStartHour, spinStartMin, spinStartAA, spinEndHour, spinEndMin, spinEndAA;
-    private ListView searchFaculty;
+    private ListView searchFaculty, addedStudents, searchStudent;
 
     //    Delete
     private EditText adminSubjectCodeDelete;
     private Button adminSubjectDeleteUser;
-    // private RecyclerView adminSubjectCodeView;
 
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;
-    private ArrayAdapter adapter;
+    private ArrayAdapter facultyAdapter, studentAdapter, addedStudentAdapter;
     public boolean schedMon = false, schedTues = false, schedWed = false, schedThurs = false, schedFri = false, schedSat = false, schedSun = false;
 
     @Override
@@ -67,6 +66,8 @@ public class AdminSubject extends AppCompatActivity {
         layoutAdminSubjectAdd = findViewById(R.id.llAdminSubjectAdd);
         layoutAdminSubjectDelete = findViewById(R.id.llAdminSubjectDelete);
 
+        adminAddStudent = findViewById(R.id.llAdminSubjectAddStudent);
+        adminSubjectStudentAdd = findViewById(R.id.etAdminSubjectStudentAdd);
         adminSubjectNameAdd = findViewById(R.id.etAdminSubjectNameAdd);
         adminSubjectFacultyAdd = findViewById(R.id.etAdminSubjectFacultyAdd);
         adminSubjectCodeAdd = findViewById(R.id.etAdminSubjectCodeAdd);
@@ -78,13 +79,20 @@ public class AdminSubject extends AppCompatActivity {
         spinStartHour = findViewById(R.id.SpinStartHour);
         spinStartMin = findViewById(R.id.SpinStartMin);
         searchFaculty = findViewById(R.id.lvSearchFaculty);
+        addedStudents = findViewById(R.id.lvAddedStudents);
+        searchStudent = findViewById(R.id.lvSearchStudent);
         adminSubjectAddUser = findViewById(R.id.btAdminSubjectAddUser);
+        adminSubjectAddStudents = findViewById(R.id.btAdminSubjectAddStudents);
 
         adminSubjectCodeDelete = findViewById(R.id.etAdminSubjectCodeDelete);
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
 
         final ArrayList<String> SearchFacultyNameList = new ArrayList<>();
         final ArrayList<String> SearchFacultyIDList = new ArrayList<>();
+        final ArrayList<String> SearchStudentNameList = new ArrayList<>();
+        final ArrayList<String> SearchStudentIDList = new ArrayList<>();
+        final ArrayList<String> AddedStudentNameList = new ArrayList<>();
+        final ArrayList<String> AddedStudentIDList = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference arrayRef = firebaseDatabase.getReference("Faculty");
@@ -102,9 +110,28 @@ public class AdminSubject extends AppCompatActivity {
 
             }
         });
+        DatabaseReference array2Ref = firebaseDatabase.getReference("Student");
+        array2Ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    SearchStudentNameList.add(ds.child("userName").getValue(String.class));
+                    SearchStudentIDList.add(ds.getKey().toString());
+                }
+            }
 
-        adapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,SearchFacultyNameList);
-        searchFaculty.setAdapter(adapter);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        addedStudentAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,AddedStudentNameList);
+        addedStudents.setAdapter(addedStudentAdapter);
+        studentAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,SearchStudentNameList);
+        searchStudent.setAdapter(studentAdapter);
+        facultyAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,SearchFacultyNameList);
+        searchFaculty.setAdapter(facultyAdapter);
 
         SubjectChooseOperation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,16 +140,24 @@ public class AdminSubject extends AppCompatActivity {
                     adminSubjectChoose.setVisibility(View.VISIBLE);
                     layoutAdminSubjectAdd.setVisibility(View.GONE);
                     layoutAdminSubjectDelete.setVisibility(View.GONE);
+                    adminAddStudent.setVisibility(View.GONE);
                     SubjectChooseOperation.setText(R.string.choose);
                 } else {
                     adminSubjectChoose.setVisibility(View.GONE);
                     layoutAdminSubjectAdd.setVisibility(View.GONE);
                     layoutAdminSubjectDelete.setVisibility(View.GONE);
+                    adminAddStudent.setVisibility(View.GONE);
                     SubjectChooseOperation.setText(R.string.choose);
                 }
             }
         });
 
+        adminSubjectAddStudents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adminAddStudent.setVisibility(View.VISIBLE);
+            }
+        });
         adminSubjectAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +171,7 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminSubject.this, FacultyViewSubject.class));
+                startActivity(new Intent(AdminSubject.this, QRScanner.class));
 
             }
         });
@@ -149,6 +184,7 @@ public class AdminSubject extends AppCompatActivity {
                 SubjectChooseOperation.setText(R.string.delete);
             }
         });
+
         adminSubjectFacultyAdd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -158,7 +194,7 @@ public class AdminSubject extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchFaculty.setVisibility(View.VISIBLE);
-                (AdminSubject.this).adapter.getFilter().filter(charSequence);
+                (AdminSubject.this).facultyAdapter.getFilter().filter(charSequence);
             }
 
             @Override
@@ -173,11 +209,55 @@ public class AdminSubject extends AppCompatActivity {
                 searchFaculty.setVisibility(View.GONE);
             }
         });
+
+        adminSubjectStudentAdd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                (AdminSubject.this).studentAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        searchStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String student = adapterView.getItemAtPosition(position).toString();
+                String id = SearchStudentIDList.get(position);
+                AddedStudentNameList.add(student);
+                AddedStudentIDList.add(id);
+                SearchStudentNameList.remove(position);
+                SearchStudentIDList.remove(position);
+                adminAddStudent.setVisibility(View.GONE);
+                Toast.makeText(AdminSubject.this,student + " is added.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        addedStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String student = adapterView.getItemAtPosition(position).toString();
+                String id = AddedStudentIDList.get(position);
+                SearchStudentNameList.add(student);
+                SearchStudentIDList.add(id);
+                AddedStudentNameList.remove(position);
+                AddedStudentIDList.remove(position);
+                adminAddStudent.setVisibility(View.GONE);
+                Toast.makeText(AdminSubject.this,student + " is removed.", Toast.LENGTH_SHORT).show();
+            }
+        });
         adminSubjectAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
+
 
                 String name = adminSubjectNameAdd.getText().toString().trim();
                 String faculty = adminSubjectFacultyAdd.getText().toString().trim();
@@ -199,6 +279,15 @@ public class AdminSubject extends AppCompatActivity {
                     myRef.child(code).child("Room").setValue(room);
                     myRef.child(code).child("Time").child("Start").setValue(startTime);
                     myRef.child(code).child("Time").child("End").setValue(endTime);
+                    for(String student: AddedStudentNameList){
+                        String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
+                        myRef.child(code).child("Students").child(studentID).setValue(student);
+                    }
+                    DatabaseReference studRef = firebaseDatabase.getReference("Student");
+                    for(String student: AddedStudentNameList){
+                        String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
+                        studRef.child(studentID).child("Subjects").child(code).setValue(name);
+                    }
                     if (schedMon) {
                         myRef.child(code).child("Schedule").child("Monday").setValue("Monday");
                     }

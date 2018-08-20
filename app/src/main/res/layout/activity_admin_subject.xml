@@ -65,6 +65,7 @@
             android:textSize="20sp" />
     </LinearLayout>
 
+    //Add
     <ScrollView
         android:id="@+id/llAdminSubjectAdd"
         android:layout_width="match_parent"
@@ -134,15 +135,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Schedule"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -290,7 +283,33 @@
                     android:layout_height="match_parent"
                     android:entries="@array/aatime" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Students"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:background="@color/transparent"/>
 
+                <Button
+                    android:id="@+id/btAdminSubjectAddStudents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_bg"
+                    android:text="+"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <ListView
+                android:id="@+id/lvAddedStudents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/btAdminSubjectAddUser"
                 android:layout_width="match_parent"
@@ -302,7 +321,35 @@
                 android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
-
+    <LinearLayout
+        android:id="@+id/llAdminSubjectAddStudent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btSubjectChooseOperation"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        android:elevation="5dp"
+        android:visibility="gone"
+        android:background="@mipmap/real_ivory"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/etAdminSubjectStudentAdd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/et_bg"
+            android:fontFamily="@font/quicksand_bold"
+            android:hint="Student Search"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <ListView
+            android:id="@+id/lvSearchStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+    //Delete
     <ScrollView
         android:id="@+id/llAdminSubjectDelete"
         android:layout_width="match_parent"
