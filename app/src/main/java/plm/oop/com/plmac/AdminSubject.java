@@ -34,7 +34,7 @@ import java.util.List;
 public class AdminSubject extends AppCompatActivity {
 
     private Button SubjectChooseOperation, adminSubjectAdd, adminSubjectDelete, adminSubjectUpdate;
-    private LinearLayout adminSubjectChoose,adminAddStudent;
+    private LinearLayout adminSubjectChoose, adminAddStudent;
     private ScrollView layoutAdminSubjectAdd, layoutAdminSubjectDelete;
     //    Add
     private EditText adminSubjectNameAdd, adminSubjectFacultyAdd, adminSubjectCodeAdd, adminSubjectRoomAdd, adminSubjectStudentAdd;
@@ -45,10 +45,11 @@ public class AdminSubject extends AppCompatActivity {
     //    Delete
     private EditText adminSubjectCodeDelete;
     private Button adminSubjectDeleteUser;
+    private ListView deleteSubject;
 
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;
-    private ArrayAdapter facultyAdapter, studentAdapter, addedStudentAdapter;
+    private ArrayAdapter facultyAdapter, studentAdapter, addedStudentAdapter, subjectAdapter;
     public boolean schedMon = false, schedTues = false, schedWed = false, schedThurs = false, schedFri = false, schedSat = false, schedSun = false;
 
     @Override
@@ -86,7 +87,9 @@ public class AdminSubject extends AppCompatActivity {
 
         adminSubjectCodeDelete = findViewById(R.id.etAdminSubjectCodeDelete);
         adminSubjectDeleteUser = findViewById(R.id.btAdminSubjectDeleteUser);
+        deleteSubject = findViewById(R.id.lvDeleteSubject);
 
+        final ArrayList<String> subject = new ArrayList<>();
         final ArrayList<String> SearchFacultyNameList = new ArrayList<>();
         final ArrayList<String> SearchFacultyIDList = new ArrayList<>();
         final ArrayList<String> SearchStudentNameList = new ArrayList<>();
@@ -94,12 +97,13 @@ public class AdminSubject extends AppCompatActivity {
         final ArrayList<String> AddedStudentNameList = new ArrayList<>();
         final ArrayList<String> AddedStudentIDList = new ArrayList<>();
 
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference arrayRef = firebaseDatabase.getReference("Faculty");
         arrayRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     SearchFacultyNameList.add(ds.child("userName").getValue(String.class));
                     SearchFacultyIDList.add(ds.getKey().toString());
                 }
@@ -114,7 +118,7 @@ public class AdminSubject extends AppCompatActivity {
         array2Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     SearchStudentNameList.add(ds.child("userName").getValue(String.class));
                     SearchStudentIDList.add(ds.getKey().toString());
                 }
@@ -126,11 +130,11 @@ public class AdminSubject extends AppCompatActivity {
             }
         });
 
-        addedStudentAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,AddedStudentNameList);
+        addedStudentAdapter = new ArrayAdapter(AdminSubject.this, android.R.layout.simple_list_item_1, AddedStudentNameList);
         addedStudents.setAdapter(addedStudentAdapter);
-        studentAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,SearchStudentNameList);
+        studentAdapter = new ArrayAdapter(AdminSubject.this, android.R.layout.simple_list_item_1, SearchStudentNameList);
         searchStudent.setAdapter(studentAdapter);
-        facultyAdapter = new ArrayAdapter(AdminSubject.this,android.R.layout.simple_list_item_1,SearchFacultyNameList);
+        facultyAdapter = new ArrayAdapter(AdminSubject.this, android.R.layout.simple_list_item_1, SearchFacultyNameList);
         searchFaculty.setAdapter(facultyAdapter);
 
         SubjectChooseOperation.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +240,7 @@ public class AdminSubject extends AppCompatActivity {
                 SearchStudentNameList.remove(position);
                 SearchStudentIDList.remove(position);
                 adminAddStudent.setVisibility(View.GONE);
-                Toast.makeText(AdminSubject.this,student + " is added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminSubject.this, student + " is added.", Toast.LENGTH_SHORT).show();
             }
         });
         addedStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -249,7 +253,7 @@ public class AdminSubject extends AppCompatActivity {
                 AddedStudentNameList.remove(position);
                 AddedStudentIDList.remove(position);
                 adminAddStudent.setVisibility(View.GONE);
-                Toast.makeText(AdminSubject.this,student + " is removed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminSubject.this, student + " is removed.", Toast.LENGTH_SHORT).show();
             }
         });
         adminSubjectAddUser.setOnClickListener(new View.OnClickListener() {
@@ -258,10 +262,9 @@ public class AdminSubject extends AppCompatActivity {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
 
-
                 String name = adminSubjectNameAdd.getText().toString().trim();
                 String faculty = adminSubjectFacultyAdd.getText().toString().trim();
-                String code = adminSubjectCodeAdd.getText().toString().trim().toUpperCase();
+                final String code = adminSubjectCodeAdd.getText().toString().trim().toUpperCase();
                 String room = adminSubjectRoomAdd.getText().toString().trim().toUpperCase();
                 String startTime = String.valueOf(spinStartHour.getSelectedItem()) + ":" + String.valueOf(spinStartMin.getSelectedItem()) + " " + String.valueOf(spinStartAA.getSelectedItem());
                 String endTime = String.valueOf(spinEndHour.getSelectedItem()) + ":" + String.valueOf(spinEndMin.getSelectedItem()) + " " + String.valueOf(spinEndAA.getSelectedItem());
@@ -273,58 +276,110 @@ public class AdminSubject extends AppCompatActivity {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = firebaseDatabase.getReference("Subject");
                     DatabaseReference facRef = firebaseDatabase.getReference("Faculty");
-                    facRef.child(facultyID).child("userSubjects").child(code).setValue(name);
-                    myRef.child(code).child("Name").setValue(name);
-                    myRef.child(code).child("Faculty").setValue(faculty);
-                    myRef.child(code).child("Room").setValue(room);
-                    myRef.child(code).child("Time").child("Start").setValue(startTime);
-                    myRef.child(code).child("Time").child("End").setValue(endTime);
-                    for(String student: AddedStudentNameList){
-                        String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
-                        myRef.child(code).child("Students").child(studentID).setValue(student);
+                    boolean check = false;
+                    for (String s : subject) {
+                        if (s.matches(code)) {
+                            check = true;
+                        }
                     }
-                    DatabaseReference studRef = firebaseDatabase.getReference("Student");
-                    for(String student: AddedStudentNameList){
-                        String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
-                        studRef.child(studentID).child("Subjects").child(code).setValue(name);
-                    }
-                    if (schedMon) {
-                        myRef.child(code).child("Schedule").child("Monday").setValue("Monday");
-                    }
-                    if (schedTues) {
-                        myRef.child(code).child("Schedule").child("Tuesday").setValue("Tuesday");
-                    }
-                    if (schedWed) {
-                        myRef.child(code).child("Schedule").child("Wednesday").setValue("Wednesday");
-                    }
-                    if (schedThurs) {
-                        myRef.child(code).child("Schedule").child("Thursday").setValue("Thursday");
-                    }
-                    if (schedFri) {
-                        myRef.child(code).child("Schedule").child("Friday").setValue("Friday");
-                    }
-                    if (schedSat) {
-                        myRef.child(code).child("Schedule").child("Saturday").setValue("Saturday");
-                    }
-                    if (schedSun) {
-                        myRef.child(code).child("Schedule").child("Sunday").setValue("Sunday");
-                    }
+                    if (check) {
+                        Toast.makeText(AdminSubject.this, "A subject with a code of " + code + " is already in the database.", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else {
 
-                    Toast.makeText(AdminSubject.this, "Add Information Successful.", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    onBackPressed();
-                    finish();
+                        facRef.child(facultyID).child("userSubjects").child(code).setValue(name);
+                        myRef.child(code).child("Name").setValue(name);
+                        myRef.child(code).child("Faculty").setValue(faculty);
+                        myRef.child(code).child("Room").setValue(room);
+                        myRef.child(code).child("Time").child("Start").setValue(startTime);
+                        myRef.child(code).child("Time").child("End").setValue(endTime);
+                        for (String student : AddedStudentNameList) {
+                            String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
+                            myRef.child(code).child("Students").child(studentID).setValue(student);
+                        }
+                        DatabaseReference studRef = firebaseDatabase.getReference("Student");
+                        for (String student : AddedStudentNameList) {
+                            String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
+                            studRef.child(studentID).child("Subjects").child(code).setValue(name);
+                        }
+                        if (schedMon) {
+                            myRef.child(code).child("Schedule").child("Monday").setValue("Monday");
+                        }
+                        if (schedTues) {
+                            myRef.child(code).child("Schedule").child("Tuesday").setValue("Tuesday");
+                        }
+                        if (schedWed) {
+                            myRef.child(code).child("Schedule").child("Wednesday").setValue("Wednesday");
+                        }
+                        if (schedThurs) {
+                            myRef.child(code).child("Schedule").child("Thursday").setValue("Thursday");
+                        }
+                        if (schedFri) {
+                            myRef.child(code).child("Schedule").child("Friday").setValue("Friday");
+                        }
+                        if (schedSat) {
+                            myRef.child(code).child("Schedule").child("Saturday").setValue("Saturday");
+                        }
+                        if (schedSun) {
+                            myRef.child(code).child("Schedule").child("Sunday").setValue("Sunday");
+                        }
+
+                        Toast.makeText(AdminSubject.this, "Add Information Successful.", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        onBackPressed();
+                        finish();
+                    }
                 }
             }
         });
 
+        DatabaseReference subjref = firebaseDatabase.getReference("Subject");
+        subjref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    subject.add(ds.getKey().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        subjectAdapter = new ArrayAdapter(AdminSubject.this, android.R.layout.simple_list_item_1, subject);
+        deleteSubject.setAdapter(subjectAdapter);
+
+        adminSubjectCodeDelete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                deleteSubject.setVisibility(View.VISIBLE);
+                (AdminSubject.this).subjectAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        deleteSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adminSubjectCodeDelete.setText(adapterView.getItemAtPosition(i).toString());
+                deleteSubject.setVisibility(View.GONE);
+            }
+        });
         adminSubjectDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String code = adminSubjectCodeDelete.getText().toString().trim().toUpperCase();
-
                 if (code.isEmpty()) {
-                    Toast.makeText(AdminSubject.this, "Input name.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminSubject.this, "Input subject code.", Toast.LENGTH_SHORT).show();
                 } else {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     final DatabaseReference databaseReference = firebaseDatabase.getReference("Subject");
