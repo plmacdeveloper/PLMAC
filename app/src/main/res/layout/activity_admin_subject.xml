@@ -72,57 +72,235 @@
         android:layout_below="@+id/btSubjectChooseOperation"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:visibility="gone">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/etAdminSubjectCodeAdd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/et_bg"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Course Code"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+        android:visibility="visible">
 
-        <EditText
-            android:id="@+id/etAdminSubjectNameAdd"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/et_bg"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Name"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etAdminSubjectFacultyAdd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/et_bg"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Faculty"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <EditText
+                android:id="@+id/etAdminSubjectCodeAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Course Code"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/btAdminSubjectAddUser"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_bg2"
-            android:fontFamily="@font/quicksand_bold"
-            android:text="Add"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etAdminSubjectNameAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Name"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etAdminSubjectFacultyAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Faculty"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <ListView
+                android:id="@+id/lvSearchFaculty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+            </ListView>
+            <EditText
+                android:id="@+id/etAdminSubjectRoomAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Room"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Schedule"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:textAlignment="center">
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleMonday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="M" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleTuesday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="T" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleWednesday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="W" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleThursday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="Th" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleFriday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="F" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleSaturday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="Sa" />
+
+                <CheckBox
+                    android:id="@+id/cbAdminSubjectScheduleSunday"
+                    style="@android:style/Widget.DeviceDefault.Light.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCheckBoxClicked"
+                    android:text="Su" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Start: "
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/SpinStartHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/hours" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text=" : "
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/SpinStartMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/minutes" />
+
+                <Spinner
+                    android:id="@+id/SpinStartAA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/aatime" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="End: "
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/SpinEndHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/hours" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text=" : "
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/SpinEndMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/minutes" />
+
+                <Spinner
+                    android:id="@+id/SpinEndAA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/aatime" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btAdminSubjectAddUser"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_bg2"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Add"
+                android:textSize="18sp" />
+        </LinearLayout>
     </ScrollView>
 
     <ScrollView
@@ -133,38 +311,40 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
         android:visibility="gone">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/etAdminSubjectCodeDelete"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/et_bg"
-            android:fontFamily="@font/quicksand_bold"
-            android:hint="Course Code"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/btAdminSubjectDeleteUser"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_bg2"
-            android:fontFamily="@font/quicksand_bold"
-            android:text="Delete"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvAdminSubjectCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:scrollbars="vertical" />
+            <EditText
+                android:id="@+id/etAdminSubjectCodeDelete"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/quicksand_bold"
+                android:hint="Course Code"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btAdminSubjectDeleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_bg2"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Delete"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvAdminSubjectCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:scrollbars="vertical" />
         </LinearLayout>
     </ScrollView>
 

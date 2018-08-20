@@ -84,7 +84,6 @@
         <activity
             android:name=".FacultyViewSubject"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ListDetails"></activity>
     </application>
 
 </manifest>
