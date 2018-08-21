@@ -39,6 +39,8 @@
             android:hint="Admin Password"
             android:paddingHorizontal="70dp"
             android:paddingVertical="10dp"
+            android:maxLines="1"
+            android:inputType="textPassword"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/darkgray"
