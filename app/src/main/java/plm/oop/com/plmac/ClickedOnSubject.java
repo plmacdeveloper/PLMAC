@@ -26,9 +26,6 @@ public class ClickedOnSubject extends AppCompatActivity {
 
         Intent i = getIntent();
         final String userSubject = i.getStringExtra("userSubject");
-//        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("userSubjects").child("CPE420");
-//        String name = ref1.getKey();
-//        Toast.makeText(ClickedOnSubject.this,name,Toast.LENGTH_SHORT).show();
         final  String refAddress = "Subject/" +userSubject+"/Dates";
         Toast.makeText(ClickedOnSubject.this,refAddress,Toast.LENGTH_SHORT).show();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(refAddress);
