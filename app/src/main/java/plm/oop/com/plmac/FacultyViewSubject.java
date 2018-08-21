@@ -68,7 +68,6 @@ public class FacultyViewSubject extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent (FacultyViewSubject.this,ClickedOnList.class );
-                        intent.putExtra("Prof", userName);
                         startActivity(intent);
                     }
                 });
