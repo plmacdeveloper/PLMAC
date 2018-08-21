@@ -64,14 +64,7 @@ public class FacultyViewSubject extends AppCompatActivity {
 
                 listView = findViewById(R.id.vslv1);
                 listView.setAdapter(place);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent (FacultyViewSubject.this,ClickedOnList.class );
-                        intent.putExtra("Prof", userName);
-                        startActivity(intent);
-                    }
-                });
+
             }
 
             @Override
@@ -81,7 +74,14 @@ public class FacultyViewSubject extends AppCompatActivity {
 
         });
 
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent (FacultyViewSubject.this,ClickedOnList.class );
+                intent.putExtra("Clicked", listView.getItemAtPosition(i).toString());
+                startActivity(intent);
+            }
+        });
     }
 
 
