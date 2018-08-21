@@ -60,6 +60,7 @@
             android:layout_below="@id/tvFacultyViewProfileIDNumber"
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_bg"
+            android:layout_centerHorizontal="true"
             android:text="Update Password"
             android:textColor="@color/white"
             android:textSize="20sp" />
