@@ -12,21 +12,21 @@ import android.widget.TextView;
 public class    ListAdapter2 extends ArrayAdapter{
 
 
-    private final Activity context;
+    private final Activity context1;
 
     private final String[] dateArray;
     public ListAdapter2(Activity context, String[] dateParam)
     {
         super(context,R.layout.customlist2,dateParam);
-        this.context = context;
+        this.context1 = context;
         this.dateArray = dateParam;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View viewList = inflater.inflate(R.layout.customlist,null,true);
+        LayoutInflater inflater = context1.getLayoutInflater();
+        View viewList = inflater.inflate(R.layout.customlist2,null,true);
 
         TextView Date =(TextView)viewList.findViewById(R.id.dtv1);
 

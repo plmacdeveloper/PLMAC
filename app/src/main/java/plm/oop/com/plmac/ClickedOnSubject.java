@@ -3,9 +3,9 @@ package plm.oop.com.plmac;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ClickedOnList extends AppCompatActivity {
+public class ClickedOnSubject extends AppCompatActivity {
     ListView listView2;
 
     @Override
@@ -25,31 +25,22 @@ public class ClickedOnList extends AppCompatActivity {
         setContentView(R.layout.activity_clicked_on_list);
 
         Intent i = getIntent();
-        final String userName = i.getStringExtra("userName");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference("Subject");
-
-
-        Query zonesQuery = mRef.orderByChild("Faculty").equalTo(userName);
-        zonesQuery.addValueEventListener(new ValueEventListener() {
-
+        final String userSubject = i.getStringExtra("userSubject");
+        final  String refAddress = "Subject/" +userSubject+"/Dates";
+        Toast.makeText(ClickedOnSubject.this,refAddress,Toast.LENGTH_SHORT).show();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(refAddress);
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> date  = new ArrayList<>();
-
-                for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                    date.add(zoneSnapshot.child("Name").getValue(String.class));
+                ArrayList<String> date = new ArrayList<>();
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    date.add(String.valueOf(dsp.getKey())); //add result into array list
                 }
-
                 String[] dateArr = date.toArray(new String[0]);
-
-                ListAdapter2 dates = new ListAdapter2(ClickedOnList.this, dateArr);
-
-                listView2 = findViewById(R.id.vslv1);
+                ListAdapter2 dates = new ListAdapter2(ClickedOnSubject.this, dateArr);
+                listView2 = findViewById(R.id.dls1);
                 listView2.setAdapter(dates);
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
