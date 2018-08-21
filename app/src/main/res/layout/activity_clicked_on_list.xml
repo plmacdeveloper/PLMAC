@@ -9,11 +9,13 @@
 
     <include
         android:id="@+id/app_bar"
-        layout = "@layout/app_bar"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dapat tinanong mo e. -.-"
-        android:textColor="@color/black"/>
+        layout="@layout/app_bar" />
 
+    <ListView
+            android:id="@+id/dls1"
+            android:layout_below="@+id/app_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp"
+            />
 </RelativeLayout>
