@@ -3,8 +3,6 @@ package plm.oop.com.plmac;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,13 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ClickedOnList extends AppCompatActivity {
-    ListView listView2;
+public class ViewStudents extends AppCompatActivity {
+    ListView listView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clicked_on_list);
+        setContentView(R.layout.activity_view_students);
 
         Intent i = getIntent();
         final String userName = i.getStringExtra("userName");
@@ -35,18 +33,18 @@ public class ClickedOnList extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> date  = new ArrayList<>();
+                ArrayList<String> student  = new ArrayList<>();
 
                 for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                    date.add(zoneSnapshot.child("Name").getValue(String.class));
+                    student.add(zoneSnapshot.child("Name").getValue(String.class));
                 }
 
-                String[] dateArr = date.toArray(new String[0]);
+                String[] studentArr = student.toArray(new String[0]);
 
-                ListAdapter2 dates = new ListAdapter2(ClickedOnList.this, dateArr);
+                ListAdapter3 Stud = new ListAdapter3(ViewStudents.this, studentArr);
 
-                listView2 = findViewById(R.id.vslv1);
-                listView2.setAdapter(dates);
+                listView3 = findViewById(R.id.dls1);
+                listView3.setAdapter(Stud);
 
             }
 
@@ -57,6 +55,7 @@ public class ClickedOnList extends AppCompatActivity {
 
         });
 
-    }
 
+
+    }
 }
