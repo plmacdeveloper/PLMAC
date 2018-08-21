@@ -42,13 +42,13 @@ public class FacultyViewSubject extends AppCompatActivity {
                 ArrayList<String> room = new ArrayList<>();
                 ArrayList<String> schedule = new ArrayList<>();
                 for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                    subject.add(zoneSnapshot.child("Name").getValue(String.class));
+                    subject.add(zoneSnapshot.getKey().toString());
                     room.add(zoneSnapshot.child("Room").getValue(String.class));
                     schedule.add(zoneSnapshot.child("Schedule").getValue(String.class));
                 }
 
 
-                String[] subjectArr = subject.toArray(new String[0]);
+                final String[] subjectArr = subject.toArray(new String[0]);
                 String[] roomArr = room.toArray(new String[0]);
                 String[] scheduleArr = schedule.toArray(new String[0]);
 
@@ -59,7 +59,7 @@ public class FacultyViewSubject extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent (FacultyViewSubject.this,ClickedOnSubject.class );
-                        intent.putExtra("userName",userName);
+                        intent.putExtra("userSubject",subjectArr[i]);
                         startActivity(intent);
                     }
                 });
