@@ -3,9 +3,8 @@ package plm.oop.com.plmac;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ClickedOnList extends AppCompatActivity {
+public class ClickedOnSubject extends AppCompatActivity {
     ListView listView2;
 
     @Override
@@ -39,16 +38,13 @@ public class ClickedOnList extends AppCompatActivity {
 
                 for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
                     date.add(zoneSnapshot.child("Name").getValue(String.class));
-
                 }
-
 
                 String[] dateArr = date.toArray(new String[0]);
 
 
-                ListAdapter2 dates = new ListAdapter2(ClickedOnList.this, dateArr);
-
-                listView2 = findViewById(R.id.vslv1);
+                ListAdapter2 dates = new ListAdapter2(ClickedOnSubject.this, dateArr);
+                listView2 = findViewById(R.id.dls1);
                 listView2.setAdapter(dates);
 
             }
