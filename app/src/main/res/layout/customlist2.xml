@@ -10,7 +10,6 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/dtv1"
-            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"

@@ -66,4 +66,14 @@ public class FacultyViewProfile extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+        Intent ii= getIntent();
+        final String userNumber1= ii.getStringExtra("userNumber");
+        final String userName1= ii.getStringExtra("userName");
+        Intent i = new Intent(FacultyViewProfile.this,FacultyHomeActivity.class);
+        i.putExtra("userName",userName1);
+        i.putExtra("userNumber",userNumber1);
+        startActivity(i);
+    }
 }

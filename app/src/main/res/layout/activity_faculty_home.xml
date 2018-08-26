@@ -53,6 +53,19 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/btFacultyHomeCheckAttendance"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/btFacultyHomeViewProfile"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_bg"
+            android:visibility="gone"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="Check Attendance"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
 

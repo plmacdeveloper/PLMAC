@@ -268,14 +268,12 @@ public class AdminSubject extends AppCompatActivity {
                 String room = adminSubjectRoomAdd.getText().toString().trim().toUpperCase();
                 String startTime = String.valueOf(spinStartHour.getSelectedItem()) + ":" + String.valueOf(spinStartMin.getSelectedItem()) + " " + String.valueOf(spinStartAA.getSelectedItem());
                 String endTime = String.valueOf(spinEndHour.getSelectedItem()) + ":" + String.valueOf(spinEndMin.getSelectedItem()) + " " + String.valueOf(spinEndAA.getSelectedItem());
-                String facultyID = SearchFacultyIDList.get(SearchFacultyNameList.indexOf(faculty));
                 if (name.isEmpty() || faculty.isEmpty() || code.isEmpty() || room.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
                     progressDialog.dismiss();
                     Toast.makeText(AdminSubject.this, "Information Incomplete.", Toast.LENGTH_SHORT).show();
                 } else {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = firebaseDatabase.getReference("Subject");
-                    DatabaseReference facRef = firebaseDatabase.getReference("Faculty");
                     boolean check = false;
                     for (String s : subject) {
                         if (s.matches(code)) {
@@ -287,7 +285,6 @@ public class AdminSubject extends AppCompatActivity {
                         progressDialog.dismiss();
                     } else {
 
-                        facRef.child(facultyID).child("userSubjects").child(code).setValue(name);
                         myRef.child(code).child("Name").setValue(name);
                         myRef.child(code).child("Faculty").setValue(faculty);
                         myRef.child(code).child("Room").setValue(room);
@@ -297,31 +294,27 @@ public class AdminSubject extends AppCompatActivity {
                             String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
                             myRef.child(code).child("Students").child(studentID).setValue(student);
                         }
-                        DatabaseReference studRef = firebaseDatabase.getReference("Student");
-                        for (String student : AddedStudentNameList) {
-                            String studentID = AddedStudentIDList.get(AddedStudentNameList.indexOf(student));
-                            studRef.child(studentID).child("Subjects").child(code).setValue(name);
-                        }
+
                         if (schedMon) {
-                            myRef.child(code).child("Schedule").child("Monday").setValue("Monday");
+                            myRef.child(code).child("Schedule").child("Monday").setValue("1");
                         }
                         if (schedTues) {
-                            myRef.child(code).child("Schedule").child("Tuesday").setValue("Tuesday");
+                            myRef.child(code).child("Schedule").child("Tuesday").setValue("2");
                         }
                         if (schedWed) {
-                            myRef.child(code).child("Schedule").child("Wednesday").setValue("Wednesday");
+                            myRef.child(code).child("Schedule").child("Wednesday").setValue("3");
                         }
                         if (schedThurs) {
-                            myRef.child(code).child("Schedule").child("Thursday").setValue("Thursday");
+                            myRef.child(code).child("Schedule").child("Thursday").setValue("4");
                         }
                         if (schedFri) {
-                            myRef.child(code).child("Schedule").child("Friday").setValue("Friday");
+                            myRef.child(code).child("Schedule").child("Friday").setValue("5");
                         }
                         if (schedSat) {
-                            myRef.child(code).child("Schedule").child("Saturday").setValue("Saturday");
+                            myRef.child(code).child("Schedule").child("Saturday").setValue("6");
                         }
                         if (schedSun) {
-                            myRef.child(code).child("Schedule").child("Sunday").setValue("Sunday");
+                            myRef.child(code).child("Schedule").child("Sunday").setValue("7");
                         }
 
                         Toast.makeText(AdminSubject.this, "Add Information Successful.", Toast.LENGTH_SHORT).show();

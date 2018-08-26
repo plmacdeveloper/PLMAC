@@ -3,6 +3,8 @@ package plm.oop.com.plmac;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -35,6 +37,7 @@ public class FacultyViewSubject extends AppCompatActivity {
 
         Query zonesQuery = mRef.orderByChild("Faculty").equalTo(userName);
         zonesQuery.addValueEventListener(new ValueEventListener() {
+
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,7 +79,25 @@ public class FacultyViewSubject extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.i("waow","aw");
+        return super.onKeyDown(keyCode, event);
+    }
 
+    @Override
+    public void onBackPressed() {
+//        Intent ii= getIntent();
+//        final String userNumber1= ii.getStringExtra("userNumber");
+//        final String userName1= ii.getStringExtra("userName");
+//        Log.i("Back",userName1+"   "+userNumber1);
+        Log.i("waow","waow");
+//        Intent i = new Intent(FacultyViewSubject.this,FacultyHomeActivity.class);
+//        i.putExtra("userName",userName1);
+//        i.putExtra("userNumber",userNumber1);
+//        startActivity(i);
+//        finish();
+    }
 }
 
 

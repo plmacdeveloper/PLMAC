@@ -81,9 +81,12 @@
         <activity
             android:name=".FacultyViewSubject"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ClickedOnSubject"
-            android:theme="@style/AppTheme"
-            ></activity>
+        <activity
+            android:name=".ClickedOnSubject"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FacultyCheckAttendance"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
