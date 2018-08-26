@@ -27,13 +27,14 @@ public class FacultyHomeActivity extends AppCompatActivity {
     private Button fh_vp;
     private Button fh_ss, fh_ca;
     private TextView welcomeMessage;
-
+    volatile String codeToSend;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_home);
         fh_ca = findViewById(R.id.btFacultyHomeCheckAttendance);
         Intent i = getIntent();
+
         final String userNumber = i.getStringExtra("userNumber");
         final String userName = i.getStringExtra("userName");
         final ArrayList<String> startTimeCheck = new ArrayList<>();
@@ -86,17 +87,16 @@ public class FacultyHomeActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Button checkAttendance = (Button) findViewById(R.id.btFacultyHomeCheckAttendance);
+                                Button checkAttendance = findViewById(R.id.btFacultyHomeCheckAttendance);
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat dayTime = new SimpleDateFormat("hh:mm aa");
                                 SimpleDateFormat dayDate = new SimpleDateFormat("MMMM-dd-yyyy");
                                 String currentTime = dayTime.format(c.getTime());
                                 String currentDate = dayDate.format(c.getTime());
-                                Log.i("DATE",currentDate);
                                 Date cTime = null;
                                 Date sTime = null;
                                 Date eTime = null;
-                                for(int i=0;i<startTimeCheck.size();i++) {
+                                for (int i = 0; i < startTimeCheck.size(); i++) {
                                     try {
                                         cTime = dayTime.parse(currentTime);
                                         eTime = dayTime.parse(endTimeCheck.get(i));
@@ -108,19 +108,23 @@ public class FacultyHomeActivity extends AppCompatActivity {
                                         checkAttendance.setVisibility(View.GONE);
                                     } else {
                                         checkAttendance.setVisibility(View.VISIBLE);
-                                    DatabaseReference addAttendance = firebaseDatabase.getReference("Subject");
-                                    addAttendance.child(subjectCodeCheck.get(i)).child("Attendance").child(currentDate).setValue("true");
+                                        DatabaseReference addAttendance = firebaseDatabase.getReference("Subject");
+                                        addAttendance.child(subjectCodeCheck.get(i)).child("Attendance").child(currentDate).child(" ").setValue(" ");
+                                        codeToSend = subjectCodeCheck.get(i);
+                                        interrupt();
+                                        break;
                                     }
                                 }
                             }
                         });
                     }
                 } catch (InterruptedException e) {
-                    Log.i("INT", "ERROR BLAH");
+                    Log.i("INT", "Exit.");
                 }
             }
         };
         checkDateTime.start();
+
         welcomeMessage = findViewById(R.id.welcomeMessage);
         String welcome = "Welcome " + userName + "!";
         welcomeMessage.setText(welcome);
@@ -154,7 +158,7 @@ public class FacultyHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FacultyHomeActivity.this, FacultyCheckAttendance.class);
-                i.putExtra("userNumber", userNumber);
+                i.putExtra("subjectCode", codeToSend);
                 startActivity(i);
             }
         });
