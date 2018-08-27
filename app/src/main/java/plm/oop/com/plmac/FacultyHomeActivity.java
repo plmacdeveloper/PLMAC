@@ -33,6 +33,7 @@ public class FacultyHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_home);
         fh_ca = findViewById(R.id.btFacultyHomeCheckAttendance);
+
         Intent i = getIntent();
 
         final String userNumber = i.getStringExtra("userNumber");

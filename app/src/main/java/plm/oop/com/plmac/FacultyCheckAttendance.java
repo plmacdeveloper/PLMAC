@@ -55,23 +55,43 @@ public class FacultyCheckAttendance extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dayDate = new SimpleDateFormat("MMMM-dd-yyyy");
         final String currentDate = dayDate.format(c.getTime());
-        if(!subjectCode.isEmpty()) {
-            if(studNum1.size() == 0){
+        if (!subjectCode.isEmpty()) {
+
             Log.i("check", subjectCode);
 
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             final DatabaseReference checkDate = firebaseDatabase.getReference("Subject").child(subjectCode).child("Attendance");
-            DatabaseReference addStudentstoAttendance = firebaseDatabase.getReference("Subject").child(subjectCode).child("Students");
-            addStudentstoAttendance.addValueEventListener(new ValueEventListener() {
+            final DatabaseReference addStudentstoAttendance = firebaseDatabase.getReference("Subject").child(subjectCode).child("Students");
+            checkDate.child(currentDate).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String bool1 = dataSnapshot.toString();
+                    Log.i("lol", bool1);
+                    boolean checkChild = dataSnapshot.hasChild("1ifExist");
+                    if (!checkChild) {
+                        Log.i("aa", "meoooooow");
+                        if (studNum1.size() == 0) {
+                            addStudentstoAttendance.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        String studNum = ds.getKey().toString();
+                                        studNum1.add(studNum);
+                                        String studName = ds.getValue().toString();
+                                        studName1.add(studName);
+                                        checkDate.child(currentDate).child(studName).setValue("absent");
+                                        Log.i("add", "I AM ADDING " + studName);
+                                    }
+                                }
 
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        String studNum = ds.getKey().toString();
-                        studNum1.add(studNum);
-                        String studName = ds.getValue().toString();
-                        studName1.add(studName);
-                        checkDate.child(currentDate).child(studName).setValue("absent");
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            checkDate.child(currentDate).child(" ").removeValue();
+                            checkDate.child(currentDate).child("1ifExist").setValue("true");
+                        }
                     }
                 }
 
@@ -80,10 +100,29 @@ public class FacultyCheckAttendance extends AppCompatActivity {
 
                 }
             });
-            checkDate.child(currentDate).child(" ").removeValue();
-        }
-        }else{
-            Toast.makeText(FacultyCheckAttendance.this,"No subject is active.",Toast.LENGTH_SHORT).show();
+            if (studNum1.size() == 0) {
+                addStudentstoAttendance.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String studNum = ds.getKey().toString();
+                            studNum1.add(studNum);
+                            String studName = ds.getValue().toString();
+                            studName1.add(studName);
+                            Log.i("add", "I AM ARRAYING " + studName);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                checkDate.child(currentDate).child(" ").removeValue();
+                checkDate.child(currentDate).child("1ifExist").setValue("true");
+            }
+        } else {
+            Toast.makeText(FacultyCheckAttendance.this, "No subject is active.", Toast.LENGTH_SHORT).show();
             onBackPressed();
             finish();
         }
@@ -151,13 +190,14 @@ public class FacultyCheckAttendance extends AppCompatActivity {
                             Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
                             String register = qrcodes.valueAt(0).displayValue;
+                            Log.i("wtf",register);
                             textResult.setText(register);
                             FirebaseDatabase fd = FirebaseDatabase.getInstance();
                             DatabaseReference checkPresent = fd.getReference("Subject").child(subjectCode).child("Attendance").child(currentDate);
-                            for(int a = 0;a<studName1.size();a++) {
-                                if (register.compareTo(studNum1.get(a)) == 0){
+                            for (int a = 0; a < studName1.size(); a++) {
+                                if (register.compareTo(studNum1.get(a)) == 0) {
                                     checkPresent.child(studName1.get(a)).setValue("present");
-                                    Toast.makeText(FacultyCheckAttendance.this,studName1.get(a)+" is present.",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FacultyCheckAttendance.this, studName1.get(a) + " is present.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
