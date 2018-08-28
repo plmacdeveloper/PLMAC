@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FacultyCheckAttendance">
+    tools:context=".FacultyCheckAttendance"
+    android:background="@mipmap/real_ivory">
 
     <include
         android:id="@+id/app_bar"
@@ -36,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_bold"
-                android:text="SCANNER"
+                android:text="P L M A C"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

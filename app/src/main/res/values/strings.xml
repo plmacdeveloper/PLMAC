@@ -1,5 +1,5 @@
 <resources>
-    <string name="result">Default</string>
+    <string name="result">Student Number</string>
     <string name="add">ADD</string>
     <string name="update">UPDATE</string>
     <string name="delete">DELETE</string>
