@@ -1,10 +1,13 @@
 package plm.oop.com.plmac;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +25,14 @@ public class StudentActivity extends AppCompatActivity {
     private Button  studentLogin;
     private EditText studentUsername, studentPassword;
 
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
+        progressDialog = new ProgressDialog(this);
         studentLogin = findViewById(R.id.btStudentLogin);
 
         studentUsername = findViewById(R.id.etStudentUsername);
@@ -38,6 +43,8 @@ public class StudentActivity extends AppCompatActivity {
         studentLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mRef = database.getReference("Student");
                 Query query =mRef.orderByChild("userNumber").equalTo(studentUsername.getText().toString());
@@ -51,16 +58,25 @@ public class StudentActivity extends AppCompatActivity {
 //                                Toast.makeText(getApplicationContext(), faculty.child("userProgram").getValue(String.class), Toast.LENGTH_SHORT).show();
                                 if (student.child("userPassword").getValue(String.class).equals(studentPassword.getText().toString())){
 //                                startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
+                                    Toast.makeText(StudentActivity.this,"Hello "+student.child("userName").getValue(String.class)+"! Login Successful!",Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                    SharedPreferences studentPref = getSharedPreferences("Student",0);
+                                    SharedPreferences.Editor editor = studentPref.edit();
+                                    editor.putString("userNumber",student.child("userNumber").getValue(String.class));
+                                    editor.putBoolean("isLoggedIn",true);
+                                    editor.apply();
                                     Intent i = new Intent(StudentActivity.this, StudentMainActivity.class);
                                     i.putExtra("userNumber",student.child("userNumber").getValue(String.class));
                                     startActivity(i);
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 }
                             }
                         }
                         else{
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                         }
 

@@ -1,7 +1,9 @@
 package plm.oop.com.plmac;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -94,5 +96,21 @@ public class AdminActivity extends AppCompatActivity implements CompoundButton.O
                     sendRef.setValue("false");
                     textSendGradeEnable.setText("Send Grade is Disabled.");
                 }
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        new AlertDialog.Builder(this)
+                .setTitle("Logout?")
+                .setNegativeButton("Cancel",null)
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(AdminActivity.this,IntroScreenActivity.class));
+                        finish();
+                    }
+                }).create().show();
+        Log.i("Back","Back");
     }
 }

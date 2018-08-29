@@ -2,6 +2,7 @@ package plm.oop.com.plmac;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -53,6 +54,12 @@ public class FacultyActivity extends AppCompatActivity {
                                 if (faculty.child("userPassword").getValue(String.class).equals(facultyPassword.getText().toString())) {
                                     Toast.makeText(FacultyActivity.this,"Hello "+faculty.child("userName").getValue(String.class)+"! Login Successful!",Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
+                                    SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
+                                    SharedPreferences.Editor editor = facultyPref.edit();
+                                    editor.putString("userNumber",faculty.child("userNumber").getValue(String.class));
+                                    editor.putString("userName",faculty.child("userName").getValue(String.class));
+                                    editor.putBoolean("isLoggedIn",true);
+                                    editor.apply();
                                     Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
                                     i.putExtra("userName", faculty.child("userName").getValue(String.class));
                                     i.putExtra("userNumber", faculty.child("userNumber").getValue(String.class));

@@ -1,7 +1,10 @@
 package plm.oop.com.plmac;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -209,28 +212,18 @@ public class FacultyHomeActivity extends AppCompatActivity {
 
     }
     private static boolean saveExcelFile(Context context, String fileName) {
-
-        // check if available and not read only
         if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
             Log.e("ExelLog", "Storage not available or read only");
             return false;
         }
-
         boolean success = false;
-
-        //New Workbook
         Workbook wb = new HSSFWorkbook();
-
         Cell c = null;
-
-        //Cell style for header row
         CellStyle cs = wb.createCellStyle();
         cs.setFillForegroundColor(HSSFColor.LIME.index);
         cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-
-        //New Sheet
         Sheet sheet1 = null;
-        sheet1 = wb.createSheet("myOrder");
+        sheet1 = wb.createSheet("Subject1");
 
         // Generate column headings
         Row row = sheet1.createRow(0);
@@ -290,4 +283,22 @@ public class FacultyHomeActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout?")
+                .setNegativeButton("Cancel",null)
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
+                        SharedPreferences.Editor editor = facultyPref.edit();
+                        editor.clear();
+                        editor.apply();
+                        startActivity(new Intent(FacultyHomeActivity.this,IntroScreenActivity.class));
+                        finish();
+                    }
+                }).create().show();
+        Log.i("Back","Back");
+    }
 }

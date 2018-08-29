@@ -61,8 +61,8 @@ public class FacultyViewSubject extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent (FacultyViewSubject.this,ClickedOnSubject.class );
-                        intent.putExtra("userSubject",subjectArr[i]);
+                        Intent intent = new Intent(FacultyViewSubject.this, ClickedOnSubject.class);
+                        intent.putExtra("userSubject", subjectArr[i]);
                         startActivity(intent);
                     }
                 });
@@ -81,22 +81,13 @@ public class FacultyViewSubject extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.i("waow","aw");
+        Log.i("waow", "aw");
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public void onBackPressed() {
-//        Intent ii= getIntent();
-//        final String userNumber1= ii.getStringExtra("userNumber");
-//        final String userName1= ii.getStringExtra("userName");
-//        Log.i("Back",userName1+"   "+userNumber1);
-        Log.i("waow","waow");
-//        Intent i = new Intent(FacultyViewSubject.this,FacultyHomeActivity.class);
-//        i.putExtra("userName",userName1);
-//        i.putExtra("userNumber",userNumber1);
-//        startActivity(i);
-//        finish();
+        super.onBackPressed();
     }
 }
 

@@ -1,10 +1,14 @@
 package plm.oop.com.plmac;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +32,7 @@ public class StudentMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_main);
         Intent i= getIntent();
         final String userNumber= i.getStringExtra("userNumber");
+        Log.i("SMA",userNumber);
         QRCodeWriter writer = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = writer.encode(userNumber, BarcodeFormat.QR_CODE, 512, 512);
@@ -71,5 +76,24 @@ public class StudentMainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout?")
+                .setNegativeButton("Cancel",null)
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences studentPref = getSharedPreferences("Student",0);
+                        SharedPreferences.Editor editor = studentPref.edit();
+                        editor.clear();
+                        editor.apply();
+                        startActivity(new Intent(StudentMainActivity.this,IntroScreenActivity.class));
+                        finish();
+                    }
+                }).create().show();
+        Log.i("Back","Back");
     }
 }
