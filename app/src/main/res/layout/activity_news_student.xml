@@ -12,12 +12,13 @@ tools:context=".NewsStudentActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="30sp"
         >
 
     <include
@@ -25,15 +26,16 @@ tools:context=".NewsStudentActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ListView
-        android:id="@+id/lvNewsStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/app_bar">
+        <ListView
+            android:id="@+id/lvNewsStudent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
 
-    </ListView>
+        </ListView>
     </LinearLayout>
     </ScrollView>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"
         android:layout_width="wrap_content"
@@ -41,4 +43,5 @@ tools:context=".NewsStudentActivity">
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header_student"
         app:menu="@menu/navigation_menu_student"/>
+
 </android.support.v4.widget.DrawerLayout>
