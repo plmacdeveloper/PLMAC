@@ -12,11 +12,14 @@
 
     </include>
 
-    <ListView
-        android:id="@+id/vslv1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <ExpandableListView
+        android:id="@+id/explv1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/black"
+        android:childDivider="@color/black"
+        android:dividerHeight="2dp"
         android:layout_below="@id/app_bar">
 
-    </ListView>
+    </ExpandableListView>
 </RelativeLayout>

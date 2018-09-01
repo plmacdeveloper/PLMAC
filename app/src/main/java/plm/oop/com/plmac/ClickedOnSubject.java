@@ -3,6 +3,7 @@ package plm.oop.com.plmac;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +26,22 @@ public class ClickedOnSubject extends AppCompatActivity {
         setContentView(R.layout.activity_clicked_on_list);
 
         Intent i = getIntent();
-        final String userSubject = i.getStringExtra("userSubject");
-        final  String refAddress = "Subject/" +userSubject+"/Dates";
-        Toast.makeText(ClickedOnSubject.this,refAddress,Toast.LENGTH_SHORT).show();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(refAddress);
-        ref.addValueEventListener(new ValueEventListener() {
+        final String FacSubject = i.getStringExtra("FacultySubject");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mRef = database.getReference("Subject").child(FacSubject).child("Attendance");
+        Toast.makeText(ClickedOnSubject.this,FacSubject,Toast.LENGTH_SHORT).show();
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> date = new ArrayList<>();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    date.add(String.valueOf(dsp.getKey())); //add result into array list
+                for (final DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    date.add(String.valueOf(dsp.getKey()));
+                //add result into array list
                 }
                 String[] dateArr = date.toArray(new String[0]);
                 ListAdapter2 dates = new ListAdapter2(ClickedOnSubject.this, dateArr);
                 listView2 = findViewById(R.id.dls1);
+
                 listView2.setAdapter(dates);
             }
             @Override
