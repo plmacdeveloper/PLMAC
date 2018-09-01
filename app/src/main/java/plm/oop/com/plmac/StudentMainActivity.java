@@ -143,7 +143,7 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
     }
 
     public void viewNews() {
-        startActivity(new Intent(StudentMainActivity.this, QRScanner.class));
+        startActivity(new Intent(StudentMainActivity.this, NewsStudentActivity.class));
     }
 
     public void viewUpdatePassword() {

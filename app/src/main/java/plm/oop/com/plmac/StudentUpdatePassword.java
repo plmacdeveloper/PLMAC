@@ -110,6 +110,7 @@ public class StudentUpdatePassword extends AppCompatActivity implements Navigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        //END OF MENU
     }
 
     @Override
@@ -145,7 +146,7 @@ public class StudentUpdatePassword extends AppCompatActivity implements Navigati
     }
 
     public void viewNews() {
-        startActivity(new Intent(StudentUpdatePassword.this, QRScanner.class));
+        startActivity(new Intent(StudentUpdatePassword.this, NewsStudentActivity.class));
     }
 
     public void viewUpdatePassword() {
