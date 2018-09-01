@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -104,7 +105,6 @@ public class StudentViewSubjects extends AppCompatActivity {
 
             }
         });
-
         expListAdapter = new ExpandableListAdapterStudent(this, listDataHeaderCode, listDataHeaderName, listDataHeaderRoom, listDataHeaderTime, listDataHeaderDays, listChildDataDate, listChildDataStatus);
 
         expListView.setAdapter(expListAdapter);
@@ -112,8 +112,19 @@ public class StudentViewSubjects extends AppCompatActivity {
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View v, int groupPosition, long id) {
-                return false;
+                Toast.makeText(StudentViewSubjects.this,"Click on "+listDataHeaderCode.get(groupPosition),Toast.LENGTH_SHORT).show();
+                if(expandableListView.isGroupExpanded(groupPosition)){
+                    expandableListView.collapseGroup(groupPosition);
+                }else{
+                    expandableListView.expandGroup(groupPosition);
+                }
+                return true;
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

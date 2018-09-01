@@ -113,7 +113,14 @@ public class FacultyViewSubject extends AppCompatActivity {
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View v, int groupPosition, long id) {
-                return false;
+                Toast.makeText(FacultyViewSubject.this,"Click on "+listDataHeaderCode.get(groupPosition),Toast.LENGTH_SHORT).show();
+                if(expandableListView.isGroupExpanded(groupPosition)){
+                    expandableListView.collapseGroup(groupPosition);
+                    }else{
+                    expandableListView.expandGroup(groupPosition);
+                }
+                    return true;
+
             }
         });
     }

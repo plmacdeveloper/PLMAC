@@ -100,6 +100,11 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
                 }
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         tvStudentViewProfileProgram = findViewById(R.id.tvStudentViewProfileProgram);
         tvStudentViewProfileStudentNumber = findViewById(R.id.tvStudentViewProfileStudentNumber);
@@ -107,7 +112,6 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
         //END OF SETTING VALUE FOR VIEWS
 
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutStudent);

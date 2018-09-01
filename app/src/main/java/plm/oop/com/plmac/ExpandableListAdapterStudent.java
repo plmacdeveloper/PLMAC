@@ -46,19 +46,20 @@ public class ExpandableListAdapterStudent extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastchid, View convertView, ViewGroup parent) {
-        final String date = (String) getChild(groupPosition, childPosition);
-        final String status = (String) _listChildDataStatus.get(this._listDataHeaderCode.get(groupPosition)).get(childPosition);
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.customlist3, null);
+            final String date = (String) getChild(groupPosition, childPosition);
+            final String status = (String) _listChildDataStatus.get(this._listDataHeaderCode.get(groupPosition)).get(childPosition);
+            if (convertView == null) {
+                LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.customlist3, null);
 
+            }
+            TextView txtListChildDate = (TextView) convertView.findViewById(R.id.dtv1);
+            TextView txtListChildStatus = (TextView) convertView.findViewById(R.id.dtv2);
+            txtListChildStatus.setText(status);
+            txtListChildDate.setText(date);
+            return convertView;
         }
-        TextView txtListChildDate = (TextView) convertView.findViewById(R.id.dtv1);
-        TextView txtListChildStatus = (TextView) convertView.findViewById(R.id.dtv2);
-        txtListChildStatus.setText(status);
-        txtListChildDate.setText(date);
-        return convertView;
-    }
+
 
     @Override
     public int getChildrenCount(int groupPosition) {
