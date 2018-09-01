@@ -99,15 +99,8 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
                     tvStudentViewProfileStudentNumber.setText("Student Number: " + student.child("userNumber").getValue(String.class));
                 }
             }
-
-            @Override
-<<<<<<< Updated upstream
-            public void onClick(View view) {
-                startActivity(new Intent(StudentMainActivity.this,NewsStudentActivity.class));
-=======
             public void onCancelled(DatabaseError databaseError) {
 
->>>>>>> Stashed changes
             }
         });
         tvStudentViewProfileProgram = findViewById(R.id.tvStudentViewProfileProgram);
