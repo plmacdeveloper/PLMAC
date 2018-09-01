@@ -100,14 +100,7 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
                 }
             }
 
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(StudentMainActivity.this, NewsStudentActivity.class));
-            }
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
         tvStudentViewProfileProgram = findViewById(R.id.tvStudentViewProfileProgram);
         tvStudentViewProfileStudentNumber = findViewById(R.id.tvStudentViewProfileStudentNumber);
         tvStudentViewProfileName = findViewById(R.id.tvStudentViewProfileName);
