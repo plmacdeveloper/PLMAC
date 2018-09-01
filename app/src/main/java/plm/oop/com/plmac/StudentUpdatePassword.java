@@ -2,6 +2,7 @@ package plm.oop.com.plmac;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -32,8 +33,6 @@ public class StudentUpdatePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_updatepassword);
         progressDialog = new ProgressDialog(this);
-        Intent i = getIntent();
-        final String userNumber = i.getStringExtra("userNumber");
         sup_op=findViewById(R.id.etStudentUpdatePasswordOldPassword);
         sup_np=findViewById(R.id.etStudentUpdatePasswordNewPassword);
         sup_vnp=findViewById(R.id.etStudentUpdatePasswordVerifyPassword);
@@ -45,20 +44,22 @@ public class StudentUpdatePassword extends AppCompatActivity {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
 
-                ref.addValueEventListener(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        SharedPreferences studentPref = getSharedPreferences("Student",0);
+                        String userNumber = studentPref.getString("userNumber","");
                         String oldpasscheck;
                         String oldpass= sup_op.getText().toString().trim();
                         String newpass= sup_np.getText().toString().trim();
                         String verify= sup_vnp.getText().toString().trim();
-                        oldpasscheck = dataSnapshot.child(userNumber).child("userPassword").getValue().toString();
-                        if (oldpass.isEmpty() || newpass.isEmpty() || verify.isEmpty()) {
+                        oldpasscheck = dataSnapshot.child(userNumber).child("userPassword").getValue(String.class);
+                        if (oldpass.isEmpty() || newpass.isEmpty() || verify.isEmpty() || oldpasscheck.isEmpty()) {
                             Toast.makeText(StudentUpdatePassword.this, "Incomplete Information.", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         } else {
-                            if (oldpass.matches(oldpasscheck)) {
-                                if (newpass.matches(verify)) {
+                            if (oldpass.compareTo(oldpasscheck) == 0) {
+                                if (newpass.compareTo(verify) == 0) {
                                     String code = userNumber;
                                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = firebaseDatabase.getReference("Student");
