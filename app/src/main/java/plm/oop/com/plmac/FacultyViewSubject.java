@@ -87,8 +87,8 @@ public class FacultyViewSubject extends AppCompatActivity {
                                 conSchedule = conSchedule.concat(DaysOfTheWeek.get(count+7)+" ");
                             }
                         }
-                        listgetAttendanceDate = new ArrayList<>();
                         listDataHeaderDays.add(conSchedule);
+                        listgetAttendanceDate = new ArrayList<>();
                         if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0){
                             for(DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()){
                                 listgetAttendanceDate.add(atten.getKey());
