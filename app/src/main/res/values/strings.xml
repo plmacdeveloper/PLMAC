@@ -4,6 +4,13 @@
     <string name="update">UPDATE</string>
     <string name="delete">DELETE</string>
     <string name="choose">CHOOSE OPERATION</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="subjects">Subjects</string>
+    <string name="update_password">Update Password</string>
+    <string name="logout">Logout</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <string-array name="AccountInformation">
         <item> </item>
         <item>Add</item>
