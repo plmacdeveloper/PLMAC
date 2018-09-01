@@ -65,7 +65,7 @@ public class StudentMainActivity extends AppCompatActivity {
         s_viewattendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StudentMainActivity.this,StudentViewAttendance.class));
+                startActivity(new Intent(StudentMainActivity.this,StudentViewSubjects.class));
             }
         });
 

@@ -23,18 +23,28 @@ import java.util.List;
 public class ExpandableListAdapters extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader;
+    private List<String> _listDataHeaderCode;
+    private List<String> _listDataHeaderName;
+    private List<String> _listDataHeaderRoom;
+    private List<String> _listDataHeaderTime;
+    private List<String> _listDataHeaderDays;
     private HashMap<String, List<String>> _listChildData;
 
-    public ExpandableListAdapters(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
+    public ExpandableListAdapters(Context context, List<String> listDataHeaderCode, List<String> listDataHeaderName,
+                                  List<String> listDataHeaderRoom, List<String> listDataHeaderTime, List<String> listDataHeaderDays,
+                                  HashMap<String, List<String>> listChildData) {
         this._context = context;
-        this._listDataHeader = listDataHeader;
+        this._listDataHeaderCode = listDataHeaderCode;
+        this._listDataHeaderName = listDataHeaderName;
+        this._listDataHeaderRoom = listDataHeaderRoom;
+        this._listDataHeaderTime = listDataHeaderTime;
+        this._listDataHeaderDays = listDataHeaderDays;
         this._listChildData = listChildData;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this._listChildData.get(this._listDataHeader.get(groupPosition)).get(childPosition);
+        return this._listChildData.get(this._listDataHeaderCode.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -59,17 +69,17 @@ public class ExpandableListAdapters extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listChildData.get(this._listDataHeader.get(groupPosition)).size();
+        return this._listChildData.get(this._listDataHeaderCode.get(groupPosition)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this._listDataHeader.get(groupPosition);
+        return this._listDataHeaderCode.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this._listDataHeader.size();
+        return this._listDataHeaderCode.size();
     }
 
     @Override
@@ -79,49 +89,28 @@ public class ExpandableListAdapters extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
-        if (convertView == null)
-        {
+        String headerCode = (String) getGroup(groupPosition);
+        String headerName = _listDataHeaderName.get(groupPosition);
+        String headerRoom = _listDataHeaderRoom.get(groupPosition);
+        String headerDays = _listDataHeaderDays.get(groupPosition);
+        String headerTime = _listDataHeaderTime.get(groupPosition);
+        if (convertView == null) {
             LayoutInflater infalInfalter = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInfalter.inflate(R.layout.customlist,null);
+            convertView = infalInfalter.inflate(R.layout.customlist, null);
         }
 
         final TextView mainListHeader = (TextView) convertView.findViewById(R.id.vstv1);
         mainListHeader.setTypeface(null, Typeface.BOLD);
-        final TextView mainListHeader1= (TextView) convertView.findViewById(R.id.vstv2);
-        mainListHeader1.setTypeface(null, Typeface.BOLD);
-
-        TextView mainListHeader2= (TextView) convertView.findViewById(R.id.vstv3);
-        mainListHeader2.setTypeface(null, Typeface.BOLD);
-
-        TextView mainListHeader3= (TextView) convertView.findViewById(R.id.vstv4);
-        mainListHeader3.setTypeface(null, Typeface.BOLD);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mref = database.getReference("Subject");
-
-        mref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String userName = "Femfem Garcia";
-                ArrayList<String> mainListHeaders = new ArrayList<String>();
-                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
-                        mainListHeaders.add(String.valueOf(ds.getKey()));
-                        for(int j = 0; j<mainListHeaders.size();j++)
-                        mainListHeader.setText(mainListHeaders.toString());
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return  convertView;
+        final TextView mainListHeader1 = (TextView) convertView.findViewById(R.id.vstv2);
+        final TextView mainListHeader2 = (TextView) convertView.findViewById(R.id.vstv3);
+        final TextView mainListHeader3 = (TextView) convertView.findViewById(R.id.vstv4);
+        final TextView mainListHeader4 = (TextView) convertView.findViewById(R.id.vstv5);
+        mainListHeader.setText(headerCode);
+        mainListHeader1.setText(headerName);
+        mainListHeader2.setText(headerRoom);
+        mainListHeader3.setText(headerTime);
+        mainListHeader4.setText(headerDays);
+        return convertView;
     }
 
     @Override

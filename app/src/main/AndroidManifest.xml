@@ -73,13 +73,7 @@
             android:name=".StudentViewSubjects"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".StudentViewAttendance"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".FacultyViewSubject"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ClickedOnSubject"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".FacultyCheckAttendance"

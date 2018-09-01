@@ -13,7 +13,6 @@ public class StudentViewSubjects extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_viewsubjects);
 
     }
 }

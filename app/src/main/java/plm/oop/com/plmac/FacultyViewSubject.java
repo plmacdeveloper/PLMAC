@@ -1,6 +1,9 @@
 package plm.oop.com.plmac;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,23 +31,82 @@ import java.util.List;
 public class FacultyViewSubject extends AppCompatActivity {
     ExpandableListAdapter expListAdapter;
     ExpandableListView expListView;
-    ListView listView;
-    List<String> listDataHeader;
+    List<String> listDataHeaderCode;
+    List<String> listDataHeaderName;
+    List<String> listDataHeaderRoom;
+    List<String> listDataHeaderTime;
+    List<String> listDataHeaderDays;
+    List<String> listgetAttendanceDate;
     HashMap<String, List<String>> listChildData;
-//
-//    Intent i = getIntent();
-//    final String userName = i.getStringExtra("userName");
-//    FirebaseDatabase database = FirebaseDatabase.getInstance();
-//    DatabaseReference mRef = database.getReference("Subject");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_subject);
-        expListView = (ExpandableListView) findViewById(R.id.explv1);
-        prepareListData();
+        expListView = findViewById(R.id.explv1);
 
-        expListAdapter = new ExpandableListAdapters(this, listDataHeader, listChildData);
+        listDataHeaderCode = new ArrayList<>();
+        listDataHeaderName = new ArrayList<>();
+        listDataHeaderRoom = new ArrayList<>();
+        listDataHeaderTime = new ArrayList<>();
+        listDataHeaderDays = new ArrayList<>();
+        listChildData = new HashMap<>();
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference mRef = firebaseDatabase.getReference("Subject");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
+                    String userNameFacultyPref = facultyPref.getString("userName", "");
+                    if(userNameFacultyPref.compareTo(ds.child("Faculty").getValue(String.class)) == 0){
+                        listDataHeaderCode.add(ds.getKey());
+                        listDataHeaderName.add(ds.child("Name").getValue(String.class));
+                        listDataHeaderRoom.add(ds.child("Room").getValue(String.class));
+                        listDataHeaderTime.add(ds.child("Time").child("Start").getValue(String.class)
+                        + " - " + ds.child("Time").child("End").getValue(String.class));
+                        String conSchedule = "";
+                        ArrayList<String> DaysOfTheWeek = new ArrayList<>();
+                        DaysOfTheWeek.add("Monday");
+                        DaysOfTheWeek.add("Tuesday");
+                        DaysOfTheWeek.add("Wednesday");
+                        DaysOfTheWeek.add("Thursday");
+                        DaysOfTheWeek.add("Friday");
+                        DaysOfTheWeek.add("Saturday");
+                        DaysOfTheWeek.add("Sunday");
+                        DaysOfTheWeek.add("M");
+                        DaysOfTheWeek.add("T");
+                        DaysOfTheWeek.add("W");
+                        DaysOfTheWeek.add("Th");
+                        DaysOfTheWeek.add("F");
+                        DaysOfTheWeek.add("Sa");
+                        DaysOfTheWeek.add("Su");
+                        for(int count = 0; count < 7; count++){
+                            if(ds.child("Schedule").hasChild(DaysOfTheWeek.get(count))){
+                                conSchedule = conSchedule.concat(DaysOfTheWeek.get(count+7)+" ");
+                            }
+                        }
+                        listgetAttendanceDate = new ArrayList<>();
+                        listDataHeaderDays.add(conSchedule);
+                        if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0){
+                            for(DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()){
+                                listgetAttendanceDate.add(atten.getKey());
+                            }
+                            listChildData.put(ds.getKey(),listgetAttendanceDate);
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        expListAdapter = new ExpandableListAdapters(this, listDataHeaderCode, listDataHeaderName, listDataHeaderRoom, listDataHeaderTime, listDataHeaderDays, listChildData);
 
         expListView.setAdapter(expListAdapter);
 
@@ -54,31 +116,6 @@ public class FacultyViewSubject extends AppCompatActivity {
                 return false;
             }
         });
-
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + "Expanded", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + "Collapsed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expListView.setOnChildClickListener(new OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + ":" + listChildData.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
-
-                return false;
-            }
-        });
-
-
     }
 
 
@@ -87,54 +124,7 @@ public class FacultyViewSubject extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listChildData = new HashMap<String, List<String>>();
-        ArrayList<String> Yes = new ArrayList<String>();
-        Yes.add("wiw");
-        Yes.add("zzz");
-        Yes.add("aweqe");
-        Yes.add("wewe");
-        listDataHeader.addAll(Yes);
-        listDataHeader.add("EW");
-        List<String> getSubject = new ArrayList<String>();
-        List<String> getRoom = new ArrayList<String>();
-        getSubject.add("Keta");
-        getRoom.add("wewew");
-        listChildData.put(listDataHeader.get(1),getRoom);
-        listChildData.put(listDataHeader.get(0), getSubject);
-//
-//        mRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                                List<String> getRoom = new ArrayList<String>();
-//                List<String> getSchedule = new ArrayList<String>();
-//                List<String> getTime= new ArrayList<String>();
-//                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
-//                        listDataHeader.add(String.valueOf(ds.getKey()));
-//                        listDataHeader.add(String.valueOf(ds.child("Room").getValue()));
-//                        listDataHeader.add(String.valueOf((ds.child("Time").child("Start").getValue()) + " - " + String.valueOf(ds.child("Time").child("End").getValue())));
-//                        listDataHeader.add(String.valueOf(ds.child("Schedule").child("Monday").getValue()));
-//                    }
-//                }
-//
-//
-//    }
-//
-//    @Override
-//    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//    }
-//});
-//
-
-
-
-        }
-
-        }
+}
 
 
 
