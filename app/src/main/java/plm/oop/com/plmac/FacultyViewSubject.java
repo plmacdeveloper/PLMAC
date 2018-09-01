@@ -1,13 +1,18 @@
 package plm.oop.com.plmac;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,78 +22,119 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class FacultyViewSubject extends AppCompatActivity {
-
+    ExpandableListAdapter expListAdapter;
+    ExpandableListView expListView;
     ListView listView;
-
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listChildData;
+//
+//    Intent i = getIntent();
+//    final String userName = i.getStringExtra("userName");
+//    FirebaseDatabase database = FirebaseDatabase.getInstance();
+//    DatabaseReference mRef = database.getReference("Subject");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_faculty_view_subject);
-        Intent i = getIntent();
-        final String userName = i.getStringExtra("userName");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference("Subject");
+        expListView = (ExpandableListView) findViewById(R.id.explv1);
+        prepareListData();
 
+        expListAdapter = new ExpandableListAdapters(this, listDataHeader, listChildData);
 
-        Query zonesQuery = mRef.orderByChild("Faculty").equalTo(userName);
-        zonesQuery.addValueEventListener(new ValueEventListener() {
+        expListView.setAdapter(expListAdapter);
 
-
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> subject = new ArrayList<>();
-                ArrayList<String> room = new ArrayList<>();
-                ArrayList<String> schedule = new ArrayList<>();
-                for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                    subject.add(zoneSnapshot.getKey().toString());
-                    room.add(zoneSnapshot.child("Room").getValue(String.class));
-                    schedule.add(zoneSnapshot.child("Schedule").getValue(String.class));
-                }
-
-
-                final String[] subjectArr = subject.toArray(new String[0]);
-                String[] roomArr = room.toArray(new String[0]);
-                String[] scheduleArr = schedule.toArray(new String[0]);
-
-                ListAdapter place = new ListAdapter(FacultyViewSubject.this, subjectArr, roomArr, scheduleArr);
-
-                listView = findViewById(R.id.vslv1);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(FacultyViewSubject.this, ClickedOnSubject.class);
-                        intent.putExtra("userSubject", subjectArr[i]);
-                        startActivity(intent);
-                    }
-                });
-                listView.setAdapter(place);
+            public boolean onGroupClick(ExpandableListView expandableListView, View v, int groupPosition, long id) {
+                return false;
             }
+        });
 
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + "Expanded", Toast.LENGTH_SHORT).show();
             }
+        });
 
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + "Collapsed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        expListView.setOnChildClickListener(new OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + ":" + listChildData.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+
+                return false;
+            }
         });
 
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.i("waow", "aw");
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-}
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listChildData = new HashMap<String, List<String>>();
+        ArrayList<String> Yes = new ArrayList<String>();
+        Yes.add("wiw");
+        Yes.add("zzz");
+        Yes.add("aweqe");
+        Yes.add("wewe");
+        listDataHeader.addAll(Yes);
+        listDataHeader.add("EW");
+        List<String> getSubject = new ArrayList<String>();
+        List<String> getRoom = new ArrayList<String>();
+        getSubject.add("Keta");
+        getRoom.add("wewew");
+        listChildData.put(listDataHeader.get(1),getRoom);
+        listChildData.put(listDataHeader.get(0), getSubject);
+//
+//        mRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                List<String> getRoom = new ArrayList<String>();
+//                List<String> getSchedule = new ArrayList<String>();
+//                List<String> getTime= new ArrayList<String>();
+//                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
+//                        listDataHeader.add(String.valueOf(ds.getKey()));
+//                        listDataHeader.add(String.valueOf(ds.child("Room").getValue()));
+//                        listDataHeader.add(String.valueOf((ds.child("Time").child("Start").getValue()) + " - " + String.valueOf(ds.child("Time").child("End").getValue())));
+//                        listDataHeader.add(String.valueOf(ds.child("Schedule").child("Monday").getValue()));
+//                    }
+//                }
+//
+//
+//    }
+//
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//    }
+//});
+//
+
+
+
+        }
+
+        }
+
 
 
