@@ -87,6 +87,8 @@
         <activity
             android:name=".FacultyCheckAttendance"
             android:theme="@style/AppTheme" />
+        <activity android:name=".NewsStudentActivity" />
+        <activity android:name=".NewsFacultyActivity"></activity>
     </application>
 
 </manifest>

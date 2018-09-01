@@ -3,6 +3,7 @@ package plm.oop.com.plmac;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -42,6 +45,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -52,6 +56,8 @@ public class FacultyHomeActivity extends AppCompatActivity {
     private Button fh_vp, fh_ss, fh_ca, fh_sg;
     private TextView welcomeMessage;
     volatile String codeToSend;
+    String UserNameGlobal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,7 @@ public class FacultyHomeActivity extends AppCompatActivity {
 
         final String userNumber = i.getStringExtra("userNumber");
         final String userName = i.getStringExtra("userName");
+        UserNameGlobal = userName;
         final ArrayList<String> startTimeCheck = new ArrayList<>();
         final ArrayList<String> endTimeCheck = new ArrayList<>();
         final ArrayList<String> subjectCodeCheck = new ArrayList<>();
@@ -160,9 +167,9 @@ public class FacultyHomeActivity extends AppCompatActivity {
         checkSend.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue().toString().compareTo("false") == 0){
+                if (dataSnapshot.getValue().toString().compareTo("false") == 0) {
                     fh_sg.setVisibility(View.GONE);
-                }else{
+                } else {
                     fh_sg.setVisibility(View.VISIBLE);
                 }
             }
@@ -175,7 +182,7 @@ public class FacultyHomeActivity extends AppCompatActivity {
         fh_sg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveExcelFile(FacultyHomeActivity.this,"myExcel.xls");
+                saveExcelFile(FacultyHomeActivity.this, userNumber + ".xls");
             }
         });
 
@@ -211,62 +218,144 @@ public class FacultyHomeActivity extends AppCompatActivity {
         });
 
     }
-    private static boolean saveExcelFile(Context context, String fileName) {
+
+    private boolean saveExcelFile(final Context context, final String fileName) {
         if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
             Log.e("ExelLog", "Storage not available or read only");
             return false;
         }
-        boolean success = false;
-        Workbook wb = new HSSFWorkbook();
-        Cell c = null;
-        CellStyle cs = wb.createCellStyle();
+
+        final ArrayList<String> studentsExcel = new ArrayList<>();
+        final boolean[] success = {false};
+        final String userName = UserNameGlobal;
+        final Workbook wb = new HSSFWorkbook();
+        final CellStyle cs = wb.createCellStyle();
         cs.setFillForegroundColor(HSSFColor.LIME.index);
         cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        Sheet sheet1 = null;
-        sheet1 = wb.createSheet("Subject1");
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Subject");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
+                        final Sheet sheet = wb.createSheet(ds.getKey());
+                        DatabaseReference studentsRef = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Students");
+                        studentsRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    String name = ds.getValue(String.class);
+                                    studentsExcel.add(name);
+                                }
+                            }
 
-        // Generate column headings
-        Row row = sheet1.createRow(0);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.i("wtf", "0");
+                            }
+                        });
+                        Cell cell = null;
+                        Log.i("length",String.valueOf(studentsExcel.size()));
+//                        for (int ctr = 1; ctr < studentsExcel.size()+1; ctr++) {
+//                            Log.i("wtf", studentsExcel.get(1));
+//                            Row names = sheet.createRow(ctr);
+//                            cell = names.createCell(0);
+//                            cell.setCellValue(studentsExcel.get(ctr));
+//                        }
+//                        Row names = sheet.createRow(1);
+//                        cell = names.createCell(0);
+//                        cell.setCellValue(studentsExcel.get(0));
+                        final Row headings = sheet.createRow(0);
+                        cell = headings.createCell(0);
+                        cell.setCellValue("Name");
+                        final DatabaseReference AttendanceRef = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Attendance");
+                        AttendanceRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int count = 1;
+                                for (final DataSnapshot date : dataSnapshot.getChildren()) {
+                                    Cell cell = null;
+                                    cell = headings.createCell(count);
+                                    cell.setCellValue(date.getKey());
+                                    count++;
+                                    AttendanceRef.child(ds.getKey()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                for (int a = 0; a < studentsExcel.size(); a++) {
+                                                    if (ds.getKey().compareTo(studentsExcel.get(a)) == 0) {
+                                                        Log.i("check", studentsExcel.get(a) + " is " + ds.getValue() + " last " + date.getKey());
+                                                    }
+                                                }
+                                            }
+                                        }
 
-        c = row.createCell(0);
-        c.setCellValue("Item Number");
-        c.setCellStyle(cs);
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        c = row.createCell(1);
-        c.setCellValue("Quantity");
-        c.setCellStyle(cs);
+                                        }
+                                    });
+                                }
+                            }
 
-        c = row.createCell(2);
-        c.setCellValue("Price");
-        c.setCellStyle(cs);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        sheet1.setColumnWidth(0, (15 * 500));
-        sheet1.setColumnWidth(1, (15 * 500));
-        sheet1.setColumnWidth(2, (15 * 500));
+                            }
+                        });
+                    }
+                }
+                File file = new File(context.getExternalFilesDir(null), fileName);
+                FileOutputStream os = null;
+
+                try {
+                    os = new FileOutputStream(file);
+                    wb.write(os);
+                    Log.i("context", context.getExternalFilesDir(null).toString());
+                    Log.w("FileUtils", "Writing file" + file);
+                    success[0] = true;
+                } catch (IOException e) {
+                    Log.w("FileUtils", "Error writing " + file, e);
+                } catch (Exception e) {
+                    Log.w("FileUtils", "Failed to save file", e);
+                } finally {
+                    try {
+                        if (null != os)
+                            os.close();
+                    } catch (Exception ex) {
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return success[0];
+//        Row row = sheet.createRow(0);
+//
+//        c = row.createCell(0);
+//        c.setCellValue("Item Number");
+//        c.setCellStyle(cs);
+//
+//        c = row.createCell(1);
+//        c.setCellValue("Quantity");
+//        c.setCellStyle(cs);
+//
+//        c = row.createCell(2);
+//        c.setCellValue("Price");
+//        c.setCellStyle(cs);
+//
+//        sheet1.setColumnWidth(0, (15 * 500));
+//        sheet1.setColumnWidth(1, (15 * 500));
+//        sheet1.setColumnWidth(2, (15 * 500));
 
         // Create a path where we will place our List of objects on external storage
-        File file = new File("/storage/emulated/0/Android/data/plm.oop.com.plmac/files", fileName);
-        FileOutputStream os = null;
-
-        try {
-            os = new FileOutputStream(file);
-            wb.write(os);
-            Log.i("context",context.getExternalFilesDir(null).toString());
-            Log.w("FileUtils", "Writing file" + file);
-            success = true;
-        } catch (IOException e) {
-            Log.w("FileUtils", "Error writing " + file, e);
-        } catch (Exception e) {
-            Log.w("FileUtils", "Failed to save file", e);
-        } finally {
-            try {
-                if (null != os)
-                    os.close();
-            } catch (Exception ex) {
-            }
-        }
-        return success;
     }
+
     public static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
@@ -287,18 +376,18 @@ public class FacultyHomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Logout?")
-                .setNegativeButton("Cancel",null)
+                .setNegativeButton("Cancel", null)
                 .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
+                        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
                         SharedPreferences.Editor editor = facultyPref.edit();
                         editor.clear();
                         editor.apply();
-                        startActivity(new Intent(FacultyHomeActivity.this,IntroScreenActivity.class));
+                        startActivity(new Intent(FacultyHomeActivity.this, IntroScreenActivity.class));
                         finish();
                     }
                 }).create().show();
-        Log.i("Back","Back");
+        Log.i("Back", "Back");
     }
 }

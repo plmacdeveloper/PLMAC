@@ -2,6 +2,7 @@ package plm.oop.com.plmac;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,14 +28,11 @@ public class StudentUpdatePassword extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference("Student");
-    String oldpasscheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_updatepassword);
         progressDialog = new ProgressDialog(this);
-        Intent i = getIntent();
-        final String userNumber = i.getStringExtra("userNumber");
         sup_op=findViewById(R.id.etStudentUpdatePasswordOldPassword);
         sup_np=findViewById(R.id.etStudentUpdatePasswordNewPassword);
         sup_vnp=findViewById(R.id.etStudentUpdatePasswordVerifyPassword);
@@ -45,14 +43,41 @@ public class StudentUpdatePassword extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
-                String oldpass= sup_op.getText().toString().trim();
-                String newpass= sup_np.getText().toString().trim();
-                String verify= sup_vnp.getText().toString().trim();
 
-                ref.addValueEventListener(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        oldpasscheck = dataSnapshot.child(userNumber).child("userPassword").getValue().toString();
+                        SharedPreferences studentPref = getSharedPreferences("Student",0);
+                        String userNumber = studentPref.getString("userNumber","");
+                        String oldpasscheck;
+                        String oldpass= sup_op.getText().toString().trim();
+                        String newpass= sup_np.getText().toString().trim();
+                        String verify= sup_vnp.getText().toString().trim();
+                        oldpasscheck = dataSnapshot.child(userNumber).child("userPassword").getValue(String.class);
+                        if (oldpass.isEmpty() || newpass.isEmpty() || verify.isEmpty() || oldpasscheck.isEmpty()) {
+                            Toast.makeText(StudentUpdatePassword.this, "Incomplete Information.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        } else {
+                            if (oldpass.compareTo(oldpasscheck) == 0) {
+                                if (newpass.compareTo(verify) == 0) {
+                                    String code = userNumber;
+                                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = firebaseDatabase.getReference("Student");
+                                    myRef.child(code).child("userPassword").setValue(newpass);
+                                    Toast.makeText(StudentUpdatePassword.this, "Password Change Complete.", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                    onBackPressed();
+                                    finish();
+                                } else {
+                                    Toast.makeText(StudentUpdatePassword.this, "Password Verification mismatch.", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                            } else {
+                                Toast.makeText(StudentUpdatePassword.this, "Wrong Old Password.", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
+
+                        }
                     }
 
                     @Override
@@ -60,30 +85,7 @@ public class StudentUpdatePassword extends AppCompatActivity {
 
                     }
                 });
-                if (oldpass.isEmpty() || newpass.isEmpty() || verify.isEmpty()) {
-                    Toast.makeText(StudentUpdatePassword.this, "Incomplete Information.", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                } else {
-                    if (oldpass.matches(oldpasscheck)) {
-                        if (newpass.matches(verify)) {
-                            String code = userNumber;
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = firebaseDatabase.getReference("Student");
-                            myRef.child(code).child("userPassword").setValue(newpass);
-                            Toast.makeText(StudentUpdatePassword.this, "Password Change Complete.", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                            onBackPressed();
-                            finish();
-                        } else {
-                            Toast.makeText(StudentUpdatePassword.this, "Password Verification mismatch.", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
-                    } else {
-                        Toast.makeText(StudentUpdatePassword.this, "Wrong Old Password.", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
 
-                }
             }
         });
 
