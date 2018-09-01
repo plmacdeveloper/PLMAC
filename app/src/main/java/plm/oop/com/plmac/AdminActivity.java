@@ -141,6 +141,7 @@ public class AdminActivity extends AppCompatActivity implements CompoundButton.O
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
         Log.i("press", "Pressed.");
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference sendRef = firebaseDatabase.getReference("Admin").child("SendGrade");
@@ -158,16 +159,19 @@ public class AdminActivity extends AppCompatActivity implements CompoundButton.O
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        new AlertDialog.Builder(this)
-                .setTitle("Logout?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(AdminActivity.this, IntroScreenActivity.class));
-                        finish();
-                    }
-                }).create().show();
-        Log.i("Back", "Back");
+        if(screenNews.getVisibility() == View.GONE) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Logout?")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(AdminActivity.this, IntroScreenActivity.class));
+                            finish();
+                        }
+                    }).create().show();
+        }else{
+            screenNews.setVisibility(View.GONE);
+        }
     }
 }
