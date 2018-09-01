@@ -108,8 +108,9 @@ public class ExpandableListAdapters extends BaseExpandableListAdapter {
                 for (final DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
                         mainListHeaders.add(String.valueOf(ds.getKey()));
-                        for(int j = 0; j<mainListHeaders.size();j++)
-                        mainListHeader.setText(mainListHeaders.toString());
+                        for(int j = 0; j<mainListHeaders.size();j++) {
+                            mainListHeader.setText(mainListHeaders.toString());
+                        }
                     }
 
                 }

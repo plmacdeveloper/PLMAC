@@ -90,13 +90,9 @@ public class FacultyViewSubject extends AppCompatActivity {
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listChildData = new HashMap<String, List<String>>();
-        ArrayList<String> Yes = new ArrayList<String>();
-        Yes.add("wiw");
-        Yes.add("zzz");
-        Yes.add("aweqe");
-        Yes.add("wewe");
-        listDataHeader.addAll(Yes);
-        listDataHeader.add("EW");
+
+        listDataHeader.add("wew");
+        listDataHeader.add("what");
         List<String> getSubject = new ArrayList<String>();
         List<String> getRoom = new ArrayList<String>();
         getSubject.add("Keta");
