@@ -72,7 +72,7 @@ public class StudentMainActivity extends AppCompatActivity {
         s_viewannouncements.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StudentMainActivity.this,StudentViewAnnouncements.class));
+                startActivity(new Intent(StudentMainActivity.this,NewsStudentActivity.class));
             }
         });
 
