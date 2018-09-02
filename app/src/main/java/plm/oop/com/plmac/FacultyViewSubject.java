@@ -1,5 +1,8 @@
 package plm.oop.com.plmac;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +18,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +44,17 @@ public class FacultyViewSubject extends AppCompatActivity {
     List<String> listgetAttendanceDate;
     HashMap<String, List<String>> listChildData;
 
+    List<String> studs = new ArrayList<String>();
+    List<String> stats = new ArrayList<String>();
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_subject);
         expListView = findViewById(R.id.explv1);
-
+        final ArrayList<String> listAttendance = new ArrayList<String>();
         listDataHeaderCode = new ArrayList<>();
         listDataHeaderName = new ArrayList<>();
         listDataHeaderRoom = new ArrayList<>();
@@ -57,15 +67,15 @@ public class FacultyViewSubject extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
                     String userNameFacultyPref = facultyPref.getString("userName", "");
-                    if(userNameFacultyPref.compareTo(ds.child("Faculty").getValue(String.class)) == 0){
+                    if (userNameFacultyPref.compareTo(ds.child("Faculty").getValue(String.class)) == 0) {
                         listDataHeaderCode.add(ds.getKey());
                         listDataHeaderName.add(ds.child("Name").getValue(String.class));
                         listDataHeaderRoom.add(ds.child("Room").getValue(String.class));
                         listDataHeaderTime.add(ds.child("Time").child("Start").getValue(String.class)
-                        + " - " + ds.child("Time").child("End").getValue(String.class));
+                                + " - " + ds.child("Time").child("End").getValue(String.class));
                         String conSchedule = "";
                         ArrayList<String> DaysOfTheWeek = new ArrayList<>();
                         DaysOfTheWeek.add("Monday");
@@ -82,24 +92,20 @@ public class FacultyViewSubject extends AppCompatActivity {
                         DaysOfTheWeek.add("F");
                         DaysOfTheWeek.add("Sa");
                         DaysOfTheWeek.add("Su");
-                        for(int count = 0; count < 7; count++){
-                            if(ds.child("Schedule").hasChild(DaysOfTheWeek.get(count))){
-                                conSchedule = conSchedule.concat(DaysOfTheWeek.get(count+7)+" ");
+                        for (int count = 0; count < 7; count++) {
+                            if (ds.child("Schedule").hasChild(DaysOfTheWeek.get(count))) {
+                                conSchedule = conSchedule.concat(DaysOfTheWeek.get(count + 7) + " ");
                             }
                         }
-                        listDataHeaderDays.add(conSchedule);
                         listgetAttendanceDate = new ArrayList<>();
-                        if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0) {
+                        listDataHeaderDays.add(conSchedule);
+                        if (dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0) {
                             for (DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()) {
                                 listgetAttendanceDate.add(atten.getKey());
 
                             }
-                                listChildData.put(ds.getKey(), listgetAttendanceDate);
+                            listChildData.put(ds.getKey(), listgetAttendanceDate);
 
-                        }else{
-                            ArrayList<String> listNothing = new ArrayList<>();
-                            listNothing.add("No information.");
-                            listChildData.put(ds.getKey(),listNothing);
                         }
 
                     }
@@ -119,22 +125,65 @@ public class FacultyViewSubject extends AppCompatActivity {
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View v, int groupPosition, long id) {
-                Toast.makeText(FacultyViewSubject.this,"Click on "+listDataHeaderCode.get(groupPosition),Toast.LENGTH_SHORT).show();
-                if(expandableListView.isGroupExpanded(groupPosition)){
-                    expandableListView.collapseGroup(groupPosition);
-                    }else{
-                    expandableListView.expandGroup(groupPosition);
-                }
-                    return true;
 
+                return false;
             }
         });
-    }
 
+        expListView.setOnChildClickListener(new OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                final String select = (String) expListAdapter.getChild(groupPosition, childPosition);
+                final String Parentselect = (String) listDataHeaderCode.get(groupPosition);
+
+                FirebaseDatabase firebaseDatabase2 = FirebaseDatabase.getInstance();
+                final DatabaseReference mRef2 = firebaseDatabase2.getReference("Subject");
+                  mRef2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot PrAbs : dataSnapshot.child(Parentselect).child("Attendance").child(select).getChildren()){
+                            studs.add(PrAbs.getKey());
+                            stats.add(PrAbs.getValue(String.class));
+
+                        }
+                        CreateAlertDialog();
+                    }
+
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                return false;
+            }
+        });
+
+
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void CreateAlertDialog(){
+         final CharSequence[] studnames = studs.toArray(new String [studs.size()]);
+         final CharSequence[] studStats = stats.toArray(new String [stats.size()]);
+        AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+        alertbox.setTitle("Students");
+        alertbox.setItems(studnames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), studStats[i], Toast.LENGTH_SHORT).show();
+                }
+
+        });
+        alertbox.show();
     }
 
 }

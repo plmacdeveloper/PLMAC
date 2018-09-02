@@ -18,18 +18,14 @@ public class ListAdapter extends ArrayAdapter{
 
     private final Activity context;
 
-    private final String[] courseArray;
-    private final String[] schedArray;
-    private final String[] roomArray;
-    private final String[] timeArray;
-    public ListAdapter(Activity context,String[] courseParam,String[] schedParam, String[] roomParam, String[] timeParam)
+    private final String[] studNameArray;
+    private final String[] studStatsArray;
+    public ListAdapter(Activity context,String[] studNameParam,String[] studStatsParam)
     {
-        super(context,R.layout.customlist,courseParam);
+        super(context,R.layout.customlist,studNameParam);
         this.context = context;
-        this.timeArray = timeParam;
-        this.courseArray = courseParam;
-        this.schedArray = schedParam;
-        this.roomArray = roomParam;
+        this.studNameArray = studNameParam;
+        this.studStatsArray = studStatsParam;
     }
 
     @NonNull
@@ -37,16 +33,12 @@ public class ListAdapter extends ArrayAdapter{
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.customlist,null,true);
-
-        TextView subTime = (TextView) rowView.findViewById(R.id.vstv4);
-        TextView subjName =(TextView)rowView.findViewById(R.id.vstv1);
-        TextView schedule =(TextView)rowView.findViewById(R.id.vstv2);
-        TextView rooms =(TextView)rowView.findViewById(R.id.vstv3);
-
-        subjName.setText(courseArray[position]);
-        schedule.setText(schedArray[position]);
-        rooms.setText(roomArray[position]);
-        subTime.setText(timeArray[position]);
+//
+//        TextView subjName =(TextView)rowView.findViewById(R.id.cl3tv1);
+//        TextView schedule =(TextView)rowView.findViewById(R.id.cl3tv2);
+//
+//        subjName.setText(studNameArray[position]);
+//        schedule.setText(studStatsArray[position]);
         return rowView;
     }
 }
