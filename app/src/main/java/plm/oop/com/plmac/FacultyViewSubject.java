@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -44,8 +45,6 @@ public class FacultyViewSubject extends AppCompatActivity {
     List<String> listgetAttendanceDate;
     HashMap<String, List<String>> listChildData;
 
-    List<String> studs = new ArrayList<String>();
-    List<String> stats = new ArrayList<String>();
 
     private ProgressDialog progressDialog;
 
@@ -106,6 +105,10 @@ public class FacultyViewSubject extends AppCompatActivity {
                             }
                             listChildData.put(ds.getKey(), listgetAttendanceDate);
 
+                        }else{
+                            ArrayList<String> listNothing = new ArrayList<>();
+                            listNothing.add("No information.");
+                            listChildData.put(ds.getKey(),listNothing);
                         }
 
                     }
@@ -137,28 +140,35 @@ public class FacultyViewSubject extends AppCompatActivity {
                 final String select = (String) expListAdapter.getChild(groupPosition, childPosition);
                 final String Parentselect = (String) listDataHeaderCode.get(groupPosition);
 
+                Log.i("wew",select);
                 FirebaseDatabase firebaseDatabase2 = FirebaseDatabase.getInstance();
                 final DatabaseReference mRef2 = firebaseDatabase2.getReference("Subject");
                   mRef2.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot PrAbs : dataSnapshot.child(Parentselect).child("Attendance").child(select).getChildren()){
-                            studs.add(PrAbs.getKey());
-                            stats.add(PrAbs.getValue(String.class));
-
+                        List<String> studs = new ArrayList<String>();
+                        if (select.compareTo("No information.") != 0) {
+                            for (DataSnapshot PrAbs : dataSnapshot.child(Parentselect).child("Attendance").child(select).getChildren()) {
+                                if(PrAbs.getKey().compareTo(" ") != 0 && PrAbs.getKey().compareTo("1ifExist") != 0) {
+                                    studs.add(PrAbs.getKey() + "\t" + PrAbs.getValue(String.class));
+                                }
+                            }
+                            final CharSequence[] studnames = studs.toArray(new String[studs.size()]);
+                            AlertDialog.Builder alertbox = new AlertDialog.Builder(FacultyViewSubject.this);
+                            alertbox.setTitle("Students (" + select+")");
+                            alertbox.setItems(studnames, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                            alertbox.show();
                         }
-                        CreateAlertDialog();
                     }
-
-
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
-
-
                 return false;
             }
         });
@@ -171,20 +181,6 @@ public class FacultyViewSubject extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void CreateAlertDialog(){
-         final CharSequence[] studnames = studs.toArray(new String [studs.size()]);
-         final CharSequence[] studStats = stats.toArray(new String [stats.size()]);
-        AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
-        alertbox.setTitle("Students");
-        alertbox.setItems(studnames, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(), studStats[i], Toast.LENGTH_SHORT).show();
-                }
-
-        });
-        alertbox.show();
-    }
 
 }
 

@@ -108,11 +108,11 @@ public class StudentViewSubjects extends AppCompatActivity {
                         }else{
                             ArrayList<String> listNothing = new ArrayList<>();
                             listNothing.add("No information.");
+                            ArrayList<String> listNothing1 = new ArrayList<>();
+                            listNothing1.add(" ");
                             listChildDataDate.put(ds.getKey(),listNothing);
-                            listChildDataStatus.put(ds.getKey(),listNothing);
+                            listChildDataStatus.put(ds.getKey(),listNothing1);
                         }
-                        Log.i("wtf",String.valueOf(listChildDataDate));
-                        Log.i("wtf2",String.valueOf(listChildDataStatus));
                     }
                 }
             }
