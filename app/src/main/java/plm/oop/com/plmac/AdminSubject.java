@@ -359,9 +359,6 @@ public class AdminSubject extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                progressDialog.dismiss();
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
                 deleteSubject.setVisibility(View.VISIBLE);
                 (AdminSubject.this).subjectAdapter.getFilter().filter(charSequence);
             }
@@ -374,9 +371,6 @@ public class AdminSubject extends AppCompatActivity {
         deleteSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                progressDialog.dismiss();
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
                 adminSubjectCodeDelete.setText(adapterView.getItemAtPosition(i).toString());
                 deleteSubject.setVisibility(View.GONE);
             }
@@ -384,9 +378,6 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.dismiss();
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
                 final String code = adminSubjectCodeDelete.getText().toString().trim().toUpperCase();
                 if (code.isEmpty()) {
                     Toast.makeText(AdminSubject.this, "Input subject code.", Toast.LENGTH_SHORT).show();

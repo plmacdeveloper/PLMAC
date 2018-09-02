@@ -4,10 +4,15 @@ import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -17,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminFaculty extends AppCompatActivity {
@@ -37,9 +43,9 @@ public class AdminFaculty extends AppCompatActivity {
     private Button adminFacultyUpdateUser, adminFacultyUpdateSetNumber;
     private ScrollView adminFacultyUpdateSet;
 
+
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,23 +156,15 @@ public class AdminFaculty extends AppCompatActivity {
                 }
             }
         });
-
         adminFacultyDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String number = adminFacultyNumberDelete.getText().toString().trim();
-
-                if(number.isEmpty()){
-                    Toast.makeText(AdminFaculty.this, "Input name.", Toast.LENGTH_SHORT).show();
-                }else{
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    final DatabaseReference databaseReference = firebaseDatabase.getReference("Faculty");
-                    databaseReference.child(number).removeValue();
+                    FirebaseDatabase.getInstance().getReference("Faculty").child(number).removeValue();
                     Toast.makeText(AdminFaculty.this, "Delete Information Successful.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                     finish();
                 }
-            }
         });
 
         adminFacultyUpdateSetNumber.setOnClickListener(new View.OnClickListener() {
