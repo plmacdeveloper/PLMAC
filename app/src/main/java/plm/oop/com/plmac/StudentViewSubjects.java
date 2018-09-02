@@ -94,8 +94,16 @@ public class StudentViewSubjects extends AppCompatActivity {
                                     }
                                 }
                             }
-                            listChildDataDate.put(ds.getKey(),listgetAttendanceDate);
-                            listChildDataStatus.put(ds.getKey(),listgetAttendanceStatus);
+                            ArrayList<String> listNothing = new ArrayList<>();
+                            listNothing.add("No information.");
+                            if (listgetAttendanceDate.isEmpty()) {
+                                listChildDataDate.put(ds.getKey(),listNothing);
+                                listChildDataStatus.put(ds.getKey(),listNothing);
+                            } else {
+                                listChildDataDate.put(ds.getKey(), listgetAttendanceDate);
+                                listChildDataStatus.put(ds.getKey(),listgetAttendanceStatus);
+                            }
+
                         }
                     }
                 }

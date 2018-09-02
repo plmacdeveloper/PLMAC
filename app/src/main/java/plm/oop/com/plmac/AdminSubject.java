@@ -58,7 +58,9 @@ public class AdminSubject extends AppCompatActivity {
         setContentView(R.layout.activity_admin_subject);
 
         progressDialog = new ProgressDialog(this);
-
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Initializing...");
+        progressDialog.show();
         SubjectChooseOperation = findViewById(R.id.btSubjectChooseOperation);
         adminSubjectChoose = findViewById(R.id.llAdminSubjectChoose);
         adminSubjectAdd = findViewById(R.id.btAdminSubjectAdd);
@@ -159,7 +161,10 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectAddStudents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 adminAddStudent.setVisibility(View.VISIBLE);
+                progressDialog.dismiss();
             }
         });
         adminSubjectAdd.setOnClickListener(new View.OnClickListener() {
@@ -239,13 +244,15 @@ public class AdminSubject extends AppCompatActivity {
                 AddedStudentIDList.add(id);
                 SearchStudentNameList.remove(position);
                 SearchStudentIDList.remove(position);
-                adminAddStudent.setVisibility(View.GONE);
+                addedStudentAdapter.notifyDataSetChanged();
+                studentAdapter.notifyDataSetChanged();
                 Toast.makeText(AdminSubject.this, student + " is added.", Toast.LENGTH_SHORT).show();
             }
         });
         addedStudents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 String student = adapterView.getItemAtPosition(position).toString();
                 String id = AddedStudentIDList.get(position);
                 SearchStudentNameList.add(student);
@@ -253,15 +260,16 @@ public class AdminSubject extends AppCompatActivity {
                 AddedStudentNameList.remove(position);
                 AddedStudentIDList.remove(position);
                 adminAddStudent.setVisibility(View.GONE);
+                addedStudentAdapter.notifyDataSetChanged();
+                studentAdapter.notifyDataSetChanged();
                 Toast.makeText(AdminSubject.this, student + " is removed.", Toast.LENGTH_SHORT).show();
             }
         });
         adminSubjectAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Loading...");
+                progressDialog.setMessage("Initializing...");
                 progressDialog.show();
-
                 String name = adminSubjectNameAdd.getText().toString().trim();
                 String faculty = adminSubjectFacultyAdd.getText().toString().trim();
                 final String code = adminSubjectCodeAdd.getText().toString().trim().toUpperCase();
@@ -317,7 +325,7 @@ public class AdminSubject extends AppCompatActivity {
                             myRef.child(code).child("Schedule").child("Sunday").setValue("7");
                         }
 
-                        Toast.makeText(AdminSubject.this, "Add Information Successful.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminSubject.this, "New Subject Information Successful.", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         onBackPressed();
                         finish();
@@ -351,6 +359,9 @@ public class AdminSubject extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                progressDialog.dismiss();
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 deleteSubject.setVisibility(View.VISIBLE);
                 (AdminSubject.this).subjectAdapter.getFilter().filter(charSequence);
             }
@@ -363,6 +374,9 @@ public class AdminSubject extends AppCompatActivity {
         deleteSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                progressDialog.dismiss();
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 adminSubjectCodeDelete.setText(adapterView.getItemAtPosition(i).toString());
                 deleteSubject.setVisibility(View.GONE);
             }
@@ -370,6 +384,9 @@ public class AdminSubject extends AppCompatActivity {
         adminSubjectDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.dismiss();
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 final String code = adminSubjectCodeDelete.getText().toString().trim().toUpperCase();
                 if (code.isEmpty()) {
                     Toast.makeText(AdminSubject.this, "Input subject code.", Toast.LENGTH_SHORT).show();
@@ -384,6 +401,17 @@ public class AdminSubject extends AppCompatActivity {
             }
         });
 
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(adminAddStudent.getVisibility() == View.VISIBLE){
+            adminAddStudent.setVisibility(View.GONE);
+        }else {
+            super.onBackPressed();
+        }
     }
 
     public void onCheckBoxClicked(View view) {

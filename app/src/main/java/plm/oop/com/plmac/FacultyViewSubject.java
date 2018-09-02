@@ -89,11 +89,17 @@ public class FacultyViewSubject extends AppCompatActivity {
                         }
                         listDataHeaderDays.add(conSchedule);
                         listgetAttendanceDate = new ArrayList<>();
-                        if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0){
-                            for(DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()){
+                        if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0) {
+                            for (DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()) {
                                 listgetAttendanceDate.add(atten.getKey());
                             }
-                            listChildData.put(ds.getKey(),listgetAttendanceDate);
+                            ArrayList<String> listNothing = new ArrayList<>();
+                            listNothing.add("No information.");
+                            if (listgetAttendanceDate.isEmpty()) {
+                                listChildData.put(ds.getKey(),listNothing);
+                            } else {
+                                listChildData.put(ds.getKey(), listgetAttendanceDate);
+                            }
                         }
 
                     }

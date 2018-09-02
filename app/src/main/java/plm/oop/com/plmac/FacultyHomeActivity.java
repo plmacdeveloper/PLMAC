@@ -64,10 +64,9 @@ public class FacultyHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_faculty_home);
         fh_ca = findViewById(R.id.btFacultyHomeCheckAttendance);
 
-        Intent i = getIntent();
-
-        final String userNumber = i.getStringExtra("userNumber");
-        final String userName = i.getStringExtra("userName");
+        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+        final String userName = facultyPref.getString("userName", "");
+        final String userNumber = facultyPref.getString("userNumber", "");
         UserNameGlobal = userName;
         final ArrayList<String> startTimeCheck = new ArrayList<>();
         final ArrayList<String> endTimeCheck = new ArrayList<>();
@@ -81,13 +80,13 @@ public class FacultyHomeActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
                 final String dayOfWeek = sdf.format(cal.getTime());
                 for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
+                    if (userName.compareTo(ds.child("Faculty").getValue(String.class)) == 0) {
                         DatabaseReference refSchedule = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Schedule");
                         refSchedule.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot dsSched : dataSnapshot.getChildren()) {
-                                    if (dayOfWeek.compareTo(dsSched.getKey().toString()) == 0) {
+                                    if (dayOfWeek.matches(dsSched.getKey())) {
                                         startTimeCheck.add(ds.child("Time").child("Start").getValue().toString());
                                         endTimeCheck.add(ds.child("Time").child("End").getValue().toString());
                                         subjectCodeCheck.add(ds.getKey());
@@ -182,7 +181,107 @@ public class FacultyHomeActivity extends AppCompatActivity {
         fh_sg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveExcelFile(FacultyHomeActivity.this, userNumber + ".xls");
+                if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
+                    Log.e("ExelLog", "Storage not available or read only");
+                } else {
+                    final String fileName = userNumber + ".xls";
+                    final Workbook wb = new HSSFWorkbook();
+                    final CellStyle cs = wb.createCellStyle();
+                    cs.setFillForegroundColor(HSSFColor.LIME.index);
+                    cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+                    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Subject");
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Cell cell = null;
+                            for (DataSnapshot sub : dataSnapshot.getChildren()) {
+                                if (userName.compareTo(sub.child("Faculty").getValue(String.class)) == 0) {
+                                    final ArrayList<String> studentsExcel = new ArrayList<>();
+                                    final ArrayList<String> attendanceExcel = new ArrayList<>();
+                                    Sheet sheet = wb.createSheet(sub.getKey());
+                                    sheet.setColumnWidth(0,(15*500));
+                                    for (DataSnapshot addStudent : dataSnapshot.child(sub.getKey()).child("Students").getChildren()) {
+                                        String name = addStudent.getValue(String.class);
+                                        studentsExcel.add(name);
+                                    }
+                                    Row headings = sheet.createRow(0);
+                                    cell = headings.createCell(0);
+                                    cell.setCellValue("Student");
+                                    int ctrDate = 1;
+                                    for (DataSnapshot attendance : dataSnapshot.child(sub.getKey()).child("Attendance").getChildren()){
+                                        String date = attendance.getKey();
+                                        attendanceExcel.add(date);
+                                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM-dd-yyyy");
+                                        SimpleDateFormat ndf = new SimpleDateFormat("MM/dd/yy");
+                                        Date holder = null;
+                                        try {
+                                            holder = sdf.parse(date);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        date = ndf.format(holder);
+                                        cell = headings.createCell(ctrDate);
+                                        cell.setCellValue(date);
+                                        sheet.setColumnWidth(ctrDate,(15*150));
+                                        ctrDate++;
+                                    }
+                                for(int perStudent = 0 ; perStudent<studentsExcel.size();perStudent++) {
+                                    Row names = sheet.createRow(perStudent + 1);
+                                    cell = names.createCell(0);
+                                    cell.setCellValue(studentsExcel.get(perStudent));
+                                    for(int perAttendance = 0 ; perAttendance<attendanceExcel.size() ; perAttendance++) {
+                                        for (DataSnapshot stud : dataSnapshot.child(sub.getKey()).child("Attendance").child(attendanceExcel.get(perAttendance)).getChildren()) {
+                                            if(stud.getKey().matches(studentsExcel.get(perStudent))){
+                                                String status = stud.getValue(String.class);
+                                                cell = names.createCell(perAttendance+1);
+                                                cell.setCellValue(status);
+                                            }
+                                        }
+                                    }
+                                }
+                                }
+                            }
+                            File file = new File(FacultyHomeActivity.this.getExternalFilesDir(null), fileName);
+                            FileOutputStream os = null;
+
+                            try {
+                                os = new FileOutputStream(file);
+                                wb.write(os);
+                                Log.w("FileUtils", "Writing file" + file);
+                            } catch (IOException e) {
+                                Log.w("FileUtils", "Error writing " + file, e);
+                            } catch (Exception e) {
+                                Log.w("FileUtils", "Failed to save file", e);
+                            } finally {
+                                try {
+                                    if (null != os)
+                                        os.close();
+                                } catch (Exception ex) {
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+//
+////                        for (DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()) {
+////                            int count = 1;
+////                            for (final DataSnapshot date : dataSnapshot.getChildren()) {
+////                                cell = headings.createCell(count);
+////                                cell.setCellValue(date.getKey());
+////                                count++;
+////                                for (DataSnapshot stud : dataSnapshot.child(ds.getKey()).child("Attendance").child(atten.getKey()).getChildren()) {
+////                                    for (int a = 0; a < studentsExcel.size(); a++) {
+////                                        if (ds.getKey().compareTo(studentsExcel.get(a)) == 0) {
+////                                            Log.i("check", studentsExcel.get(a) + " is " + ds.getValue() + " last " + date.getKey());
+////
             }
         });
 
@@ -219,142 +318,6 @@ public class FacultyHomeActivity extends AppCompatActivity {
 
     }
 
-    private boolean saveExcelFile(final Context context, final String fileName) {
-        if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
-            Log.e("ExelLog", "Storage not available or read only");
-            return false;
-        }
-
-        final ArrayList<String> studentsExcel = new ArrayList<>();
-        final boolean[] success = {false};
-        final String userName = UserNameGlobal;
-        final Workbook wb = new HSSFWorkbook();
-        final CellStyle cs = wb.createCellStyle();
-        cs.setFillForegroundColor(HSSFColor.LIME.index);
-        cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("Subject");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (userName.compareTo(ds.child("Faculty").getValue().toString()) == 0) {
-                        final Sheet sheet = wb.createSheet(ds.getKey());
-                        DatabaseReference studentsRef = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Students");
-                        studentsRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                    String name = ds.getValue(String.class);
-                                    studentsExcel.add(name);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Log.i("wtf", "0");
-                            }
-                        });
-                        Cell cell = null;
-                        Log.i("length",String.valueOf(studentsExcel.size()));
-//                        for (int ctr = 1; ctr < studentsExcel.size()+1; ctr++) {
-//                            Log.i("wtf", studentsExcel.get(1));
-//                            Row names = sheet.createRow(ctr);
-//                            cell = names.createCell(0);
-//                            cell.setCellValue(studentsExcel.get(ctr));
-//                        }
-//                        Row names = sheet.createRow(1);
-//                        cell = names.createCell(0);
-//                        cell.setCellValue(studentsExcel.get(0));
-                        final Row headings = sheet.createRow(0);
-                        cell = headings.createCell(0);
-                        cell.setCellValue("Name");
-                        final DatabaseReference AttendanceRef = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Attendance");
-                        AttendanceRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int count = 1;
-                                for (final DataSnapshot date : dataSnapshot.getChildren()) {
-                                    Cell cell = null;
-                                    cell = headings.createCell(count);
-                                    cell.setCellValue(date.getKey());
-                                    count++;
-                                    AttendanceRef.child(ds.getKey()).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                for (int a = 0; a < studentsExcel.size(); a++) {
-                                                    if (ds.getKey().compareTo(studentsExcel.get(a)) == 0) {
-                                                        Log.i("check", studentsExcel.get(a) + " is " + ds.getValue() + " last " + date.getKey());
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-                File file = new File(context.getExternalFilesDir(null), fileName);
-                FileOutputStream os = null;
-
-                try {
-                    os = new FileOutputStream(file);
-                    wb.write(os);
-                    Log.i("context", context.getExternalFilesDir(null).toString());
-                    Log.w("FileUtils", "Writing file" + file);
-                    success[0] = true;
-                } catch (IOException e) {
-                    Log.w("FileUtils", "Error writing " + file, e);
-                } catch (Exception e) {
-                    Log.w("FileUtils", "Failed to save file", e);
-                } finally {
-                    try {
-                        if (null != os)
-                            os.close();
-                    } catch (Exception ex) {
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return success[0];
-//        Row row = sheet.createRow(0);
-//
-//        c = row.createCell(0);
-//        c.setCellValue("Item Number");
-//        c.setCellStyle(cs);
-//
-//        c = row.createCell(1);
-//        c.setCellValue("Quantity");
-//        c.setCellStyle(cs);
-//
-//        c = row.createCell(2);
-//        c.setCellValue("Price");
-//        c.setCellStyle(cs);
-//
-//        sheet1.setColumnWidth(0, (15 * 500));
-//        sheet1.setColumnWidth(1, (15 * 500));
-//        sheet1.setColumnWidth(2, (15 * 500));
-
-        // Create a path where we will place our List of objects on external storage
-    }
 
     public static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
