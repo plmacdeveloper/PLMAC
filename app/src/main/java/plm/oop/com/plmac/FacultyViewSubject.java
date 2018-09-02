@@ -92,14 +92,14 @@ public class FacultyViewSubject extends AppCompatActivity {
                         if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0) {
                             for (DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()) {
                                 listgetAttendanceDate.add(atten.getKey());
+
                             }
+                                listChildData.put(ds.getKey(), listgetAttendanceDate);
+
+                        }else{
                             ArrayList<String> listNothing = new ArrayList<>();
                             listNothing.add("No information.");
-                            if (listgetAttendanceDate.isEmpty()) {
-                                listChildData.put(ds.getKey(),listNothing);
-                            } else {
-                                listChildData.put(ds.getKey(), listgetAttendanceDate);
-                            }
+                            listChildData.put(ds.getKey(),listNothing);
                         }
 
                     }

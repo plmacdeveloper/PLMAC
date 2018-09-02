@@ -1,10 +1,12 @@
 package plm.oop.com.plmac;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
@@ -34,12 +36,13 @@ public class StudentViewSubjects extends AppCompatActivity {
     List<String> listgetAttendanceStatus;
     HashMap<String, List<String>> listChildDataDate;
     HashMap<String, List<String>> listChildDataStatus;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_view_subject);
         expListView = findViewById(R.id.explv2);
-
+        progressDialog = new ProgressDialog(this);
         listDataHeaderCode = new ArrayList<>();
         listDataHeaderName = new ArrayList<>();
         listDataHeaderRoom = new ArrayList<>();
@@ -52,10 +55,11 @@ public class StudentViewSubjects extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                SharedPreferences studentPref = getSharedPreferences("Student", 0);
+                String userNumberStudentPref = studentPref.getString("userNumber", "");
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    SharedPreferences studentPref = getSharedPreferences("Student", 0);
-                    String userNumberStudentPref = studentPref.getString("userNumber", "");
                     if (ds.child("Students").hasChild(userNumberStudentPref)) {
+                        String userNameStudentPref = ds.child("Students").child(userNumberStudentPref).getValue(String.class);
                         listDataHeaderCode.add(ds.getKey());
                         listDataHeaderName.add(ds.child("Name").getValue(String.class));
                         listDataHeaderRoom.add(ds.child("Room").getValue(String.class));
@@ -88,23 +92,27 @@ public class StudentViewSubjects extends AppCompatActivity {
                         if(dataSnapshot.child(ds.getKey()).child("Attendance").getChildrenCount() != 0){
                             for(DataSnapshot atten : dataSnapshot.child(ds.getKey()).child("Attendance").getChildren()){
                                 listgetAttendanceDate.add(atten.getKey());
+                                Log.i("atten",atten.getKey());
+                                Log.i("atten",userNameStudentPref+"!");
                                 for(DataSnapshot stat : dataSnapshot.child(ds.getKey()).child("Attendance").child(atten.getKey()).getChildren()){
-                                    if(userNumberStudentPref.matches(stat.getKey())){
+                                    Log.i("atten",stat.getKey());
+                                    Log.i("atten",String.valueOf(userNameStudentPref.compareTo(stat.getKey())));
+                                    if(userNameStudentPref.compareTo(stat.getKey()) == 0){
                                         listgetAttendanceStatus.add(stat.getValue(String.class));
+                                        Log.i("atten",stat.getValue(String.class));
                                     }
                                 }
                             }
-                            ArrayList<String> listNothing = new ArrayList<>();
-                            listNothing.add("No information.");
-                            if (listgetAttendanceDate.isEmpty()) {
-                                listChildDataDate.put(ds.getKey(),listNothing);
-                                listChildDataStatus.put(ds.getKey(),listNothing);
-                            } else {
                                 listChildDataDate.put(ds.getKey(), listgetAttendanceDate);
                                 listChildDataStatus.put(ds.getKey(),listgetAttendanceStatus);
-                            }
-
+                        }else{
+                            ArrayList<String> listNothing = new ArrayList<>();
+                            listNothing.add("No information.");
+                            listChildDataDate.put(ds.getKey(),listNothing);
+                            listChildDataStatus.put(ds.getKey(),listNothing);
                         }
+                        Log.i("wtf",String.valueOf(listChildDataDate));
+                        Log.i("wtf2",String.valueOf(listChildDataStatus));
                     }
                 }
             }

@@ -63,6 +63,7 @@ public class StudentActivity extends AppCompatActivity {
                                     SharedPreferences studentPref = getSharedPreferences("Student",0);
                                     SharedPreferences.Editor editor = studentPref.edit();
                                     editor.putString("userNumber",student.child("userNumber").getValue(String.class));
+                                    editor.putString("userName",student.child("userName").getValue(String.class));
                                     editor.putBoolean("isLoggedIn",true);
                                     editor.apply();
                                     Intent i = new Intent(StudentActivity.this, StudentMainActivity.class);
