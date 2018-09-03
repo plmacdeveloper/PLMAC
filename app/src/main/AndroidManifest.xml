@@ -16,7 +16,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".IntroScreenActivity"
-            android:theme="@style/LogoScreen">
+            android:theme="@style/LogoScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +26,12 @@
         </activity>
         <activity
             android:name=".StudentActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".FacultyActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".InformationActivity"
             android:theme="@style/LogoScreen" />

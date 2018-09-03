@@ -6,31 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@mipmap/real_ivory"
-    tools:context=".IntroScreenActivity">
+    android:background="@drawable/facultylogin"
+    >
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
-
-    <ImageView
-        android:id="@+id/ivFacultyPic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/app_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:src="@mipmap/faculty_icon" />
 
     <ScrollView
-
         android:id="@+id/linlay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivFacultyPic"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
+        android:layout_marginRight="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,12 +34,11 @@
                 android:background="@drawable/et_bg"
                 android:fontFamily="sans-serif"
                 android:hint="ID Number"
-
                 android:inputType="textAutoComplete"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/etFacultyPassword"
@@ -59,13 +47,12 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/et_bg"
                 android:fontFamily="sans-serif"
-
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
     </ScrollView>
@@ -77,13 +64,14 @@
         android:layout_below="@+id/linlay1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_bg2"
+        android:background="@drawable/btn_bg3"
         android:fontFamily="@font/quicksand_bold"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
         android:text="Login "
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

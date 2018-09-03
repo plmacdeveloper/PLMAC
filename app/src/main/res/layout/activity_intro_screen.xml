@@ -5,71 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@mipmap/real_ivory"
+    android:background="@drawable/splash"
     tools:context=".IntroScreenActivity">
 
     <RelativeLayout
+        android:id="@+id/rellay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:background="@drawable/bg"
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/newlogo" />
-
-        <RelativeLayout
-            android:id="@+id/rellay"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivLogo"
-            android:visibility="gone">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvPlm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="PAMANTASAN NG LUNGSOD NG MAYNILA"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvAc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Attendance Checker"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btStudentAccess"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_below="@+id/tvAc"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_bg3"
-                android:fontFamily="@font/quicksand_bold"
-                android:paddingLeft="70dp"
-                android:paddingRight="70dp"
+                android:fontFamily="@font/impact"
+                android:paddingLeft="110dp"
+                android:paddingRight="100dp"
                 android:text="Student"
                 android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/btFacultyAccess"
@@ -77,28 +45,29 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/btStudentAccess"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/btn_bg3"
-                android:fontFamily="@font/quicksand_bold"
-                android:paddingLeft="70dp"
-                android:paddingRight="70dp"
+                android:fontFamily="@font/impact"
+                android:paddingLeft="110dp"
+                android:paddingRight="110dp"
                 android:text="Faculty"
                 android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/btInformation"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@+id/btFacultyAccess"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@mipmap/infologo"
 
-                />
-        </RelativeLayout>
+        </LinearLayout>
 
+        <Button
+            android:id="@+id/btInformation"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+
+            />
     </RelativeLayout>
 
 </RelativeLayout>
