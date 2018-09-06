@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,8 @@ public class FacultyActivity extends AppCompatActivity {
     private Button facultyLogin;
     private EditText facultyUsername, facultyPassword;
     private ProgressDialog progressDialog;
+    private TextInputLayout usernameWrapper;
+    private TextInputLayout passwordWrapper;
     private ScrollView scrollView;
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
@@ -43,6 +47,11 @@ public class FacultyActivity extends AppCompatActivity {
         facultyLogin = findViewById(R.id.btFacultyLogin);
         facultyUsername = findViewById(R.id.etFacultyUsername);
         facultyPassword = findViewById(R.id.etFacultyPassword);
+        usernameWrapper = findViewById(R.id.wrapperFacultyUsername);
+        passwordWrapper = findViewById(R.id.wrapperFacultyPassword);
+        usernameWrapper.setHint("Username");
+        passwordWrapper.setHint("Password");
+
         scrollView = findViewById(R.id.linlay1);
         handler.postDelayed(runnable, 1000);
 
@@ -50,53 +59,78 @@ public class FacultyActivity extends AppCompatActivity {
 
 
             public void onClick(View view) {
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mRef = database.getReference("Faculty");
-                Query query = mRef.orderByChild("userNumber").equalTo(facultyUsername.getText().toString());
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
+                if(!validateForm()){
+
+                }else {
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.show();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference mRef = database.getReference("Faculty");
+                    Query query = mRef.orderByChild("userNumber").equalTo(facultyUsername.getText().toString());
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
 //                                    startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
 //
-                            for (DataSnapshot faculty : dataSnapshot.getChildren()) {
+                                for (DataSnapshot faculty : dataSnapshot.getChildren()) {
 //                                Toast.makeText(getApplicationContext(), faculty.child("userProgram").getValue(String.class), Toast.LENGTH_SHORT).show();
-                                if (faculty.child("userPassword").getValue(String.class).equals(facultyPassword.getText().toString())) {
-                                    Toast.makeText(FacultyActivity.this,"Hello "+faculty.child("userName").getValue(String.class)+"! Login Successful!",Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-                                    SharedPreferences facultyPref = getSharedPreferences("Faculty",0);
-                                    SharedPreferences.Editor editor = facultyPref.edit();
-                                    editor.putString("userNumber",faculty.child("userNumber").getValue(String.class));
-                                    editor.putString("userName",faculty.child("userName").getValue(String.class));
-                                    editor.putBoolean("isLoggedIn",true);
-                                    editor.apply();
-                                    Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
-                                    i.putExtra("userName", faculty.child("userName").getValue(String.class));
-                                    i.putExtra("userNumber", faculty.child("userNumber").getValue(String.class));
-                                    startActivity(i);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
+                                    if (faculty.child("userPassword").getValue(String.class).equals(facultyPassword.getText().toString())) {
+                                        Toast.makeText(FacultyActivity.this, "Hello " + faculty.child("userName").getValue(String.class) + "! Login Successful!", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+                                        SharedPreferences.Editor editor = facultyPref.edit();
+                                        editor.putString("userNumber", faculty.child("userNumber").getValue(String.class));
+                                        editor.putString("userName", faculty.child("userName").getValue(String.class));
+                                        editor.putBoolean("isLoggedIn", true);
+                                        editor.apply();
+                                        Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
+                                        i.putExtra("userName", faculty.child("userName").getValue(String.class));
+                                        i.putExtra("userNumber", faculty.child("userNumber").getValue(String.class));
+                                        startActivity(i);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                    }
                                 }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
 
-                    }
-                });
-
-
+                }
             }
         });
 
     }
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String usernumber = facultyUsername.getText().toString();
+        if (TextUtils.isEmpty(usernumber)) {
+            usernameWrapper.setError("Required");
+            valid = false;
+        } else {
+            usernameWrapper.setError(null);
+        }
+        String password = facultyPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            passwordWrapper.setError("Required");
+            valid = false;
+        } else {
+            passwordWrapper.setError(null);
+        }
+
+
+        return valid;
+    }
+
 }

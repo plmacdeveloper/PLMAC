@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +57,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 
-public class FacultyHomeActivity extends AppCompatActivity {
+public class FacultyHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private Button fh_vp, fh_ss, fh_ca, fh_sg;
     private TextView welcomeMessage;
@@ -316,7 +322,78 @@ public class FacultyHomeActivity extends AppCompatActivity {
             }
         });
 
+
+        //MENU
+        Toolbar mToolbar = findViewById(R.id.nav_action_bar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+
+
+        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayoutFaculty);
+        ActionBarDrawerToggle mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
+        //END OF MENU
     }
+
+    public void logout() {
+            new AlertDialog.Builder(this)
+            .setTitle("Logout?")
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+                    SharedPreferences.Editor editor = facultyPref.edit();
+                    editor.clear();
+                    editor.apply();
+                    startActivity(new Intent(FacultyHomeActivity.this, IntroScreenActivity.class));
+                    finish();
+                }
+            }).create().show();
+        Log.i("Back", "Back");
+    }
+
+
+    public void viewHome() {
+        startActivity(new Intent(FacultyHomeActivity.this, FacultyHomeActivity.class));
+    }
+
+    public void viewNews() {
+        startActivity(new Intent(FacultyHomeActivity.this, NewsFacultyActivity.class));
+    }
+
+    public void viewUpdatePassword() {
+        startActivity(new Intent(FacultyHomeActivity.this, FacultyUpdatePassword.class));
+    }
+
+    public void viewSubjects() {
+        startActivity(new Intent(FacultyHomeActivity.this, FacultyViewSubject.class));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int i = item.getItemId();
+
+        if (i == R.id.nav_home) {
+            viewNews();
+        } else if (i == R.id.nav_profile) {
+            viewHome();
+        } else if (i == R.id.nav_update_password) {
+            viewUpdatePassword();
+        } else if (i == R.id.nav_subjects) {
+            viewSubjects();
+        } else if (i == R.id.nav_logout) {
+            logout();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutFaculty);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    //END MENU
 
 
     public static boolean isExternalStorageReadOnly() {
@@ -337,20 +414,6 @@ public class FacultyHomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Logout?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
-                        SharedPreferences.Editor editor = facultyPref.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(FacultyHomeActivity.this, IntroScreenActivity.class));
-                        finish();
-                    }
-                }).create().show();
-        Log.i("Back", "Back");
+       logout();
     }
 }

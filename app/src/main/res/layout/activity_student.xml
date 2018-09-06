@@ -17,40 +17,52 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etStudentUsername"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="sans-serif"
-                android:hint="ID Number"
-                android:inputType="textAutoComplete"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="24sp"/>
 
-            <EditText
-                android:id="@+id/etStudentPassword"
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/wrapperStudentUsername"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="sans-serif"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                >
+                <EditText
+                    android:id="@+id/etStudentUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:fontFamily="sans-serif"
+                    android:hint="ID Number"
+                    android:inputType="text"
+                    android:textSize="20sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/wrapperStudentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                >
+                <EditText
+                    android:id="@+id/etStudentPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:fontFamily="sans-serif"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textSize="20sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
 
         </LinearLayout>
     </ScrollView>
@@ -58,10 +70,9 @@
     <Button
         android:id="@+id/btStudentLogin"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="40sp"
         android:layout_below="@+id/linlay11"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_bg3"
         android:fontFamily="@font/quicksand_bold"
         android:paddingLeft="70dp"
@@ -70,7 +81,7 @@
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 
 

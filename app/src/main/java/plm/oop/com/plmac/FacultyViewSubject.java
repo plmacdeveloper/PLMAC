@@ -8,10 +8,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FacultyViewSubject extends AppCompatActivity {
+public class FacultyViewSubject extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     ExpandableListAdapter expListAdapter;
     ExpandableListView expListView;
     List<String> listDataHeaderCode;
@@ -174,11 +180,87 @@ public class FacultyViewSubject extends AppCompatActivity {
         });
 
 
+        //MENU
+        Toolbar mToolbar = findViewById(R.id.nav_action_bar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+
+
+        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayoutFaculty);
+        ActionBarDrawerToggle mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
+        //END OF MENU
+    }
+
+    public void logout() {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Logout?")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+                        SharedPreferences.Editor editor = facultyPref.edit();
+                        editor.clear();
+                        editor.apply();
+                        startActivity(new Intent(FacultyViewSubject.this, IntroScreenActivity.class));
+                        finish();
+                    }
+                }).create().show();
+        Log.i("Back", "Back");
+    }
+
+
+    public void viewHome() {
+        startActivity(new Intent(FacultyViewSubject.this, FacultyHomeActivity.class));
+    }
+
+    public void viewNews() {
+        startActivity(new Intent(FacultyViewSubject.this, NewsFacultyActivity.class));
+    }
+
+    public void viewUpdatePassword() {
+        startActivity(new Intent(FacultyViewSubject.this, FacultyUpdatePassword.class));
+    }
+
+    public void viewSubjects() {
+        startActivity(new Intent(FacultyViewSubject.this, FacultyViewSubject.class));
     }
 
     @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int i = item.getItemId();
+
+        if (i == R.id.nav_home) {
+            viewNews();
+        } else if (i == R.id.nav_profile) {
+            viewHome();
+        } else if (i == R.id.nav_update_password) {
+            viewUpdatePassword();
+        } else if (i == R.id.nav_subjects) {
+            viewSubjects();
+        } else if (i == R.id.nav_logout) {
+            logout();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutFaculty);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    //END MENU
+
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutFaculty);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            startActivity(new Intent(FacultyViewSubject.this, FacultyHomeActivity.class));
+            finish();
+        }
     }
 
 
