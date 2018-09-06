@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,11 +29,14 @@ import java.util.ArrayList;
 public class NewsFacultyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_faculty);
-
+        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+        final String userName = facultyPref.getString("userName", "");
+        final String userNumber = facultyPref.getString("userNumber", "");
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference newsReference = firebaseDatabase.getReference("Admin").child("News");
         newsReference.addValueEventListener(new ValueEventListener() {
@@ -73,6 +77,11 @@ public class NewsFacultyActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerFacultyName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerFacultyNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
 
@@ -96,7 +105,8 @@ public class NewsFacultyActivity extends AppCompatActivity implements Navigation
 
 
     public void viewHome() {
-        startActivity(new Intent(NewsFacultyActivity.this, FacultyHomeActivity.class));
+        startActivity(new Intent(NewsFacultyActivity.this, FacultyViewProfile.class));
+        finish();
     }
 
     public void viewNews() {
@@ -105,10 +115,12 @@ public class NewsFacultyActivity extends AppCompatActivity implements Navigation
 
     public void viewUpdatePassword() {
         startActivity(new Intent(NewsFacultyActivity.this, FacultyUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(NewsFacultyActivity.this, FacultyViewSubject.class));
+        finish();
     }
 
     @Override
@@ -137,8 +149,7 @@ public class NewsFacultyActivity extends AppCompatActivity implements Navigation
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            startActivity(new Intent(NewsFacultyActivity.this, FacultyHomeActivity.class));
-            finish();
+            viewHome();
         }
     }
 }

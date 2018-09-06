@@ -73,6 +73,7 @@ public class FacultyHomeActivity extends AppCompatActivity implements Navigation
         SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
         final String userName = facultyPref.getString("userName", "");
         final String userNumber = facultyPref.getString("userNumber", "");
+
         UserNameGlobal = userName;
         final ArrayList<String> startTimeCheck = new ArrayList<>();
         final ArrayList<String> endTimeCheck = new ArrayList<>();
@@ -336,6 +337,11 @@ public class FacultyHomeActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerFacultyName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerFacultyNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
 
@@ -359,19 +365,23 @@ public class FacultyHomeActivity extends AppCompatActivity implements Navigation
 
 
     public void viewHome() {
-        startActivity(new Intent(FacultyHomeActivity.this, FacultyHomeActivity.class));
+        startActivity(new Intent(FacultyHomeActivity.this, FacultyViewProfile.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(FacultyHomeActivity.this, NewsFacultyActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
         startActivity(new Intent(FacultyHomeActivity.this, FacultyUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(FacultyHomeActivity.this, FacultyViewSubject.class));
+        finish();
     }
 
     @Override

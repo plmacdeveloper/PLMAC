@@ -53,11 +53,13 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
 
 
     private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_subject);
+        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+        final String userName = facultyPref.getString("userName", "");
+        final String userNumber = facultyPref.getString("userNumber", "");
         expListView = findViewById(R.id.explv1);
         final ArrayList<String> listAttendance = new ArrayList<String>();
         listDataHeaderCode = new ArrayList<>();
@@ -193,6 +195,11 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerFacultyName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerFacultyNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
 
@@ -216,7 +223,7 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
 
 
     public void viewHome() {
-        startActivity(new Intent(FacultyViewSubject.this, FacultyHomeActivity.class));
+        startActivity(new Intent(FacultyViewSubject.this, FacultyViewProfile.class));
     }
 
     public void viewNews() {
@@ -258,8 +265,7 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            startActivity(new Intent(FacultyViewSubject.this, FacultyHomeActivity.class));
-            finish();
+            viewHome();
         }
     }
 

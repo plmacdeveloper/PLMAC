@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,9 @@ public class NewsStudentActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_student);
-
+        SharedPreferences studentPref = getSharedPreferences("Student", 0);
+        final String userName = studentPref.getString("userName", "");
+        final String userNumber = studentPref.getString("userNumber", "");
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference newsReference = firebaseDatabase.getReference("Admin").child("News");
         newsReference.addValueEventListener(new ValueEventListener() {
@@ -78,6 +81,11 @@ public class NewsStudentActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerStudentName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerStudentNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
     @Override

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,14 +41,15 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
     private TextInputLayout verifyPasswordWrapper;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference("Faculty");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_update_password);
         progressDialog = new ProgressDialog(this);
-        Intent i = getIntent();
-        final String userNumber = i.getStringExtra("userNumber");
+        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
+        final String userName = facultyPref.getString("userName", "");
+        final String userNumber = facultyPref.getString("userNumber", "");
+
         fup_op = findViewById(R.id.etFacultyUpdatePasswordOldPassword);
         fup_np = findViewById(R.id.etFacultyUpdatePasswordNewPassword);
         fup_vnp = findViewById(R.id.etFacultyUpdatePasswordVerifyPassword);
@@ -124,6 +126,11 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerFacultyName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerFacultyNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
 
@@ -147,11 +154,13 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
 
 
     public void viewHome() {
-        startActivity(new Intent(FacultyUpdatePassword.this, FacultyHomeActivity.class));
+        startActivity(new Intent(FacultyUpdatePassword.this, FacultyViewProfile.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(FacultyUpdatePassword.this, NewsFacultyActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
@@ -160,6 +169,7 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
 
     public void viewSubjects() {
         startActivity(new Intent(FacultyUpdatePassword.this, FacultyViewSubject.class));
+        finish();
     }
 
     @Override
@@ -225,8 +235,7 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            startActivity(new Intent(FacultyUpdatePassword.this, FacultyHomeActivity.class));
-            finish();
+            viewHome();
         }
     }
 }

@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayoutFaculty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/real_ivory"
+    android:orientation="vertical"
     tools:context=".FacultyViewProfile">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar"></include>
-
-    <RelativeLayout
-        android:id="@+id/rlFacultyViewProfileInfo"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_marginBottom="30sp"
 
         >
-
+        <include
+            layout="@layout/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
         <TextView
             android:id="@+id/tvFacultyViewProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/quicksand_bold"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            app:fontFamily="@font/quicksand_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -33,11 +46,9 @@
             android:id="@+id/tvFacultyViewProfileCollege"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvFacultyViewProfileName"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/quicksand_bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:fontFamily="@font/quicksand_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -45,28 +56,33 @@
             android:id="@+id/tvFacultyViewProfileIDNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvFacultyViewProfileCollege"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/quicksand_bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:fontFamily="@font/quicksand_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btFacultyViewProfileUpdatePassword"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/tvFacultyViewProfileIDNumber"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/btn_bg"
-            android:layout_centerHorizontal="true"
-            android:text="Update Password"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+        <!--<Button-->
+            <!--android:id="@+id/btFacultyViewProfileUpdatePassword"-->
+            <!--android:layout_width="250dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:background="@drawable/btn_bg"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="Update Password"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="20sp" />-->
 
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
-    </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header_faculty"
+        app:menu="@menu/navigation_menu_faculty"/>
 
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

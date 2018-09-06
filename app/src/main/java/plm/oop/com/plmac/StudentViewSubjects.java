@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +50,9 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences studentPref = getSharedPreferences("Student", 0);
+        final String userNumber = studentPref.getString("userNumber", "");
+        String userName = studentPref.getString("userName", "");
         setContentView(R.layout.activity_student_view_subject);
         expListView = findViewById(R.id.explv2);
         progressDialog = new ProgressDialog(this);
@@ -64,12 +68,12 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                SharedPreferences studentPref = getSharedPreferences("Student", 0);
-                String userNumberStudentPref = studentPref.getString("userNumber", "");
+
+
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.child("Students").hasChild(userNumberStudentPref)) {
-                        String userNameStudentPref = ds.child("Students").child(userNumberStudentPref).getValue(String.class);
+                    if (ds.child("Students").hasChild(userNumber)) {
+                        String userNameStudentPref = ds.child("Students").child(userNumber).getValue(String.class);
                         listDataHeaderCode.add(ds.getKey());
                         listDataHeaderName.add(ds.child("Name").getValue(String.class));
                         listDataHeaderRoom.add(ds.child("Room").getValue(String.class));
@@ -168,6 +172,11 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerStudentName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerStudentNumber);
+        navUsernumber.setText(userNumber);
         //END OF MENU
     }
 
