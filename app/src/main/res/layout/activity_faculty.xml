@@ -38,7 +38,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/etFacultyPassword"
@@ -52,7 +52,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>
