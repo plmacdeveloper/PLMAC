@@ -26,33 +26,43 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etFacultyUsername"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="sans-serif"
-                android:hint="ID Number"
-                android:inputType="textAutoComplete"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/etFacultyPassword"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/wrapperFacultyUsername"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="sans-serif"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                >
+                <EditText
+                    android:id="@+id/etFacultyUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:fontFamily="sans-serif"
+                    android:hint="ID Number"
+                    android:inputType="text"
+                    android:textSize="20sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/wrapperFacultyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                >
+                <EditText
+                    android:id="@+id/etFacultyPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:fontFamily="sans-serif"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textSize="20sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
 
         </LinearLayout>
     </ScrollView>

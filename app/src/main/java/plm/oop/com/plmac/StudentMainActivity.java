@@ -50,7 +50,7 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
 
         SharedPreferences studentPref = getSharedPreferences("Student", 0);
         String userNumber = studentPref.getString("userNumber", "");
-
+        String userName = studentPref.getString("userName", "");
 
         Toolbar mToolbar = findViewById(R.id.nav_action_bar);
         mToolbar.setTitle("");
@@ -66,6 +66,11 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(StudentMainActivity.this);
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerStudentName);
+        navUsername.setText(userName);
+        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerStudentNumber);
+        navUsernumber.setText(userNumber);
 
         //START OF QR CODE
         QRCodeWriter writer = new QRCodeWriter();
@@ -118,7 +123,7 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            logout();
         }
     }
 

@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StudentActivity extends AppCompatActivity {
 
-    private Button  studentLogin;
+    private Button studentLogin;
     private EditText studentUsername, studentPassword;
+    private TextInputLayout usernameWrapper;
+    private TextInputLayout passwordWrapper;
+
 
     private ProgressDialog progressDialog;
     private ScrollView scrollView;
@@ -38,6 +43,7 @@ public class StudentActivity extends AppCompatActivity {
             studentLogin.setVisibility(View.VISIBLE);
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +54,29 @@ public class StudentActivity extends AppCompatActivity {
 
         studentUsername = findViewById(R.id.etStudentUsername);
         studentPassword = findViewById(R.id.etStudentPassword);
+
+        usernameWrapper = findViewById(R.id.wrapperStudentUsername);
+        passwordWrapper = findViewById(R.id.wrapperStudentPassword);
+        usernameWrapper.setHint("Username");
+        passwordWrapper.setHint("Password");
+
+
         scrollView = findViewById(R.id.linlay11);
         handler.postDelayed(runnable, 1000);
 
         studentLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                if(!validateForm()){
+
+                }else{
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mRef = database.getReference("Student");
-                Query query =mRef.orderByChild("userNumber").equalTo(studentUsername.getText().toString());
+                Query query = mRef.orderByChild("userNumber").equalTo(studentUsername.getText().toString());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,28 +84,27 @@ public class StudentActivity extends AppCompatActivity {
 //                                    startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
 //
                             for (DataSnapshot student : dataSnapshot.getChildren()) {
+
 //                                Toast.makeText(getApplicationContext(), faculty.child("userProgram").getValue(String.class), Toast.LENGTH_SHORT).show();
-                                if (student.child("userPassword").getValue(String.class).equals(studentPassword.getText().toString())){
+                                if (student.child("userPassword").getValue(String.class).equals(studentPassword.getText().toString())) {
 //                                startActivity(new Intent(FacultyActivity.this, FacultyHomeActivity.class));
-                                    Toast.makeText(StudentActivity.this,"Hello "+student.child("userName").getValue(String.class)+"! Login Successful!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StudentActivity.this, "Hello " + student.child("userName").getValue(String.class) + "! Login Successful!", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
-                                    SharedPreferences studentPref = getSharedPreferences("Student",0);
+                                    SharedPreferences studentPref = getSharedPreferences("Student", 0);
                                     SharedPreferences.Editor editor = studentPref.edit();
-                                    editor.putString("userNumber",student.child("userNumber").getValue(String.class));
-                                    editor.putString("userName",student.child("userName").getValue(String.class));
-                                    editor.putBoolean("isLoggedIn",true);
+                                    editor.putString("userNumber", student.child("userNumber").getValue(String.class));
+                                    editor.putString("userName", student.child("userName").getValue(String.class));
+                                    editor.putBoolean("isLoggedIn", true);
                                     editor.apply();
                                     Intent i = new Intent(StudentActivity.this, StudentMainActivity.class);
-                                    i.putExtra("userNumber",student.child("userNumber").getValue(String.class));
+                                    i.putExtra("userNumber", student.child("userNumber").getValue(String.class));
                                     startActivity(i);
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                         }
@@ -98,11 +115,32 @@ public class StudentActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-            });
-            }
+                });
+            }}
         });
 
 
-
     }
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String usernumber = studentUsername.getText().toString();
+        if (TextUtils.isEmpty(usernumber)) {
+            usernameWrapper.setError("Required");
+            valid = false;
+        } else {
+            usernameWrapper.setError(null);
+        }
+        String password = studentPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            passwordWrapper.setError("Required");
+            valid = false;
+        } else {
+            passwordWrapper.setError(null);
+        }
+
+
+        return valid;
+    }
+
 }
