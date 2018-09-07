@@ -38,7 +38,10 @@
                 android:id="@+id/qrlinlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                >
 
                 <TextView
                     android:id="@+id/tvScanner"
@@ -53,12 +56,17 @@
                 <TextView
 
                     android:id="@+id/tvScanResult"
-                    android:layout_width="match_parent"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/result"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:maxLines="100"
+                    android:scrollHorizontally="false"
+                    />
             </LinearLayout>
             <SurfaceView
                 android:id="@+id/svCameraPreview"
