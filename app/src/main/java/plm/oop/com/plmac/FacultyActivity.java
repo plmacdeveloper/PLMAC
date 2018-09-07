@@ -84,9 +84,7 @@ public class FacultyActivity extends AppCompatActivity {
                                         editor.putString("userName", faculty.child("userName").getValue(String.class));
                                         editor.putBoolean("isLoggedIn", true);
                                         editor.apply();
-                                        Intent i = new Intent(FacultyActivity.this, FacultyHomeActivity.class);
-                                        i.putExtra("userName", faculty.child("userName").getValue(String.class));
-                                        i.putExtra("userNumber", faculty.child("userNumber").getValue(String.class));
+                                        Intent i = new Intent(FacultyActivity.this, FacultyViewProfile.class);
                                         startActivity(i);
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
