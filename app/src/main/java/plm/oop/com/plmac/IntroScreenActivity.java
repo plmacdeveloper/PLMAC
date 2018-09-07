@@ -53,7 +53,7 @@ public class IntroScreenActivity extends AppCompatActivity {
             i.putExtra("userNumber",userNumberStudentPref);
             startActivity(i);
         }else if(checkIsLoggedIn2){
-            Intent i = new Intent(IntroScreenActivity.this,FacultyHomeActivity.class);
+            Intent i = new Intent(IntroScreenActivity.this,FacultyViewProfile.class);
             i.putExtra("userNumber",userNumberFacultyPref);
             i.putExtra("userName",userNameFacultyPref);
             startActivity(i);

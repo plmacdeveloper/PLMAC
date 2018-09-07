@@ -28,62 +28,12 @@
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30sp"
-            >
-
-
-            <LinearLayout
-                android:id="@+id/qrlinlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
-                >
-
-                <TextView
-                    android:id="@+id/tvScanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:text="SCANNER"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-
-                    android:id="@+id/tvScanResult"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/result"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:layout_weight="1"
-                    android:ellipsize="none"
-                    android:maxLines="100"
-                    android:scrollHorizontally="false"
-                    />
-            </LinearLayout>
-            <SurfaceView
-                android:id="@+id/svCameraPreview"
-                android:layout_width="450px"
-                android:layout_height="450px"
-
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
             >
-        <TextView
+
+            <TextView
             android:id="@+id/tvFacultyViewProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +62,19 @@
             app:fontFamily="@font/quicksand_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
+            <Button
+                android:id="@+id/btFacultyHomeCheckAttendance"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_bg"
+                android:visibility="gone"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Check Attendance"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         <!--<Button-->
             <!--android:id="@+id/btFacultyViewProfileUpdatePassword"-->
             <!--android:layout_width="250dp"-->

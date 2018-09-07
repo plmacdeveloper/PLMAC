@@ -40,17 +40,23 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FacultyViewProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
 
-    private Button fvp_up;
+    private Button fvp_up,fh_ca;
     private TextView tvFacultyViewProfileName;
     private  TextView tvFacultyViewProfileCollege;
     private TextView tvFacultyViewProfileIDNumber;
     private SurfaceView cameraPreview;
     private TextView textResult;
     private BarcodeDetector barcodeDetector;
+    volatile String codeToSend;
     private CameraSource cameraSource;
     private SurfaceHolder holder;
     final int RequestCameraPermissionID = 100;
@@ -85,77 +91,105 @@ public class FacultyViewProfile extends AppCompatActivity implements NavigationV
         tvFacultyViewProfileCollege=findViewById(R.id.tvFacultyViewProfileCollege);
         tvFacultyViewProfileIDNumber=findViewById(R.id.tvFacultyViewProfileIDNumber);
         tvFacultyViewProfileName=findViewById(R.id.tvFacultyViewProfileName);
+        fh_ca=findViewById(R.id.btFacultyHomeCheckAttendance);
 
-        cameraPreview = findViewById(R.id.svCameraPreview);
-        textResult = findViewById(R.id.tvScanResult);
-        cameraPreview.setZOrderMediaOverlay(true);
-        holder = cameraPreview.getHolder();
-
-        barcodeDetector = new BarcodeDetector.Builder(FacultyViewProfile.this)
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
-
-        if(!barcodeDetector.isOperational()){
-            Toast.makeText(FacultyViewProfile.this,"Sorry. Detector can't load.",Toast.LENGTH_SHORT).show();
-            this.finish();
-        }
-        cameraSource = new CameraSource
-                .Builder(FacultyViewProfile.this, barcodeDetector)
-                .setFacing(CameraSource.CAMERA_FACING_FRONT)
-                .setRequestedFps(24)
-                .setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1920, 1024)
-                .build();
-
-        cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
+        final ArrayList<String> startTimeCheck = new ArrayList<>();
+        final ArrayList<String> endTimeCheck = new ArrayList<>();
+        final ArrayList<String> subjectCodeCheck = new ArrayList<>();
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("Subject");
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+                final String dayOfWeek = sdf.format(cal.getTime());
+                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (userName.compareTo(ds.child("Faculty").getValue(String.class)) == 0) {
+                        DatabaseReference refSchedule = firebaseDatabase.getReference("Subject").child(ds.getKey()).child("Schedule");
+                        refSchedule.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot dsSched : dataSnapshot.getChildren()) {
+                                    if (dayOfWeek.matches(dsSched.getKey())) {
+                                        startTimeCheck.add(ds.child("Time").child("Start").getValue().toString());
+                                        endTimeCheck.add(ds.child("Time").child("End").getValue().toString());
+                                        subjectCodeCheck.add(ds.getKey());
+                                    }
+                                }
+                            }
 
-                try {
-                    if (ContextCompat.checkSelfPermission(FacultyViewProfile.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(cameraPreview.getHolder());
-                        return;
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                cameraSource.stop();
-            }
-        });
-
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> qrcodes = detections.getDetectedItems();
-                if (qrcodes.size() > 0) {
-                    textResult.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(1000);
-                            textResult.setText(qrcodes.valueAt(0).displayValue);
-                        }
-                    });
                 }
             }
-        });
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        final Thread checkDateTime = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Button btnCheckAttendance= findViewById(R.id.btFacultyHomeCheckAttendance);
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat dayTime = new SimpleDateFormat("hh:mm aa");
+                                SimpleDateFormat dayDate = new SimpleDateFormat("MMMM-dd-yyyy");
+                                String currentTime = dayTime.format(c.getTime());
+                                String currentDate = dayDate.format(c.getTime());
+                                Date cTime = null;
+                                Date sTime = null;
+                                Date eTime = null;
+                                for (int i = 0; i < startTimeCheck.size(); i++) {
+                                    try {
+                                        cTime = dayTime.parse(currentTime);
+                                        eTime = dayTime.parse(endTimeCheck.get(i));
+                                        sTime = dayTime.parse(startTimeCheck.get(i));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (cTime.before(sTime) || cTime.after(eTime)) {
+                                        btnCheckAttendance.setVisibility(View.GONE);
+
+                                    } else {
+                                        btnCheckAttendance.setVisibility(View.VISIBLE);
+
+                                        DatabaseReference addAttendance = firebaseDatabase.getReference("Subject");
+                                        addAttendance.child(subjectCodeCheck.get(i)).child("Attendance").child(currentDate).child(" ").setValue(" ");
+                                        codeToSend = subjectCodeCheck.get(0);
+                                        interrupt();
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    Log.i("INT", "Exit.");
+                }
+            }
+        };
+        checkDateTime.start();
+        fh_ca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(FacultyViewProfile.this, FacultyCheckAttendance.class);
+                i.putExtra("subjectCode", codeToSend);
+                startActivity(i);
+            }
+        });
 
 
         //MENU
