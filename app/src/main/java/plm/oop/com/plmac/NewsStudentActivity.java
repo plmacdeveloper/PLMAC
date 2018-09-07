@@ -119,18 +119,22 @@ public class NewsStudentActivity extends AppCompatActivity implements Navigation
 
     public void viewHome() {
         startActivity(new Intent(NewsStudentActivity.this, StudentMainActivity.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(NewsStudentActivity.this, NewsStudentActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
         startActivity(new Intent(NewsStudentActivity.this, StudentUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(NewsStudentActivity.this, StudentViewSubjects.class));
+        finish();
     }
 
     @Override

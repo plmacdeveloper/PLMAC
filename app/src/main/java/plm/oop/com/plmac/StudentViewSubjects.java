@@ -211,18 +211,22 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
 
     public void viewHome() {
         startActivity(new Intent(StudentViewSubjects.this, StudentMainActivity.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(StudentViewSubjects.this, NewsStudentActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
         startActivity(new Intent(StudentViewSubjects.this, StudentUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(StudentViewSubjects.this, StudentViewSubjects.class));
+        finish();
     }
 
     @Override

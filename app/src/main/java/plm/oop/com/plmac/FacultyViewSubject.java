@@ -224,18 +224,22 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
 
     public void viewHome() {
         startActivity(new Intent(FacultyViewSubject.this, FacultyViewProfile.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(FacultyViewSubject.this, NewsFacultyActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
         startActivity(new Intent(FacultyViewSubject.this, FacultyUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(FacultyViewSubject.this, FacultyViewSubject.class));
+        finish();
     }
 
     @Override
@@ -266,6 +270,7 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
             drawer.closeDrawer(GravityCompat.START);
         } else {
             viewHome();
+            finish();
         }
     }
 

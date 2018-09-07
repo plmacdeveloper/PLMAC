@@ -164,18 +164,22 @@ public class StudentUpdatePassword extends AppCompatActivity implements Navigati
 
     public void viewHome() {
         startActivity(new Intent(StudentUpdatePassword.this, StudentMainActivity.class));
+        finish();
     }
 
     public void viewNews() {
         startActivity(new Intent(StudentUpdatePassword.this, NewsStudentActivity.class));
+        finish();
     }
 
     public void viewUpdatePassword() {
         startActivity(new Intent(StudentUpdatePassword.this, StudentUpdatePassword.class));
+        finish();
     }
 
     public void viewSubjects() {
         startActivity(new Intent(StudentUpdatePassword.this, StudentViewSubjects.class));
+        finish();
     }
 
     @Override

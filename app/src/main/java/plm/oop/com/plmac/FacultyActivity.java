@@ -86,6 +86,7 @@ public class FacultyActivity extends AppCompatActivity {
                                         editor.apply();
                                         Intent i = new Intent(FacultyActivity.this, FacultyViewProfile.class);
                                         startActivity(i);
+                                        finish();
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Invalid User Number and Password", Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();

@@ -236,6 +236,7 @@ public class FacultyUpdatePassword extends AppCompatActivity implements Navigati
             drawer.closeDrawer(GravityCompat.START);
         } else {
             viewHome();
+            finish();
         }
     }
 }
