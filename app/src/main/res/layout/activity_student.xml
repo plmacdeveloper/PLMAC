@@ -81,7 +81,7 @@
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
 
