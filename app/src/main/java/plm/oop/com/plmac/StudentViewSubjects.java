@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StudentViewSubjects extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class StudentViewSubjects extends StudentBaseActivity{
     ExpandableListAdapter expListAdapter;
     ExpandableListView expListView;
     List<String> listDataHeaderCode;
@@ -50,10 +50,11 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_student_view_subject);
+        displayDrawer();
         SharedPreferences studentPref = getSharedPreferences("Student", 0);
         final String userNumber = studentPref.getString("userNumber", "");
         String userName = studentPref.getString("userName", "");
-        setContentView(R.layout.activity_student_view_subject);
         expListView = findViewById(R.id.explv2);
         progressDialog = new ProgressDialog(this);
         listDataHeaderCode = new ArrayList<>();
@@ -159,98 +160,10 @@ public class StudentViewSubjects extends AppCompatActivity implements Navigation
             }
         });
 
- //MENU
-        Toolbar mToolbar = findViewById(R.id.nav_action_bar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
 
-
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayoutStudent);
-        ActionBarDrawerToggle mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.headerStudentName);
-        navUsername.setText(userName);
-        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerStudentNumber);
-        navUsernumber.setText(userNumber);
-        //END OF MENU
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutStudent);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            startActivity(new Intent(StudentViewSubjects.this, StudentMainActivity.class));
-            finish();
-        }
-    }
-
-    public void logout() {
-        new AlertDialog.Builder(this)
-                .setTitle("Logout?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences studentPref = getSharedPreferences("Student", 0);
-                        SharedPreferences.Editor editor = studentPref.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(StudentViewSubjects.this, IntroScreenActivity.class));
-                        finish();
-                    }
-                }).create().show();
     }
 
 
-    public void viewHome() {
-        startActivity(new Intent(StudentViewSubjects.this, StudentMainActivity.class));
-        finish();
-    }
-
-    public void viewNews() {
-        startActivity(new Intent(StudentViewSubjects.this, NewsStudentActivity.class));
-        finish();
-    }
-
-    public void viewUpdatePassword() {
-        startActivity(new Intent(StudentViewSubjects.this, StudentUpdatePassword.class));
-        finish();
-    }
-
-    public void viewSubjects() {
-        startActivity(new Intent(StudentViewSubjects.this, StudentViewSubjects.class));
-        finish();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int i = item.getItemId();
-
-        if (i == R.id.nav_home) {
-            viewNews();
-        } else if (i == R.id.nav_profile) {
-            viewHome();
-        } else if (i == R.id.nav_update_password) {
-            viewUpdatePassword();
-        } else if (i == R.id.nav_subjects) {
-            viewSubjects();
-        } else if (i == R.id.nav_logout) {
-            logout();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutStudent);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
-    //END MENU
     }
 
 

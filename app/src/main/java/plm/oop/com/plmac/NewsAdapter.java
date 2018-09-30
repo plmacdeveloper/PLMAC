@@ -63,7 +63,6 @@ public class NewsAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.news_custom_list, null, true);
-
         TextView title = (TextView) rowView.findViewById(R.id.tvAdapterTitle);
         TextView date = (TextView) rowView.findViewById(R.id.tvAdapterDate);
         TextView content = (TextView) rowView.findViewById(R.id.tvAdapterContent);

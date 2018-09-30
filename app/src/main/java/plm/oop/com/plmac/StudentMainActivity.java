@@ -35,7 +35,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-public class StudentMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class StudentMainActivity extends StudentBaseActivity {
 
 
     private TextView tvStudentViewProfileName;
@@ -48,30 +48,10 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
 
+        displayDrawer();
         SharedPreferences studentPref = getSharedPreferences("Student", 0);
         String userNumber = studentPref.getString("userNumber", "");
         String userName = studentPref.getString("userName", "");
-
-        Toolbar mToolbar = findViewById(R.id.nav_action_bar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
-
-
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayoutStudent);
-        ActionBarDrawerToggle mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(StudentMainActivity.this);
-
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.headerStudentName);
-        navUsername.setText(userName);
-        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerStudentNumber);
-        navUsernumber.setText(userNumber);
-
         //START OF QR CODE
         QRCodeWriter writer = new QRCodeWriter();
         try {
@@ -117,68 +97,10 @@ public class StudentMainActivity extends AppCompatActivity implements Navigation
         //END OF SETTING VALUE FOR VIEWS
 
     }
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutStudent);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            logout();
-        }
+        super.onBackPressed();
+        logout();
     }
-
-    public void logout() {
-        new AlertDialog.Builder(this)
-                .setTitle("Logout?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences studentPref = getSharedPreferences("Student", 0);
-                        SharedPreferences.Editor editor = studentPref.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(StudentMainActivity.this, IntroScreenActivity.class));
-                        finish();
-                    }
-                }).create().show();
-    }
-
-
-    public void viewHome() {
-        startActivity(new Intent(StudentMainActivity.this, StudentMainActivity.class));
-    }
-
-    public void viewNews() {
-        startActivity(new Intent(StudentMainActivity.this, NewsStudentActivity.class));
-    }
-
-    public void viewUpdatePassword() {
-        startActivity(new Intent(StudentMainActivity.this, StudentUpdatePassword.class));
-    }
-
-    public void viewSubjects() {
-        startActivity(new Intent(StudentMainActivity.this, StudentViewSubjects.class));
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int i = item.getItemId();
-
-        if (i == R.id.nav_home) {
-            viewNews();
-        } else if (i == R.id.nav_profile) {
-            viewHome();
-        } else if (i == R.id.nav_update_password) {
-            viewUpdatePassword();
-        } else if (i == R.id.nav_subjects) {
-            viewSubjects();
-        } else if (i == R.id.nav_logout) {
-            logout();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutStudent);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
 }
