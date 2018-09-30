@@ -17,7 +17,9 @@
         <activity
             android:name=".IntroScreenActivity"
             android:theme="@style/LogoScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

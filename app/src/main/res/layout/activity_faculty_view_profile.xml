@@ -32,7 +32,8 @@
             android:orientation="vertical"
             android:gravity="center"
             >
-        <TextView
+
+            <TextView
             android:id="@+id/tvFacultyViewProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +62,19 @@
             app:fontFamily="@font/quicksand_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
+            <Button
+                android:id="@+id/btFacultyHomeCheckAttendance"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_bg"
+                android:visibility="gone"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Check Attendance"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         <!--<Button-->
             <!--android:id="@+id/btFacultyViewProfileUpdatePassword"-->
             <!--android:layout_width="250dp"-->
