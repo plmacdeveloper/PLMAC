@@ -84,7 +84,7 @@
             android:background="@drawable/btn_bg"
             android:visibility="gone"
             android:fontFamily="@font/quicksand_bold"
-            android:text="Send Grade"
+            android:text="Export Record"
             android:textColor="@color/white"
             android:textSize="20sp" />
 

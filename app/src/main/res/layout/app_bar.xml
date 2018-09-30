@@ -14,7 +14,7 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_gravity="right"
-        android:src="@mipmap/newlogo" />
+        android:src="@drawable/baybayin_logo" />
 
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
