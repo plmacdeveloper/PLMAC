@@ -142,5 +142,9 @@ public class StudentActivity extends AppCompatActivity {
 
         return valid;
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,IntroScreenActivity.class));
+        finish();
+    }
 }

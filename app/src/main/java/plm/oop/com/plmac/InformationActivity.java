@@ -64,4 +64,9 @@ public class InformationActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,IntroScreenActivity.class));
+        finish();
+    }
 }
