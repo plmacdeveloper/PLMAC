@@ -52,6 +52,7 @@ public class InformationActivity extends AppCompatActivity {
                 } else {
                     if (pass.matches("wow")) {
                         startActivity(new Intent(InformationActivity.this, AdminActivity.class));
+                        finish();
                         Toast.makeText(InformationActivity.this, "Hello Admin!", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     } else {

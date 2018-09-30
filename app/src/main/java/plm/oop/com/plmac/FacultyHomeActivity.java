@@ -62,7 +62,7 @@ public class FacultyHomeActivity extends AppCompatActivity implements Navigation
     private Button fh_vp, fh_ss, fh_ca, fh_sg;
     private TextView welcomeMessage;
     volatile String codeToSend;
-    String UserNameGlobal;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class FacultyHomeActivity extends AppCompatActivity implements Navigation
         final String userName = facultyPref.getString("userName", "");
         final String userNumber = facultyPref.getString("userNumber", "");
 
-        UserNameGlobal = userName;
+
         final ArrayList<String> startTimeCheck = new ArrayList<>();
         final ArrayList<String> endTimeCheck = new ArrayList<>();
         final ArrayList<String> subjectCodeCheck = new ArrayList<>();

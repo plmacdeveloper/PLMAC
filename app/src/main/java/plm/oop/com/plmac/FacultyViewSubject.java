@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FacultyViewSubject extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class FacultyViewSubject extends FacultyBaseActivity{
     ExpandableListAdapter expListAdapter;
     ExpandableListView expListView;
     List<String> listDataHeaderCode;
@@ -51,12 +51,11 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
     List<String> listgetAttendanceDate;
     HashMap<String, List<String>> listChildData;
 
-
-    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_view_subject);
+        displayDrawer();
         SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
         final String userName = facultyPref.getString("userName", "");
         final String userNumber = facultyPref.getString("userNumber", "");
@@ -182,97 +181,11 @@ public class FacultyViewSubject extends AppCompatActivity implements NavigationV
         });
 
 
-        //MENU
-        Toolbar mToolbar = findViewById(R.id.nav_action_bar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
 
-
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawerLayoutFaculty);
-        ActionBarDrawerToggle mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.headerFacultyName);
-        navUsername.setText(userName);
-        TextView navUsernumber = (TextView) headerView.findViewById(R.id.headerFacultyNumber);
-        navUsernumber.setText(userNumber);
-        //END OF MENU
-    }
-
-    public void logout() {
-        new android.support.v7.app.AlertDialog.Builder(this)
-                .setTitle("Logout?")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences facultyPref = getSharedPreferences("Faculty", 0);
-                        SharedPreferences.Editor editor = facultyPref.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(FacultyViewSubject.this, IntroScreenActivity.class));
-                        finish();
-                    }
-                }).create().show();
-        Log.i("Back", "Back");
     }
 
 
-    public void viewHome() {
-        startActivity(new Intent(FacultyViewSubject.this, FacultyViewProfile.class));
-        finish();
-    }
 
-    public void viewNews() {
-        startActivity(new Intent(FacultyViewSubject.this, NewsFacultyActivity.class));
-        finish();
-    }
-
-    public void viewUpdatePassword() {
-        startActivity(new Intent(FacultyViewSubject.this, FacultyUpdatePassword.class));
-        finish();
-    }
-
-    public void viewSubjects() {
-        startActivity(new Intent(FacultyViewSubject.this, FacultyViewSubject.class));
-        finish();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int i = item.getItemId();
-
-        if (i == R.id.nav_home) {
-            viewNews();
-        } else if (i == R.id.nav_profile) {
-            viewHome();
-        } else if (i == R.id.nav_update_password) {
-            viewUpdatePassword();
-        } else if (i == R.id.nav_subjects) {
-            viewSubjects();
-        } else if (i == R.id.nav_logout) {
-            logout();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutFaculty);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    //END MENU
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutFaculty);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            viewHome();
-            finish();
-        }
-    }
 
 
 }
